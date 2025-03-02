@@ -4,5 +4,3 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 @import "@mantine/core/styles.layer.css";
-
-@import "tailwind-preset-mantine/theme.css"; /* <-- import the preset */
