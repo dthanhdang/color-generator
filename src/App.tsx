@@ -1,32 +1,94 @@
 //import { Form } from "./Form"
 
-import { ColorPalette } from "./ColorPalette"
+import { ColorPalette, type ColorPaletteItem } from "./ColorPalette"
 import { useState } from "react"
 import chroma from "chroma-js"
 
-import { MantineProvider } from "@mantine/core"
+import { MantineProvider, Tabs } from "@mantine/core"
 import { Select } from "@mantine/core"
 import { FormHsl } from "./components/FormHsl"
 import { FormOklch } from "./components/FormOklch"
 import { Form } from "./Form"
+import { nanoid } from "nanoid"
+import { getColorName } from "./utils/getColorName"
+import { HarmonySelector } from "./components/HarmonySelector"
+import { HarmonyType, getHarmonyColor } from "./utils/colorHarmony"
 
 type ColorMode = "hex" | "hsl" | "oklch"
+type PaletteMode = "scale" | "harmony"
+
+type GetColorScaleProps = {
+  baseColor: string
+  count: number
+}
+
 //Il faut transformer ce tableau de chaines en un tableau qui contient des objets avec des champs id(nanoid), color et bientot name
 // Il faut utiliser .map
-function getColorScale(color: string, count: number): string[] {
-  return chroma.scale(["white", color]).mode("lch").colors(count)
+function getColorScale({
+  baseColor,
+  count,
+}: GetColorScaleProps): ColorPaletteItem[] {
+  return chroma
+    .scale(["white", baseColor])
+    .mode("lch")
+    .colors(count)
+    .map((color, index) => {
+      const weight = index === 0 ? 50 : index === 10 ? 950 : index * 100
+      const colorObject = chroma(color)
+      const colorNameResult = getColorName(colorObject)
+
+      console.log("getColorName result:", colorNameResult)
+      return {
+        id: nanoid(),
+        color,
+        weight,
+        name: colorNameResult ? colorNameResult.name : "",
+      }
+    }) as ColorPaletteItem[]
+}
+
+function getHarmonyPalette(
+  baseColor: string,
+  harmonyType: HarmonyType,
+  count: number
+): ColorPaletteItem[] {
+  return getHarmonyColor(baseColor, harmonyType, count).map((color, index) => {
+    const colorObject = chroma(color)
+    const colorNameResult = getColorName(colorObject)
+
+    return {
+      id: nanoid(),
+      color,
+      weight: index * 100 + 100,
+      name: colorNameResult ? colorNameResult.name : "",
+    }
+  })
 }
 
 export function App() {
   //const [palette, setPalette] = useState(chroma.scale(["white", color]).mode("lch").colors(10));
   const [color, setColor] = useState<string>("#b4f2ce")
   const [colorMode, setColorMode] = useState<ColorMode>("hex")
-  const [palette, setPalette] = useState(() => getColorScale(color, 11))
+
+  const [paletteMode, setPaletteMode] = useState<PaletteMode>("scale")
+  const [harmonyType, setHarmonyType] = useState<HarmonyType>("monochromatic")
+
+  const [palette, setPalette] = useState<ColorPaletteItem[]>(() =>
+    getColorScale({ baseColor: color, count: 11 })
+  )
 
   const handleColorSubmit = (newColor: string) => {
     //const newPalette = getColorScale(newColor, 10)
-    setColor(newColor)
-    setPalette(getColorScale(newColor, 11))
+    if (chroma.valid(newColor)) {
+      setColor(newColor)
+      if (paletteMode === "scale") {
+        setPalette(getColorScale({ baseColor: newColor, count: 11 }))
+      } else {
+        setPalette(getHarmonyPalette(newColor, harmonyType, 6))
+      }
+    } else {
+      console.error(`Invalid color : ${newColor}`)
+    }
   }
 
   const handleModeChange = (value: string | null) => {
@@ -34,31 +96,89 @@ export function App() {
       setColorMode(value)
   }
 
+  const handleHarmonyChange = (value: HarmonyType) => {
+    setHarmonyType(value)
+    if (paletteMode === "harmony") {
+      setPalette(getHarmonyPalette(color, value, 6))
+    }
+  }
+
+  const handlePaletteModeChange = (value: PaletteMode) => {
+    setPaletteMode(value)
+
+    if (value === "scale") {
+      setPalette(getColorScale({ baseColor: color, count: 11 }))
+    } else {
+      setPalette(getHarmonyPalette(color, harmonyType, 6))
+    }
+  }
+
   return (
     <MantineProvider>
-      <main>
-        <Select
-          data={[
-            { value: "hex", label: "HEX" },
-            { value: "hsl", label: "HSL" },
-            { value: "oklch", label: "OKLCH" },
-          ]}
-          value={colorMode}
-          onChange={handleModeChange}
-        />
-        {colorMode === "hex" && (
-          <Form onSubmit={handleColorSubmit} initialColor={color} />
-        )}
+      <main className="container mx-auto p-4">
+        <h1 className="text-center text-5xl font-bold my-8">
+          Your{" "}
+          <span style={{ color: "oklch(0.511 0.262 276.966)" }}>
+            Color Palette
+          </span>{" "}
+          Generator
+          {/*<span className="inline-block bg-gradient-to-r from-rose-100 to-rose-900 bg-clip-text text-transparent">
+            Color Palette
+          </span>{" "}*/}
+        </h1>
+        <div className="mb-4">
+          <Select
+            data={[
+              { value: "hex", label: "HEX" },
+              { value: "hsl", label: "HSL" },
+              { value: "oklch", label: "OKLCH" },
+            ]}
+            value={colorMode}
+            onChange={handleModeChange}
+          />
+        </div>
 
-        {colorMode === "hsl" && (
-          <FormHsl initialColor={color} onSubmit={handleColorSubmit} />
-        )}
-        {colorMode === "oklch" && (
-          <FormOklch initialColor={color} onSubmit={handleColorSubmit} />
-        )}
-        {/*<FormHsl onSubmit={handleColorSubmit} initialColor="#b4f2ce" />*/}
-        {/*<FormOklch onSubmit={handleColorSubmit} initialColor="#b4f2ce" />*/}
-        <ColorPalette palette={palette} />
+        <Tabs
+          value={paletteMode}
+          onChange={(value) => handlePaletteModeChange(value as PaletteMode)}
+        >
+          <Tabs.List>
+            <Tabs.Tab value="scale">Colors Scale</Tabs.Tab>
+            <Tabs.Tab value="harmony">Colors Harmony</Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="scale">
+            {null} <div className="mt-4"></div>
+          </Tabs.Panel>
+
+          <Tabs.Panel value="harmony">
+            <div className="mt-4">
+              <HarmonySelector
+                value={harmonyType}
+                onChange={handleHarmonyChange}
+              />
+            </div>
+          </Tabs.Panel>
+        </Tabs>
+        <div className="mt-4">
+          {" "}
+          {colorMode === "hex" && (
+            <Form onSubmit={handleColorSubmit} initialColor={color} />
+          )}
+          {colorMode === "hsl" && (
+            <FormHsl initialColor={color} onSubmit={handleColorSubmit} />
+          )}
+          {colorMode === "oklch" && (
+            <FormOklch initialColor={color} onSubmit={handleColorSubmit} />
+          )}
+        </div>
+
+        <div className="mt-8">
+          <h2 className="text-xl font-bold mb-4">
+            {paletteMode === "scale" ? "Colors scale" : `${harmonyType}`}
+          </h2>
+          <ColorPalette palette={palette} />
+        </div>
       </main>
     </MantineProvider>
   )

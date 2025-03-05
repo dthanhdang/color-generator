@@ -60,7 +60,7 @@ export function FormOklch({
           <Slider
             min={0}
             max={100}
-            label={(value: number) => `${value}%`}
+            label={(value: number) => `${Math.round(value)}%`}
             value={oklchValues.l}
             onChange={(value: number) => handleOklchChange("l", value)}
             marks={[
@@ -76,7 +76,7 @@ export function FormOklch({
           <Slider
             min={0}
             max={40}
-            label={(value: number) => `${value}%`} //il faut afficher la valeur arrondie
+            label={(value: number) => `${Math.round(value)}%`} //il faut afficher la valeur arrondie
             value={oklchValues.c}
             onChange={(value: number) => handleOklchChange("c", value)}
             marks={[
@@ -92,7 +92,7 @@ export function FormOklch({
           <Slider
             min={0}
             max={360}
-            label={(value: number) => `${value}°`}
+            label={(value: number) => `${Math.round(value)}°`}
             value={oklchValues.h}
             onChange={(value: number) => handleOklchChange("h", value)}
             marks={[

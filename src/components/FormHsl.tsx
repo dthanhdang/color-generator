@@ -60,7 +60,7 @@ export function FormHsl({
           <Slider
             min={0}
             max={360}
-            label={(value: number) => `${value}`}
+            label={(value: number) => `${Math.round(value)}°`}
             value={hslValues.h}
             onChange={(value: number) => handleHSLChange("h", value)}
             marks={[
@@ -75,7 +75,7 @@ export function FormHsl({
           <Slider
             min={0}
             max={100}
-            label={(value: number) => `${value}%`}
+            label={(value: number) => `${Math.round(value)}%`}
             value={hslValues.s}
             onChange={(value: number) => handleHSLChange("s", value)}
             marks={[
@@ -91,7 +91,7 @@ export function FormHsl({
           <Slider
             min={0}
             max={100}
-            label={(value: number) => `${value}%`}
+            label={(value: number) => `${Math.round(value)}%`}
             value={hslValues.l}
             onChange={(value: number) => handleHSLChange("l", value)}
             marks={[
