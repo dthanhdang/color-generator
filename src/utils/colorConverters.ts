@@ -29,3 +29,7 @@ export function oklchToHex(l: number, c: number, h: number): string {
   const color = chroma.lch(l, c, h)
   return color.hex()
 }
+
+export function rgbToHex(r: number, g: number, b: number): string {
+  return chroma.rgb(r, g, b).hex()
+}

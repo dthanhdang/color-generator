@@ -5,7 +5,7 @@ import { useDropzone } from "react-dropzone"
 import { Upload } from "lucide-react"
 
 type ImageUploadProps = {
-  onImageUpload: (image: string) => void
+  onImageUpload: (file: File | string) => void
 }
 
 export function ImageUploader({ onImageUpload }: ImageUploadProps) {
@@ -18,7 +18,8 @@ export function ImageUploader({ onImageUpload }: ImageUploadProps) {
         const reader = new FileReader()
         reader.onloadend = () => {
           setPreview(reader.result as string)
-          onImageUpload(reader.result as string)
+          //onImageUpload(reader.result as string)
+          onImageUpload(file)
         }
         reader.readAsDataURL(file)
       }
@@ -50,7 +51,7 @@ export function ImageUploader({ onImageUpload }: ImageUploadProps) {
               : "Drag and drop your image or browse an image"}
           </Text>
           <Text size="sm" color="dimmed">
-            PNG, JPG, GIF jusqu'à 5MB
+            PNG, JPG, GIF to 5MB
           </Text>
         </Stack>
       </div>

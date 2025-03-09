@@ -13,17 +13,17 @@ import { nanoid } from "nanoid"
 import { getColorName } from "./utils/getColorName"
 import { HarmonySelector } from "./components/HarmonySelector"
 import { HarmonyType, getHarmonyColor } from "./utils/colorHarmony"
+import { ImageColorPicker } from "./components/ImageColorPicker"
+import { ColorDisplay } from "./components/ColorDisplay"
 
 type ColorMode = "hex" | "hsl" | "oklch"
-type PaletteMode = "scale" | "harmony"
+type PaletteMode = "scale" | "harmony" | "image"
 
 type GetColorScaleProps = {
   baseColor: string
   count: number
 }
 
-//Il faut transformer ce tableau de chaines en un tableau qui contient des objets avec des champs id(nanoid), color et bientot name
-// Il faut utiliser .map
 function getColorScale({
   baseColor,
   count,
@@ -72,6 +72,7 @@ export function App() {
 
   const [paletteMode, setPaletteMode] = useState<PaletteMode>("scale")
   const [harmonyType, setHarmonyType] = useState<HarmonyType>("monochromatic")
+  const [extractedImageColors, setExtractedImageColors] = useState<string[]>([])
 
   const [palette, setPalette] = useState<ColorPaletteItem[]>(() =>
     getColorScale({ baseColor: color, count: 11 })
@@ -108,8 +109,31 @@ export function App() {
 
     if (value === "scale") {
       setPalette(getColorScale({ baseColor: color, count: 11 }))
-    } else {
+    } else if (value === "harmony") {
       setPalette(getHarmonyPalette(color, harmonyType, 6))
+    } else if (value === "image" && extractedImageColors.length > 0) {
+      setPalette(
+        extractedImageColors.map((color, index) => ({
+          id: nanoid(),
+          color,
+          weight: index * 100 + 100,
+          name: getColorName(chroma(color))?.name || "",
+        }))
+      )
+    }
+  }
+
+  const handleImageColorsExtracted = (colors: string[]) => {
+    setExtractedImageColors(colors)
+    if (paletteMode === "image") {
+      setPalette(
+        colors.map((color, index) => ({
+          id: nanoid(),
+          color,
+          weight: index * 100 + 100,
+          name: getColorName(chroma(color))?.name || "",
+        }))
+      )
     }
   }
 
@@ -145,6 +169,7 @@ export function App() {
           <Tabs.List>
             <Tabs.Tab value="scale">Colors Scale</Tabs.Tab>
             <Tabs.Tab value="harmony">Colors Harmony</Tabs.Tab>
+            <Tabs.Tab value="image">Image Colors</Tabs.Tab>
           </Tabs.List>
 
           <Tabs.Panel value="scale">
@@ -157,6 +182,20 @@ export function App() {
                 value={harmonyType}
                 onChange={handleHarmonyChange}
               />
+            </div>
+          </Tabs.Panel>
+          <Tabs.Panel value="image">
+            <div className="mt-4">
+              <ImageColorPicker
+                onColorSelect={setColor}
+                onColorsExtracted={handleImageColorsExtracted}
+              />
+              {extractedImageColors.length > 0 && (
+                <ColorDisplay
+                  colors={extractedImageColors}
+                  onColorSelect={setColor}
+                />
+              )}
             </div>
           </Tabs.Panel>
         </Tabs>
@@ -175,7 +214,11 @@ export function App() {
 
         <div className="mt-8">
           <h2 className="text-xl font-bold mb-4">
-            {paletteMode === "scale" ? "Colors scale" : `${harmonyType}`}
+            {paletteMode === "scale"
+              ? "Colors scale"
+              : paletteMode === "harmony"
+                ? `${harmonyType}`
+                : "Colors Palette"}
           </h2>
           <ColorPalette palette={palette} />
         </div>
