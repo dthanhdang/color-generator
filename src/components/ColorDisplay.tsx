@@ -118,7 +118,7 @@ export function ColorDisplay({ colors, onColorSelect }: ColorDisplayProps) {
         onClick={exportPalette}
         className="mt-4"
       >
-        Exporter la palette
+        Export palette
       </Button>
 
       {selectedColorIndex !== null && (

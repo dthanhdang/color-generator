@@ -15,9 +15,10 @@ import { HarmonySelector } from "./components/HarmonySelector"
 import { HarmonyType, getHarmonyColor } from "./utils/colorHarmony"
 import { ImageColorPicker } from "./components/ImageColorPicker"
 import { ColorDisplay } from "./components/ColorDisplay"
+import { RandomColor } from "./components/RandomColor"
 
 type ColorMode = "hex" | "hsl" | "oklch"
-type PaletteMode = "scale" | "harmony" | "image"
+type PaletteMode = "scale" | "harmony" | "image" | "random"
 
 type GetColorScaleProps = {
   baseColor: string
@@ -169,7 +170,8 @@ export function App() {
           <Tabs.List>
             <Tabs.Tab value="scale">Colors Scale</Tabs.Tab>
             <Tabs.Tab value="harmony">Colors Harmony</Tabs.Tab>
-            <Tabs.Tab value="image">Image Colors</Tabs.Tab>
+            <Tabs.Tab value="image">Image Picker</Tabs.Tab>
+            <Tabs.Tab value="random">Random Palette</Tabs.Tab>
           </Tabs.List>
 
           <Tabs.Panel value="scale">
@@ -198,6 +200,22 @@ export function App() {
               )}
             </div>
           </Tabs.Panel>
+
+          <Tabs.Panel value="random">
+            <RandomColor
+              onColorSelect={(color) => {
+                setColor(color)
+                // Mettre à jour la palette principale en fonction du mode actuel
+                if (paletteMode === "scale") {
+                  setPalette(getColorScale({ baseColor: color, count: 11 }))
+                } else if (paletteMode === "harmony") {
+                  setPalette(getHarmonyPalette(color, harmonyType, 6))
+                }
+              }}
+              getColorScale={getColorScale}
+              getHarmonyPalette={getHarmonyPalette}
+            />
+          </Tabs.Panel>
         </Tabs>
         <div className="mt-4">
           {" "}
@@ -218,7 +236,9 @@ export function App() {
               ? "Colors scale"
               : paletteMode === "harmony"
                 ? `${harmonyType}`
-                : "Colors Palette"}
+                : paletteMode === "random"
+                  ? "Random Colors Palette"
+                  : "Colors Palette"}
           </h2>
           <ColorPalette palette={palette} />
         </div>
