@@ -1,8 +1,11 @@
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Paper, Text, Button, Group, Stack, Box } from "@mantine/core"
 import { ImageUploader } from "./ImageUploader"
 import { ImageCanvas } from "./ImageCanvas"
-import { ColorExtractor } from "./ColorExtractor"
+
+import { getDominantColors } from "../utils/colorExtraction"
+
+import { ColorPickerComponent } from "./ColorPicker"
 
 type ImageColorPickerProps = {
   onColorSelect: (color: string) => void
@@ -15,6 +18,15 @@ export function ImageColorPicker({
 }: ImageColorPickerProps) {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
+  const [extractedColors, setExtractedColors] = useState<string[]>([])
+  //const [paletteSize, setPaletteSize] = useState<number>(5)
+  const [selectedColorIndex, setSelectedColorIndex] = useState<number | null>(
+    null
+  )
+  //const [isExtracting, setIsExtracting] = useState(false)
+
+  // Limiter le nombre de couleurs affichées selon le slider
+  //const displayColors = extractedColors.slice(0, paletteSize)
 
   const handleImageUpload = (file: File | string) => {
     if (typeof file === "string") {
@@ -23,17 +35,86 @@ export function ImageColorPicker({
     } else {
       setImageFile(file)
       setSelectedColor(null)
+      setSelectedColorIndex(null)
+    }
+  }
+
+  const extractColorsFromImage = useCallback(
+    async (file: File) => {
+      try {
+        //setIsExtracting(true)
+
+        const img = new Image()
+        img.crossOrigin = "Anonymous"
+
+        const loadImage = new Promise<void>((resolve, reject) => {
+          img.onload = () => resolve()
+          img.onerror = () => reject(new Error("Failed to load image"))
+          img.src = URL.createObjectURL(file)
+        })
+
+        await loadImage
+
+        const colors = await getDominantColors(img, 10)
+        setExtractedColors(colors)
+
+        if (onColorsExtracted) {
+          onColorsExtracted(colors)
+        }
+
+        URL.revokeObjectURL(img.src)
+      } catch (error) {
+        console.error("Error extracting colors:", error)
+      }
+    },
+    [onColorsExtracted]
+  )
+
+  useEffect(() => {
+    if (imageFile) {
+      extractColorsFromImage(imageFile)
+    }
+  }, [imageFile, extractColorsFromImage])
+
+  const handleColorChange = (newColor: string, index: number) => {
+    if (index !== null && index >= 0 && index < extractedColors.length) {
+      const newColors = [...extractedColors]
+      newColors[index] = newColor
+      setExtractedColors(newColors)
+
+      if (selectedColorIndex === index) {
+        setSelectedColor(newColor)
+      }
+
+      if (onColorsExtracted) {
+        onColorsExtracted(newColors)
+      }
     }
   }
 
   const handleColorSelect = (color: string) => {
     setSelectedColor(color)
+    // Rechercher si la couleur existe déjà dans la palette
+    const colorIndex = extractedColors.findIndex((c) => c === color)
+    if (colorIndex >= 0) {
+      setSelectedColorIndex(colorIndex)
+    } else {
+      setSelectedColorIndex(null)
+    }
   }
 
   const handleUseColor = () => {
     if (selectedColor) {
       onColorSelect(selectedColor)
     }
+  }
+
+  {
+    /*const exportPalette = () => {
+    const colorValues = displayColors.join(", ")
+    navigator.clipboard.writeText(colorValues)
+    alert("Palette copied to clipboard!")
+  }*/
   }
 
   return (
@@ -49,25 +130,17 @@ export function ImageColorPicker({
               onClick={() => {
                 setImageFile(null)
                 setSelectedColor(null)
+                setExtractedColors([])
               }}
             >
-              Upload another image
+              {" "}
+              Browse image
             </Button>
           </Group>
 
           <ImageCanvas
             imageFile={imageFile}
             onColorSelect={handleColorSelect}
-          />
-
-          <ColorExtractor
-            imageFile={imageFile}
-            onColorSelect={handleColorSelect}
-            onColorsExtracted={(colors) => {
-              if (onColorsExtracted) {
-                onColorsExtracted(colors)
-              }
-            }}
           />
 
           {selectedColor && (
@@ -90,8 +163,25 @@ export function ImageColorPicker({
                     </Text>
                   </div>
                 </Group>
-                <Button onClick={handleUseColor}>Use this color</Button>
+                <Button onClick={handleUseColor} /*disabled={isExtracting*/>
+                  Use this color
+                </Button>
               </Group>
+
+              {selectedColorIndex !== null && (
+                <div className="mt-4">
+                  <Text size="sm" fw={500} mb="xs">
+                    Adjust Color
+                  </Text>
+                  <ColorPickerComponent
+                    color={extractedColors[selectedColorIndex]}
+                    onChange={(color) => setSelectedColor(color)}
+                    onApply={(color) =>
+                      handleColorChange(color, selectedColorIndex)
+                    }
+                  />
+                </div>
+              )}
             </Paper>
           )}
         </>

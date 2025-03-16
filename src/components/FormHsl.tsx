@@ -1,7 +1,6 @@
+import { hexToHsl, hslToHex } from "#utils/colorConverters.ts"
 import { Slider, Group, Stack, Text, Paper } from "@mantine/core"
 import React, { useState } from "react"
-import { hexToHsl } from "../utils/colorConverters"
-import { hslToHex } from "../utils/colorConverters"
 
 type HSLColor = {
   h: number
