@@ -1,11 +1,12 @@
 import React, { useEffect } from "react"
 
-import { Footer } from "@/components/Footer"
-import { CTAButton } from "@/components/CTAButton"
 import { ArrowRight, Palette, PaintBucket, Eye, Sparkles } from "lucide-react"
-import { FeatureSection } from "@/components/FeatureSection"
-import { Header } from "@/components/Header"
-import { HeroSection } from "@/components/HeroSection"
+
+import { HeroSection } from "./HeroSection"
+import { Header } from "./Header"
+import { FeatureSection } from "./FeatureSection"
+import { CTAButton } from "./CTAButton"
+import { Footer } from "./Footer"
 
 export const LandingPage = () => {
   useEffect(() => {
