@@ -1,29 +1,23 @@
 import { useState, useEffect, useCallback } from "react"
 import { Button } from "@mantine/core"
-import {
-  generateRandomColor,
-  getRandomPaletteMode,
-} from "../utils/colorExtraction"
+import { generateRandomColor } from "../utils/colorExtraction"
 import { ColorDisplay } from "./ColorDisplay"
-import { HarmonyType } from "../utils/colorHarmony"
+//import { HarmonyType } from "../utils/colorHarmony"
 import { ColorPaletteItem } from "../ColorPalette"
 
 type RandomColorProps = {
   onColorSelect: (color: string) => void
-  getColorScale: (props: {
-    baseColor: string
-    count: number
-  }) => ColorPaletteItem[]
+
   getHarmonyPalette: (
     baseColor: string,
-    harmonyType: HarmonyType,
+    harmonyType: "split-complementary",
     count: number
   ) => ColorPaletteItem[]
 }
 
 export function RandomColor({
   onColorSelect,
-  getColorScale,
+  //getColorScale,
   getHarmonyPalette,
 }: RandomColorProps) {
   const [randomColors, setRandomColors] = useState<string[]>([
@@ -36,29 +30,19 @@ export function RandomColor({
 
   const generateRandomPalette = useCallback(() => {
     const newColor = generateRandomColor()
-    const randomMode = getRandomPaletteMode()
+    const newColors = getHarmonyPalette(newColor, "split-complementary", 5)
+    setRandomColors(newColors.map((item) => item.color))
+  }, [getHarmonyPalette])
 
-    if (randomMode === "scale") {
-      // Générer une palette de type scale
-      const newColors = getColorScale({ baseColor: newColor, count: 11 })
-      setRandomColors(newColors.map((item) => item.color))
-    } else {
-      // Choisir aléatoirement un type d'harmonie
-      const harmonyTypes: HarmonyType[] = [
-        "monochromatic",
-        "complementary",
-        "analogous",
-        "triadic",
-        "tetradic",
-      ]
-      const randomHarmonyType =
-        harmonyTypes[Math.floor(Math.random() * harmonyTypes.length)]
-
-      // Générer une palette de type harmony avec le type d'harmonie aléatoire
-      const newColors = getHarmonyPalette(newColor, randomHarmonyType, 6)
-      setRandomColors(newColors.map((item) => item.color))
-    }
-  }, [getColorScale, getHarmonyPalette])
+  {
+    /*const generateRandomPalette = useCallback(() => {
+    const newColor = chroma.random().hex(); // Générer une couleur aléatoire
+    const newPalette = generateSplitComplementaryPalette(newColor, 5); // Générer la palette
+    setRandomColors(newPalette); // Mettre à jour les couleurs affichées
+    onPaletteGenerated(newPalette); // Renvoyer la palette à App
+    onColorSelect(newColor); // Notifier la sélection de couleur
+  }, [onColorSelect, onPaletteGenerated]);*/
+  }
 
   // Générer une palette aléatoire au chargement du composant
   useEffect(() => {

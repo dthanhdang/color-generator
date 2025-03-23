@@ -3,6 +3,7 @@ import chroma from "chroma-js"
 export type HarmonyType =
   | "monochromatic"
   | "complementary"
+  | "split-complementary"
   | "triadic"
   | "analogous"
   | "tetradic"
@@ -106,6 +107,24 @@ export function getTetradic(baseColor: string, count: number = 8): string[] {
   return [...group1, ...group2, ...group3, ...group4].slice(0, count)
 }
 
+export function getSplitComplementary(
+  baseColor: string,
+  count: number
+): string[] {
+  const color = chroma(baseColor)
+  const hue = color.hsl()[0]
+  const splitOffset = 30
+  const hues = [hue, (hue + splitOffset) % 360, (hue - splitOffset + 360) % 360]
+  const splitPalette = []
+  for (let i = 0; i < count; i++) {
+    const adjustedHue = hues[i % hues.length]
+    const lightness = 50 + i * 10
+    const newColor = chroma.hsl(adjustedHue, color.hsl()[1], lightness / 100)
+    splitPalette.push(newColor.hex())
+  }
+  return splitPalette
+}
+
 export function getHarmonyColor(
   baseColor: string,
   harmonyType: HarmonyType,
@@ -116,6 +135,8 @@ export function getHarmonyColor(
       return getMonochromatic(baseColor, count)
     case "complementary":
       return getComplementary(baseColor, count)
+    case "split-complementary":
+      return getSplitComplementary(baseColor, count)
     case "analogous":
       return getAnalogous(baseColor, count)
     case "triadic":

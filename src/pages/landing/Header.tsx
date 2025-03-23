@@ -21,7 +21,7 @@ export const Header = () => {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12 transition-all duration-300",
+        "absolute top-0 left-0 right-0 z-50 py-4 px-6 md:px-12 transition-all duration-300",
         scrolled ? "bg-white/80 backdrop-blur-md shadow-sm" : "bg-transparent"
       )}
     >

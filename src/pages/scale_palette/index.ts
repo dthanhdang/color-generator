@@ -1,1 +1,1 @@
-export * from "./ScalePaletteGenerator.jsx"
+export * from "./ScalePalettePage.jsx"

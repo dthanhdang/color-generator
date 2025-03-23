@@ -20,6 +20,7 @@ export function HarmonySelector({ value, onChange }: HarmonySelectorProps) {
         data={[
           { value: "monochromatic", label: "Monochromatic" },
           { value: "complementary", label: "Complementary" },
+          { value: "split-complementary", label: "Split-complementary" },
           { value: "analogous", label: "Analogous" },
           { value: "triadic", label: "Triadic" },
           { value: "tetradic", label: "Tetradic" },

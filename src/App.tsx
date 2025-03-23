@@ -212,7 +212,7 @@ export function App() {
                   setPalette(getHarmonyPalette(color, harmonyType, 6))
                 }
               }}
-              getColorScale={getColorScale}
+              //getColorScale={getColorScale}
               getHarmonyPalette={getHarmonyPalette}
             />
           </Tabs.Panel>

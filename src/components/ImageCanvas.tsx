@@ -29,6 +29,26 @@ export function ImageCanvas({ imageFile, onColorSelect }: ImageCanvasProps) {
     currentPointRef.current = currentPoint
   }, [currentPoint])
 
+  // Dessiner un cercle de sélection
+
+  const drawSelectionCircle = useCallback(
+    (ctx: CanvasRenderingContext2D, x: number, y: number, color: string) => {
+      // Cercle externe blanc
+      ctx.beginPath()
+      ctx.arc(x, y, 20, 0, 2 * Math.PI)
+      ctx.strokeStyle = "white"
+      ctx.lineWidth = 2
+      ctx.stroke()
+
+      // Cercle interne avec la couleur sélectionnée
+      ctx.beginPath()
+      ctx.arc(x, y, 10, 0, 2 * Math.PI)
+      ctx.fillStyle = color
+      ctx.fill()
+    },
+    []
+  )
+
   // Définir redrawCanvas comme un useCallback pour éviter les recréations inutiles
   const redrawCanvas = useCallback(
     (ctx: CanvasRenderingContext2D, img: HTMLImageElement) => {
@@ -50,27 +70,9 @@ export function ImageCanvas({ imageFile, onColorSelect }: ImageCanvasProps) {
         )
       }
     },
-    []
+    [drawSelectionCircle]
   )
 
-  // Dessiner un cercle de sélection
-  const drawSelectionCircle = useCallback(
-    (ctx: CanvasRenderingContext2D, x: number, y: number, color: string) => {
-      // Cercle externe blanc
-      ctx.beginPath()
-      ctx.arc(x, y, 20, 0, 2 * Math.PI)
-      ctx.strokeStyle = "white"
-      ctx.lineWidth = 2
-      ctx.stroke()
-
-      // Cercle interne avec la couleur sélectionnée
-      ctx.beginPath()
-      ctx.arc(x, y, 10, 0, 2 * Math.PI)
-      ctx.fillStyle = color
-      ctx.fill()
-    },
-    []
-  )
   useEffect(() => {
     if (!imageFile || !canvasRef.current || !imgRef.current) return
 
