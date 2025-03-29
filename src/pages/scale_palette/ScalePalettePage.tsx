@@ -24,8 +24,8 @@ function getColorScale({
   baseColor,
   count,
 }: GetColorScaleProps): ColorPaletteItem[] {
-  const lightColor = chroma(baseColor).brighten(2.5).desaturate(0.7)
-  const darkColor = chroma(baseColor).darken(1)
+  const lightColor = chroma(baseColor).brighten(2)
+  const darkColor = chroma(baseColor).darken(1.5)
   return (
     chroma
       //.scale(["white", baseColor])
