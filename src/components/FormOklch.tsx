@@ -1,7 +1,8 @@
 import React from "react"
 import { Slider, Group, Stack, Text, Paper } from "@mantine/core"
 import { useState } from "react"
-import { hexToOklch, oklchToHex } from "../utils/colorConverters"
+//import { hexToOklch, oklchToHex } from "../utils/colorConverters"
+import { type Color } from "chroma-js"
 
 type OKLCHColor = {
   l: number
@@ -10,33 +11,24 @@ type OKLCHColor = {
 }
 
 type FormOklchProps = {
-  initialColor: string
-  onSubmit: (color: string) => void
+  initialColor: Color
+  onSubmit: (color: Color) => void
 }
 
 export function FormOklch({
   initialColor,
   onSubmit,
 }: FormOklchProps): React.JSX.Element {
-  const [oklchValues, setOklchValues] = useState<OKLCHColor>(() =>
-    hexToOklch(initialColor)
-  )
+  const [oklchValues, setOklchValues] = useState(initialColor)
 
-  const [previewColor, setPreviewColor] = useState(initialColor)
+  //const [previewColor, setPreviewColor] = useState(initialColor)
 
   const handleOklchChange = (key: keyof OKLCHColor, value: number): void => {
-    const newOklchValues: OKLCHColor = {
-      ...oklchValues,
-      [key]: value,
-    }
-    setOklchValues(newOklchValues)
-    const newHexColor: string = oklchToHex(
-      newOklchValues.l,
-      newOklchValues.c,
-      newOklchValues.h
-    )
-    setPreviewColor(newHexColor)
-    onSubmit(newHexColor)
+    const divider = key === "l" ? 100 : 1
+    const newColor = oklchValues.set(`oklch.${key}`, value / divider)
+    setOklchValues(newColor)
+
+    onSubmit(newColor)
   }
 
   return (
@@ -44,24 +36,16 @@ export function FormOklch({
       <Stack className="flex flex-col space-y-4">
         <Group className="flex justify-between items-center">
           <Text className="text-lg font-medium">OKLCH</Text>
-          <input
-            type="text"
-            value={previewColor}
-            onChange={(e) => {
-              setPreviewColor(e.target.value)
-              onSubmit(e.target.value)
-              setOklchValues(hexToOklch(e.target.value))
-            }}
-          />
-          <div style={{ backgroundColor: previewColor }} />
+          <p>{oklchValues.hex()}</p>
+          <div style={{ backgroundColor: oklchValues.hex() }} />
         </Group>
         <div>
-          <Text>Luminance : {Math.round(oklchValues.l)}%</Text>
+          <Text>Luminance : {Math.round(oklchValues.oklch()[0] * 100)}%</Text>
           <Slider
             min={0}
             max={100}
             label={(value: number) => `${Math.round(value)}%`}
-            value={oklchValues.l}
+            value={oklchValues.oklch()[0] * 100}
             onChange={(value: number) => handleOklchChange("l", value)}
             marks={[
               { value: 0, label: "0%" },
@@ -72,28 +56,29 @@ export function FormOklch({
         </div>
 
         <div>
-          <Text>Chroma : {Math.round(oklchValues.c)}%</Text>
+          <Text>Chroma : {oklchValues.oklch()[1].toFixed(3)}</Text>
           <Slider
             min={0}
-            max={40}
-            label={(value: number) => `${Math.round(value)}%`} //il faut afficher la valeur arrondie
-            value={oklchValues.c}
+            max={0.4}
+            step={0.001}
+            label={(value: number) => value.toFixed(3)} //il faut afficher la valeur arrondie
+            value={oklchValues.oklch()[1]}
             onChange={(value: number) => handleOklchChange("c", value)}
             marks={[
-              { value: 0, label: "0%" },
-              { value: 20, label: "20%" },
-              { value: 40, label: "40%" },
+              { value: 0, label: "0" },
+              { value: 0.2, label: "0.2" },
+              { value: 0.4, label: "0.4" },
             ]}
           />
         </div>
 
         <div>
-          <Text>Hue : {Math.round(oklchValues.h)}°</Text>
+          <Text>Hue : {Math.round(oklchValues.oklch()[2])}°</Text>
           <Slider
             min={0}
             max={360}
             label={(value: number) => `${Math.round(value)}°`}
-            value={oklchValues.h}
+            value={oklchValues.oklch()[2]}
             onChange={(value: number) => handleOklchChange("h", value)}
             marks={[
               { value: 0, label: "0°" },

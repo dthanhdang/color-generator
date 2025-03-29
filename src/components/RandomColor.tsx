@@ -1,63 +1,57 @@
-import { useState, useEffect, useCallback } from "react"
-import { Button } from "@mantine/core"
-import { generateRandomColor } from "../utils/colorExtraction"
-import { ColorDisplay } from "./ColorDisplay"
-//import { HarmonyType } from "../utils/colorHarmony"
+import { useEffect } from "react"
+import { Button, Stack, Box, Text } from "@mantine/core"
+//import { generateRandomColor } from "../utils/colorExtraction"
+//import { ColorDisplay } from "./ColorDisplay"
 import { ColorPaletteItem } from "../ColorPalette"
+//import { ColorPalette } from "../ColorPalette"
+
+import chroma, { type Color } from "chroma-js"
 
 type RandomColorProps = {
-  onColorSelect: (color: string) => void
-
+  onPaletteGenerated: (palette: ColorPaletteItem[]) => void
   getHarmonyPalette: (
-    baseColor: string,
-    harmonyType: "split-complementary",
+    baseColor: Color,
+    harmonyType: "analogous",
     count: number
   ) => ColorPaletteItem[]
 }
 
 export function RandomColor({
-  onColorSelect,
-  //getColorScale,
+  onPaletteGenerated,
   getHarmonyPalette,
 }: RandomColorProps) {
-  const [randomColors, setRandomColors] = useState<string[]>([
-    "#FF5733",
-    "#33FF57",
-    "#3357FF",
-    "#F3FF33",
-    "#FF33F3",
-  ])
+  //const [palette, setPalette] = useState<ColorPaletteItem[]>([])
 
-  const generateRandomPalette = useCallback(() => {
-    const newColor = generateRandomColor()
-    const newColors = getHarmonyPalette(newColor, "split-complementary", 5)
-    setRandomColors(newColors.map((item) => item.color))
-  }, [getHarmonyPalette])
+  const generateRandomPalette = () => {
+    const baseColor = chroma.random()
+    const paletteItems = getHarmonyPalette(baseColor, "analogous", 5)
+    //const newPalette = paletteItems.map((item) => chroma(item.color))
 
-  {
-    /*const generateRandomPalette = useCallback(() => {
-    const newColor = chroma.random().hex(); // Générer une couleur aléatoire
-    const newPalette = generateSplitComplementaryPalette(newColor, 5); // Générer la palette
-    setRandomColors(newPalette); // Mettre à jour les couleurs affichées
-    onPaletteGenerated(newPalette); // Renvoyer la palette à App
-    onColorSelect(newColor); // Notifier la sélection de couleur
-  }, [onColorSelect, onPaletteGenerated]);*/
+    //setPalette(paletteItems)
+    onPaletteGenerated(paletteItems)
   }
 
-  // Générer une palette aléatoire au chargement du composant
   useEffect(() => {
     generateRandomPalette()
-  }, [generateRandomPalette])
+  }, [])
 
   return (
-    <div className="mt-4">
-      <h2 className="text-xl font-semibold mb-3">Get Random Palette</h2>
+    <Stack>
+      <Box p="md" bg="gray.0">
+        <Stack>
+          <Text size="xl">Generate Random Palette</Text>
 
-      <Button onClick={generateRandomPalette} className="mb-6" fullWidth>
-        Generate New Palette
-      </Button>
+          <Button onClick={generateRandomPalette} variant="filled" fullWidth>
+            Get New Palette
+          </Button>
+        </Stack>
+      </Box>
 
-      <ColorDisplay colors={randomColors} onColorSelect={onColorSelect} />
-    </div>
+      {/*{palette.length > 0 && (
+        <Box>
+          <ColorPalette palette={palette} />
+        </Box>
+      )}*/}
+    </Stack>
   )
 }

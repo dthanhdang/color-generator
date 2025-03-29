@@ -1,7 +1,7 @@
 //import { Form } from "./Form"
 
 import { useState } from "react"
-import chroma from "chroma-js"
+import chroma, { type Color } from "chroma-js"
 import { Select } from "@mantine/core"
 
 import { nanoid } from "nanoid"
@@ -16,7 +16,7 @@ type ColorMode = "hex" | "hsl" | "oklch"
 //type PaletteMode = "scale" | "harmony" | "image" | "random"
 
 type GetColorScaleProps = {
-  baseColor: string
+  baseColor: Color
   count: number
 }
 
@@ -24,34 +24,39 @@ function getColorScale({
   baseColor,
   count,
 }: GetColorScaleProps): ColorPaletteItem[] {
-  return chroma
-    .scale(["white", baseColor])
-    .mode("lch")
-    .colors(count)
-    .map((color, index) => {
-      const weight = index === 0 ? 50 : index === 10 ? 950 : index * 100
-      const colorObject = chroma(color)
-      const colorNameResult = getColorName(colorObject)
+  const lightColor = chroma(baseColor).brighten(2.5).desaturate(0.7)
+  const darkColor = chroma(baseColor).darken(1)
+  return (
+    chroma
+      //.scale(["white", baseColor])
+      .scale([lightColor, baseColor, darkColor])
+      .mode("lch")
+      .colors(count, undefined)
+      .map((color, index) => {
+        const weight = index === 0 ? 50 : index === 10 ? 950 : index * 100
+        //const colorObject = chroma(color)
+        const colorNameResult = getColorName(color)
 
-      console.log("getColorName result:", colorNameResult)
-      return {
-        id: nanoid(),
-        color,
-        weight,
-        name: colorNameResult ? colorNameResult.name : "",
-      }
-    }) as ColorPaletteItem[]
+        console.log("getColorName result:", colorNameResult)
+        return {
+          id: nanoid(),
+          color,
+          weight,
+          name: colorNameResult ? colorNameResult.name : "",
+        }
+      }) as ColorPaletteItem[]
+  )
 }
 
 export function ScalePaletteGenerator() {
-  const [color, setColor] = useState<string>("#3b82f6")
+  const [color, setColor] = useState(chroma("#3b82f6"))
   const [colorMode, setColorMode] = useState<ColorMode>("hex")
-  //const [paletteMode, setPaletteMode] = useState<PaletteMode>("scale")
+
   const [palette, setPalette] = useState<ColorPaletteItem[]>(
     getColorScale({ baseColor: color, count: 11 })
   )
 
-  const handleColorSubmit = (newColor: string) => {
+  const handleColorSubmit = (newColor: Color) => {
     //const newPalette = getColorScale(newColor, 10)
     if (chroma.valid(newColor)) {
       setColor(newColor)

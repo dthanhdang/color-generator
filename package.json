@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "tsc:check": "tsc -noEmit"
+    "tsc:check": "tsc -noEmit --project tsconfig.app.json"
   },
   "dependencies": {
     "@mantine/core": "^7.17.0",

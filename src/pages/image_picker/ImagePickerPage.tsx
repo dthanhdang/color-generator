@@ -2,32 +2,29 @@
 
 import { ColorPalette, type ColorPaletteItem } from "../../ColorPalette"
 import { useState } from "react"
-import chroma from "chroma-js"
+import chroma, { type Color } from "chroma-js"
 
 import { Select } from "@mantine/core"
-//import { FormHsl } from "./components/FormHsl"
-//import { FormOklch } from "./components/FormOklch"
-//import { Form } from "./Form"
+
 import { nanoid } from "nanoid"
-//import { getColorName } from "./utils/getColorName"
+
 import { ImageColorPicker } from "#components/ImageColorPicker.tsx"
 import { getColorName } from "#utils/getColorName.ts"
 import { Form } from "../../Form"
 import { FormOklch } from "../../components/FormOklch"
 import { FormHsl } from "#components/FormHsl.tsx"
-//import { ColorDisplay } from "./components/ColorDisplay"
 
 type ColorMode = "hex" | "hsl" | "oklch"
 
 export function ImagePicker() {
-  const [color, setColor] = useState<string>("#b4f2ce")
+  const [color, setColor] = useState(chroma("#b4f2ce"))
   const [colorMode, setColorMode] = useState<ColorMode>("hex")
 
   const [extractedImageColors, setExtractedImageColors] = useState<string[]>([])
 
   const [palette, setPalette] = useState<ColorPaletteItem[]>([])
 
-  const handleColorSubmit = (newColor: string) => {
+  const handleColorSubmit = (newColor: Color) => {
     //const newPalette = getColorScale(newColor, 10)
     if (chroma.valid(newColor)) {
       setColor(newColor)
@@ -47,7 +44,7 @@ export function ImagePicker() {
     setPalette(
       colors.map((color, index) => ({
         id: nanoid(),
-        color,
+        color: chroma(color),
         weight: index * 100 + 100,
         name: getColorName(chroma(color))?.name || "",
       }))
@@ -63,7 +60,7 @@ export function ImagePicker() {
       </h1>
       <div className="mt-4">
         <ImageColorPicker
-          onColorSelect={setColor}
+          onColorSelect={(color) => setColor(chroma(color))}
           onColorsExtracted={handleImageColorsExtracted}
         />
       </div>

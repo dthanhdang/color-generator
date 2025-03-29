@@ -1,4 +1,4 @@
-import chroma from "chroma-js"
+import chroma, { type Color } from "chroma-js"
 
 export type HarmonyType =
   | "monochromatic"
@@ -8,7 +8,7 @@ export type HarmonyType =
   | "analogous"
   | "tetradic"
 
-export function getMonochromatic(baseColor: string, count: number): string[] {
+export function getMonochromatic(baseColor: Color, count: number): Color[] {
   return chroma
     .scale([
       chroma(baseColor).brighten(1),
@@ -17,10 +17,10 @@ export function getMonochromatic(baseColor: string, count: number): string[] {
       chroma(baseColor).darken(1),
     ])
     .mode("lch")
-    .colors(count)
+    .colors(count, undefined)
 }
 
-export function getComplementary(baseColor: string, count: number): string[] {
+export function getComplementary(baseColor: Color, count: number): Color[] {
   const baseChroma = chroma(baseColor)
   const complement = baseChroma.set("hsl.h", "+180")
 
@@ -28,28 +28,28 @@ export function getComplementary(baseColor: string, count: number): string[] {
   const firstHalf = chroma
     .scale([baseColor, baseChroma.brighten(1)])
     .mode("lch")
-    .colors(count / 2)
+    .colors(count / 2, undefined)
   const secondHalf = chroma
     .scale([complement, complement.brighten(1)])
     .mode("lch")
-    .colors(count / 2)
+    .colors(count / 2, undefined)
 
   return [...firstHalf, ...secondHalf]
 }
 
-export function getAnalogous(baseColor: string, count: number): string[] {
+export function getAnalogous(baseColor: Color, count: number): Color[] {
   const [h, s, l] = chroma(baseColor).hsl()
-  const colors: string[] = []
+  const colors: Color[] = []
   const angle = 30
   const startAngle = (h - (angle * (count - 1)) / 2 + 360) % 360
   for (let i = 0; i < count; i++) {
     const newH = (startAngle + angle * i) % 360
-    colors.push(chroma.hsl(newH, s, l).hex())
+    colors.push(chroma.hsl(newH, s, l))
   }
   return colors
 }
 
-export function getTriadic(baseColor: string, count: number = 3): string[] {
+export function getTriadic(baseColor: Color, count: number = 3): Color[] {
   const color = chroma(baseColor)
   const [h, s, l] = color.hsl()
 
@@ -63,14 +63,23 @@ export function getTriadic(baseColor: string, count: number = 3): string[] {
 
   const perGroup = Math.ceil(count / 3)
 
-  const group1 = chroma.scale([color1, "white"]).mode("lch").colors(perGroup)
-  const group2 = chroma.scale([color2, "white"]).mode("lch").colors(perGroup)
-  const group3 = chroma.scale([color3, "white"]).mode("lch").colors(perGroup)
+  const group1 = chroma
+    .scale([color1, "white"])
+    .mode("lch")
+    .colors(perGroup, undefined)
+  const group2 = chroma
+    .scale([color2, "white"])
+    .mode("lch")
+    .colors(perGroup, undefined)
+  const group3 = chroma
+    .scale([color3, "white"])
+    .mode("lch")
+    .colors(perGroup, undefined)
 
   return [...group1, ...group2, ...group3].slice(0, count)
 }
 
-export function getTetradic(baseColor: string, count: number = 8): string[] {
+export function getTetradic(baseColor: Color, count: number = 8): Color[] {
   const color = chroma(baseColor)
   const [h, s, l] = color.hsl()
 
@@ -90,27 +99,27 @@ export function getTetradic(baseColor: string, count: number = 8): string[] {
   const group1 = chroma
     .scale([color1.darken(1), color1, color1.brighten(1)])
     .mode("lch")
-    .colors(perGroup)
+    .colors(perGroup, undefined)
   const group2 = chroma
     .scale([color2.darken(1), color2, color2.brighten(1)])
     .mode("lch")
-    .colors(perGroup)
+    .colors(perGroup, undefined)
   const group3 = chroma
     .scale([color3.darken(1), color3, color3.brighten(1)])
     .mode("lch")
-    .colors(perGroup)
+    .colors(perGroup, undefined)
   const group4 = chroma
     .scale([color4.darken(1), color4, color4.brighten(1)])
     .mode("lch")
-    .colors(perGroup)
+    .colors(perGroup, undefined)
 
   return [...group1, ...group2, ...group3, ...group4].slice(0, count)
 }
 
 export function getSplitComplementary(
-  baseColor: string,
+  baseColor: Color,
   count: number
-): string[] {
+): Color[] {
   const color = chroma(baseColor)
   const hue = color.hsl()[0]
   const splitOffset = 30
@@ -120,16 +129,16 @@ export function getSplitComplementary(
     const adjustedHue = hues[i % hues.length]
     const lightness = 50 + i * 10
     const newColor = chroma.hsl(adjustedHue, color.hsl()[1], lightness / 100)
-    splitPalette.push(newColor.hex())
+    splitPalette.push(newColor)
   }
   return splitPalette
 }
 
 export function getHarmonyColor(
-  baseColor: string,
+  baseColor: Color,
   harmonyType: HarmonyType,
   count: number
-): string[] {
+): Color[] {
   switch (harmonyType) {
     case "monochromatic":
       return getMonochromatic(baseColor, count)

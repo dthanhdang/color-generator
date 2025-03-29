@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 
 import { ArrowRight, Palette, PaintBucket, Eye, Sparkles } from "lucide-react"
 

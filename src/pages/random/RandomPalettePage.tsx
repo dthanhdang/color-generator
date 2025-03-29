@@ -1,12 +1,7 @@
-//import { Form } from "./Form"
-
-//import { ColorPalette, ColorPaletteItem } from "./ColorPalette"
 import { useState } from "react"
-import chroma from "chroma-js"
+import chroma, { type Color } from "chroma-js"
 
-//import { Form } from "./Form"
 import { nanoid } from "nanoid"
-//import { getColorName } from "./utils/getColorName"
 
 import { RandomColor } from "#components/RandomColor.tsx"
 import { getHarmonyColor, HarmonyType } from "#utils/colorHarmony.ts"
@@ -16,13 +11,8 @@ import { ColorPalette, ColorPaletteItem } from "../../ColorPalette"
 export function RandomPalette() {
   const [palette, setPalette] = useState<ColorPaletteItem[]>([])
 
-  const handleColorSelect = (newColor: string) => {
-    console.log("Selected color", newColor)
-    setPalette(getHarmonyPalette(newColor, "split-complementary", 5))
-  }
-
   function getHarmonyPalette(
-    baseColor: string,
+    baseColor: Color,
     harmonyType: HarmonyType,
     count: number
   ): ColorPaletteItem[] {
@@ -52,7 +42,7 @@ export function RandomPalette() {
       </h1>
 
       <RandomColor
-        onColorSelect={handleColorSelect}
+        onPaletteGenerated={setPalette}
         getHarmonyPalette={getHarmonyPalette}
       />
 

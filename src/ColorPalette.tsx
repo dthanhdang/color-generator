@@ -1,23 +1,20 @@
 import React from "react"
 import { SingleColor } from "./SingleColor"
+import { type Color } from "chroma-js"
 //import { nanoid } from "nanoid"
 //import chroma  from "chroma-js";
 
 export type ColorPaletteItem = {
   id: string
-  color: string
+  color: Color
   weight: number
   name: string
 }
 
 type ColorPaletteProps = {
   palette: ColorPaletteItem[]
-  // il faut modifier en un objet chroma => chroma.Color[]*/}
-  //palette: chroma.Color[];
 }
 
-// Il faut ajouter l'argument colorMode pour afficher les valeurs en fonction de chaque mode selectionné
-//const chromaColor = chroma("red");
 export function ColorPalette({
   palette,
 }: ColorPaletteProps): React.JSX.Element {
