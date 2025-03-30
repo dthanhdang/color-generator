@@ -73,7 +73,7 @@ export function ScalePaletteGenerator() {
   }
 
   return (
-    <main>
+    <main className="p-4">
       <h1 className="text-center text-5xl font-bold my-8">
         Your{" "}
         <span style={{ color: "oklch(0.511 0.262 276.966)" }}>
