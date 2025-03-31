@@ -13,6 +13,7 @@ import { getColorName } from "#utils/getColorName.ts"
 import { Form } from "../../Form"
 import { FormOklch } from "../../components/FormOklch"
 import { FormHsl } from "#components/FormHsl.tsx"
+import { PageStyle } from "#components/PageStyle.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
 
@@ -52,12 +53,7 @@ export function ImagePicker() {
   }
 
   return (
-    <main className="container mx-auto p-4">
-      <h1 className="text-center text-5xl font-bold my-8">
-        Your{" "}
-        <span style={{ color: "oklch(0.511 0.262 276.966)" }}>Image Color</span>{" "}
-        Extractor
-      </h1>
+    <PageStyle titleHighlight="Color From Image">
       <div className="mt-4">
         <ImageColorPicker
           onColorSelect={(color) => setColor(chroma(color))}
@@ -95,6 +91,6 @@ export function ImagePicker() {
       </div>
 
       {/*<ColorPalette palette={palette} />*/}
-    </main>
+    </PageStyle>
   )
 }

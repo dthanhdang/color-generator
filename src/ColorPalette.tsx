@@ -15,24 +15,62 @@ type ColorPaletteProps = {
   palette: ColorPaletteItem[]
 }
 
+type BasicColorFormats = {
+  hexCode: string
+  rgbCode: string
+  hslCode: string
+}
+
+type ExtendedColorFormats = BasicColorFormats & {
+  cssVariables: string
+  cssClasses: string
+  tailwindConfig: string
+}
+
 export function ColorPalette({ palette }: ColorPaletteProps) {
   const [selectedColor, setSelectedColor] = useState<ColorPaletteItem | null>(
     null
   )
+  //const [showCssCode, setShowCssCode] = useState(false)
   const handleColorClick = (item: ColorPaletteItem) => {
     setSelectedColor(item === selectedColor ? null : item)
   }
-  const getColorFormats = (color: Color) => {
+  const getColorFormats = (
+    color: Color,
+    includeCss: boolean = false
+  ): BasicColorFormats | ExtendedColorFormats => {
     const hexCode = color.hex()
     const [r, g, b] = color.rgb()
     const rgbCode = `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`
     const [h, s, l] = color.hsl()
     const hslCode = `hsl(${Math.round(h) || 0}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`
-    return {
+    const basicFormats: BasicColorFormats = {
       hexCode,
       rgbCode,
       hslCode,
     }
+
+    //Il faut ajouter les options CSS dans le render
+    if (includeCss) {
+      const cssVariables = `--color: ${hexCode};\n--color-rgb: ${r}, ${g}, ${b};\n--color-hsl: ${Math.round(h) || 0}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%;`
+
+      const cssClasses = `.bg-color { background-color: ${hexCode}; }\n.text-color { color: ${hexCode}; }\n.border-color { border-color: ${hexCode}; }`
+
+      const tailwindConfig = `'color': {\n  DEFAULT: '${hexCode}',\n  rgb: '${rgbCode}',\n  hsl: '${hslCode}'\n}`
+
+      return {
+        ...basicFormats,
+        cssVariables,
+        cssClasses,
+        tailwindConfig,
+      }
+    }
+    return basicFormats
+  }
+  {
+    /*const getExtendedFormats = (color: Color): ExtendedColorFormats => {
+    return getColorFormats(color, true) as ExtendedColorFormats
+  }*/
   }
   return (
     <div>
@@ -80,9 +118,12 @@ export function ColorPalette({ palette }: ColorPaletteProps) {
             <div className="p-3 space-y-2">
               <div className="flex items-center justify-between">
                 <Text size="sm" className="font-mono">
-                  {selectedColor.color.hex()}
+                  {getColorFormats(selectedColor.color).hexCode}
                 </Text>
-                <CopyButton value={selectedColor.color.hex()} timeout={2000}>
+                <CopyButton
+                  value={getColorFormats(selectedColor.color).hexCode}
+                  timeout={2000}
+                >
                   {({ copied, copy }) => (
                     <Tooltip
                       label={copied ? "Copied !" : "Copy"}
