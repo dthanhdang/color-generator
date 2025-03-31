@@ -1,79 +1,57 @@
-import { useState, useEffect, useCallback } from "react"
-import { Button } from "@mantine/core"
-import {
-  generateRandomColor,
-  getRandomPaletteMode,
-} from "../utils/colorExtraction"
-import { ColorDisplay } from "./ColorDisplay"
-import { HarmonyType } from "../utils/colorHarmony"
+import { useEffect } from "react"
+import { Button, Stack, Box, Text } from "@mantine/core"
+//import { generateRandomColor } from "../utils/colorExtraction"
+//import { ColorDisplay } from "./ColorDisplay"
 import { ColorPaletteItem } from "../ColorPalette"
+//import { ColorPalette } from "../ColorPalette"
+
+import chroma, { type Color } from "chroma-js"
 
 type RandomColorProps = {
-  onColorSelect: (color: string) => void
-  getColorScale: (props: {
-    baseColor: string
-    count: number
-  }) => ColorPaletteItem[]
+  onPaletteGenerated: (palette: ColorPaletteItem[]) => void
   getHarmonyPalette: (
-    baseColor: string,
-    harmonyType: HarmonyType,
+    baseColor: Color,
+    harmonyType: "analogous",
     count: number
   ) => ColorPaletteItem[]
 }
 
 export function RandomColor({
-  onColorSelect,
-  getColorScale,
+  onPaletteGenerated,
   getHarmonyPalette,
 }: RandomColorProps) {
-  const [randomColors, setRandomColors] = useState<string[]>([
-    "#FF5733",
-    "#33FF57",
-    "#3357FF",
-    "#F3FF33",
-    "#FF33F3",
-  ])
+  //const [palette, setPalette] = useState<ColorPaletteItem[]>([])
 
-  const generateRandomPalette = useCallback(() => {
-    const newColor = generateRandomColor()
-    const randomMode = getRandomPaletteMode()
+  const generateRandomPalette = () => {
+    const baseColor = chroma.random()
+    const paletteItems = getHarmonyPalette(baseColor, "analogous", 5)
+    //const newPalette = paletteItems.map((item) => chroma(item.color))
 
-    if (randomMode === "scale") {
-      // Générer une palette de type scale
-      const newColors = getColorScale({ baseColor: newColor, count: 11 })
-      setRandomColors(newColors.map((item) => item.color))
-    } else {
-      // Choisir aléatoirement un type d'harmonie
-      const harmonyTypes: HarmonyType[] = [
-        "monochromatic",
-        "complementary",
-        "analogous",
-        "triadic",
-        "tetradic",
-      ]
-      const randomHarmonyType =
-        harmonyTypes[Math.floor(Math.random() * harmonyTypes.length)]
+    //setPalette(paletteItems)
+    onPaletteGenerated(paletteItems)
+  }
 
-      // Générer une palette de type harmony avec le type d'harmonie aléatoire
-      const newColors = getHarmonyPalette(newColor, randomHarmonyType, 6)
-      setRandomColors(newColors.map((item) => item.color))
-    }
-  }, [getColorScale, getHarmonyPalette])
-
-  // Générer une palette aléatoire au chargement du composant
   useEffect(() => {
     generateRandomPalette()
-  }, [generateRandomPalette])
+  }, [])
 
   return (
-    <div className="mt-4">
-      <h2 className="text-xl font-semibold mb-3">Get Random Palette</h2>
+    <Stack>
+      <Box p="md" bg="gray.0">
+        <Stack>
+          <Text size="xl">Generate Random Palette</Text>
 
-      <Button onClick={generateRandomPalette} className="mb-6" fullWidth>
-        Generate New Palette
-      </Button>
+          <Button onClick={generateRandomPalette} variant="filled" fullWidth>
+            Get New Palette
+          </Button>
+        </Stack>
+      </Box>
 
-      <ColorDisplay colors={randomColors} onColorSelect={onColorSelect} />
-    </div>
+      {/*{palette.length > 0 && (
+        <Box>
+          <ColorPalette palette={palette} />
+        </Box>
+      )}*/}
+    </Stack>
   )
 }

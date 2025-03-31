@@ -43,7 +43,7 @@ export function ImageUploader({ onImageUpload }: ImageUploadProps) {
           {preview ? (
             <Image src={preview} alt="Preview" maw={rem(200)} radius="md" />
           ) : (
-            <Upload size={rem(48)} color="#868e96" />
+            <Upload size={24} color="#868e96" />
           )}
           <Text>
             {isDragActive
