@@ -64,8 +64,8 @@
     "./pages/landing": "./src/pages/landing/index.ts"
   },
   "imports": {
-    "#pages/*": "./src/pages/*/index.ts",
-    "#utils/*": "./src/utils/*",
-    "#components/*": "./src/components/*"
+    "#pages/*": "./src/client/pages/*/index.ts",
+    "#utils/*": "./src/client/utils/*",
+    "#components/*": "./src/client/components/*"
   }
 }
