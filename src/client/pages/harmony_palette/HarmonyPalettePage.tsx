@@ -13,6 +13,7 @@ import { Form } from "../../Form"
 import { FormOklch } from "../../components/FormOklch"
 import { FormHsl } from "../../components/FormHsl"
 import { type Color } from "chroma-js"
+import { PageStyle } from "#components/PageStyle.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
 //type PaletteMode = "scale" | "harmony" | "image" | "random"
@@ -66,14 +67,8 @@ export function HarmonyPalette() {
   }
 
   return (
-    <main className="container mx-auto p-4">
-      <h1 className="text-center text-5xl font-bold my-8">
-        Your{" "}
-        <span style={{ color: "oklch(0.511 0.262 276.966)" }}>
-          Harmony Palette
-        </span>{" "}
-        Generator
-      </h1>
+    <PageStyle titleHighlight="Harmony Palette">
+      {" "}
       <div className="mb-4">
         <Select
           data={[
@@ -85,11 +80,9 @@ export function HarmonyPalette() {
           onChange={handleModeChange}
         />
       </div>
-
       <div className="mt-4">
         <HarmonySelector value={harmonyType} onChange={handleHarmonyChange} />
       </div>
-
       <div className="mt-4">
         {" "}
         {colorMode === "hex" && (
@@ -102,11 +95,10 @@ export function HarmonyPalette() {
           <FormOklch initialColor={color} onSubmit={handleColorSubmit} />
         )}
       </div>
-
       <div className="mt-8">
         <h2 className="text-xl font-bold mb-4">{harmonyType}</h2>
         <ColorPalette palette={palette} />
       </div>
-    </main>
+    </PageStyle>
   )
 }

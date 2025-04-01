@@ -11,6 +11,7 @@ import { Form } from "../../Form"
 import { FormHsl } from "../../components/FormHsl"
 import { FormOklch } from "../../components/FormOklch"
 import { getColorName } from "#utils/getColorName.ts"
+import { PageStyle } from "#components/PageStyle.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
 //type PaletteMode = "scale" | "harmony" | "image" | "random"
@@ -73,14 +74,7 @@ export function ScalePaletteGenerator() {
   }
 
   return (
-    <main className="p-4">
-      <h1 className="text-center text-5xl font-bold my-8">
-        Your{" "}
-        <span style={{ color: "oklch(0.511 0.262 276.966)" }}>
-          Scale Palette
-        </span>{" "}
-        Generator
-      </h1>
+    <PageStyle titleHighlight="Scale Palette">
       <div className="mb-4">
         <Select
           data={[
@@ -107,6 +101,6 @@ export function ScalePaletteGenerator() {
       <div className="mt-8">
         <ColorPalette palette={palette} />
       </div>
-    </main>
+    </PageStyle>
   )
 }
