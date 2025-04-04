@@ -7,6 +7,7 @@ import { Header } from "./Header"
 import { FeatureSection } from "./FeatureSection"
 import { CTAButton } from "./CTAButton"
 import { Footer } from "./Footer"
+import { SeoTags } from "#client/components/seo_tags"
 
 export const LandingPage = () => {
   useEffect(() => {
@@ -38,6 +39,7 @@ export const LandingPage = () => {
 
   return (
     <div className="min-h-screen overflow-hidden">
+      <SeoTags />
       <Header />
       <HeroSection />
 

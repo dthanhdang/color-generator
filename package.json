@@ -66,6 +66,7 @@
   "imports": {
     "#pages/*": "./src/client/pages/*/index.ts",
     "#utils/*": "./src/client/utils/*",
-    "#components/*": "./src/client/components/*"
+    "#components/*": "./src/client/components/*",
+    "#client/*": "./src/client/*/index.ts"
   }
 }
