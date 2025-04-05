@@ -23,6 +23,8 @@ export default defineWorkersProject(async () => {
           main: "./src/server/index.ts",
           miniflare: {
             bindings: {
+              CF_PAGES_URL: "http://localhost:5173",
+              JWT_SECRET: "secret",
               TEST_MIGRATIONS: migrations,
             },
           },
@@ -32,7 +34,6 @@ export default defineWorkersProject(async () => {
           },
         },
       },
-      server: { sourcemap: true },
       setupFiles: ["src/server/test/setup/index.ts"],
     },
   };
