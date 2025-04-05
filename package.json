@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "qa": "pnpm tsc:check && pnpm lint:check && pnpm prettier:check && pnpm unit_tests",
     "tsc:check": "tsc -noEmit --project tsconfig.app.json",
-    "tsr:generate": "tsr generate",
+    "tsr:generate_routes": "tsr generate",
     "unit_tests": "vitest --run"
   },
   "dependencies": {
