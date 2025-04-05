@@ -7,8 +7,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "lint:check": "eslint .",
+    "prettier:check": "prettier --check .",
     "preview": "vite preview",
-    "tsc:check": "tsc -noEmit --project tsconfig.app.json"
+    "qa": "pnpm tsc:check && pnpm lint:check && pnpm prettier:check && pnpm unit_tests",
+    "tsc:check": "tsc -noEmit --project tsconfig.app.json",
+    "tsr:generate_routes": "tsr generate",
+    "unit_tests": "vitest --run"
   },
   "dependencies": {
     "@mantine/core": "^7.17.0",
@@ -37,6 +42,7 @@
   "devDependencies": {
     "@eslint/js": "^9.19.0",
     "@meow-meow-dev/generator": "^1.3.0",
+    "@tanstack/router-cli": "^1.114.34",
     "@tanstack/router-plugin": "^1.114.27",
     "@types/chroma-js": "^3.1.1",
     "@types/react": "^19.0.8",
@@ -66,6 +72,7 @@
   "imports": {
     "#pages/*": "./src/client/pages/*/index.ts",
     "#utils/*": "./src/client/utils/*",
-    "#components/*": "./src/client/components/*"
+    "#components/*": "./src/client/components/*",
+    "#client/*": "./src/client/*/index.ts"
   }
 }
