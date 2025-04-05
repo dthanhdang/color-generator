@@ -2,16 +2,18 @@
 
 import { useState } from "react"
 import chroma, { type Color } from "chroma-js"
-import { Select } from "@mantine/core"
+import { Select, Button, Group } from "@mantine/core"
+import { Shuffle } from "lucide-react"
 
 import { nanoid } from "nanoid"
 
-import { ColorPalette, ColorPaletteItem } from "../../ColorPalette"
-import { Form } from "../../Form"
+//import { ColorPalette, ColorPaletteItem } from "../../ColorPalette"
+import { Form } from "../../components/Form"
 import { FormHsl } from "../../components/FormHsl"
 import { FormOklch } from "../../components/FormOklch"
 import { getColorName } from "#utils/getColorName.ts"
 import { PageStyle } from "#components/PageStyle.tsx"
+import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
 //type PaletteMode = "scale" | "harmony" | "image" | "random"
@@ -26,7 +28,7 @@ function getColorScale({
   count,
 }: GetColorScaleProps): ColorPaletteItem[] {
   const lightColor = chroma(baseColor).brighten(2)
-  const darkColor = chroma(baseColor).darken(1.5)
+  const darkColor = chroma(baseColor).darken(1)
   return (
     chroma
       //.scale(["white", baseColor])
@@ -47,6 +49,10 @@ function getColorScale({
         }
       }) as ColorPaletteItem[]
   )
+}
+
+function generateRandomColor(): Color {
+  return chroma.random()
 }
 
 export function ScalePaletteGenerator() {
@@ -73,9 +79,15 @@ export function ScalePaletteGenerator() {
       setColorMode(value)
   }
 
+  const handleGenerateRandomScalePalette = () => {
+    const RandomColor = generateRandomColor()
+    setColor(RandomColor)
+    setPalette(getColorScale({ baseColor: RandomColor, count: 11 }))
+  }
+
   return (
     <PageStyle titleHighlight="Scale Palette">
-      <div className="mb-4">
+      <Group justify="space-between" mb="md">
         <Select
           data={[
             { value: "hex", label: "HEX" },
@@ -85,7 +97,21 @@ export function ScalePaletteGenerator() {
           value={colorMode}
           onChange={handleModeChange}
         />
-      </div>
+        <Button
+          onClick={handleGenerateRandomScalePalette}
+          //className="bg-[oklch(0.511_0.262_276.966)] text-white"
+          style={{
+            backgroundColor: "oklch(0.511 0.262 276.966)",
+            color: "white",
+          }}
+          //variant="oklch(0.511 0.262 276.966)"
+          //color="blue"
+          leftSection={<Shuffle size={16} />}
+        >
+          Generate Random Scale Palette
+        </Button>
+      </Group>
+
       <div className="mt-4">
         {" "}
         {colorMode === "hex" && (

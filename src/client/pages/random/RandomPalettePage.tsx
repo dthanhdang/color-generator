@@ -6,8 +6,9 @@ import { nanoid } from "nanoid"
 import { RandomColor } from "#components/RandomColor.tsx"
 import { getHarmonyColor, HarmonyType } from "#utils/colorHarmony.ts"
 import { getColorName } from "#utils/getColorName.ts"
-import { ColorPalette, ColorPaletteItem } from "../../ColorPalette"
+//import { ColorPalette, ColorPaletteItem } from "../../ColorPalette"
 import { PageStyle } from "#components/PageStyle.tsx"
+import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
 
 export function RandomPalette() {
   const [palette, setPalette] = useState<ColorPaletteItem[]>([])

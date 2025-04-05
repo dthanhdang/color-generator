@@ -1,8 +1,9 @@
 import { useState } from "react"
-import { SingleColor } from "./SingleColor"
+
 import { type Color } from "chroma-js"
 import { Copy, Check } from "lucide-react"
 import { Card, Text, CopyButton, ActionIcon, Tooltip } from "@mantine/core"
+import { SingleColor } from "../SingleColor"
 
 export type ColorPaletteItem = {
   id: string
@@ -19,6 +20,7 @@ type BasicColorFormats = {
   hexCode: string
   rgbCode: string
   hslCode: string
+  oklchCode: string
 }
 
 type ExtendedColorFormats = BasicColorFormats & {
@@ -44,10 +46,13 @@ export function ColorPalette({ palette }: ColorPaletteProps) {
     const rgbCode = `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`
     const [h, s, l] = color.hsl()
     const hslCode = `hsl(${Math.round(h) || 0}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`
+    const [lOklch, cOklch, hOklch] = color.oklch()
+    const oklchCode = `oklch(${Math.round(lOklch * 100)}% ${cOklch.toFixed(2)} ${Math.round(hOklch) || 0})`
     const basicFormats: BasicColorFormats = {
       hexCode,
       rgbCode,
       hslCode,
+      oklchCode,
     }
 
     //Il faut ajouter les options CSS dans le render
@@ -77,7 +82,7 @@ export function ColorPalette({ palette }: ColorPaletteProps) {
       <p className="text-sm text-gray-600 text-center mb-3 px-4">
         Click on any color below to view its detailed information
       </p>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-4 p-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 p-4">
         {palette.map((item, index) => (
           <SingleColor
             key={item.id}
@@ -193,30 +198,36 @@ export function ColorPalette({ palette }: ColorPaletteProps) {
                   )}
                 </CopyButton>
               </div>
+
+              <div className="flex items-center justify-between">
+                <Text size="sm" className="font-mono">
+                  {getColorFormats(selectedColor.color).oklchCode}
+                </Text>
+                <CopyButton
+                  value={getColorFormats(selectedColor.color).oklchCode}
+                  timeout={2000}
+                >
+                  {({ copied, copy }) => (
+                    <Tooltip
+                      label={copied ? "Copied !" : "Copy"}
+                      withArrow
+                      position="top"
+                    >
+                      <ActionIcon
+                        size="sm"
+                        color={copied ? "teal" : "gray"}
+                        onClick={copy}
+                      >
+                        {copied ? <Check size={14} /> : <Copy size={14} />}
+                      </ActionIcon>
+                    </Tooltip>
+                  )}
+                </CopyButton>
+              </div>
             </div>
           </Card>
         </div>
       )}
     </div>
   )
-}
-
-{
-  /*export function ColorPalette({
-  palette,
-}: ColorPaletteProps): React.JSX.Element {
-  return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-4 p-4">
-      {palette.map(({ color, id, name, weight }, index) => (
-        <SingleColor
-          key={id}
-          color={color}
-          index={index}
-          name={name}
-          weight={weight}
-        />
-      ))}
-    </div>
-  )
-}*/
 }

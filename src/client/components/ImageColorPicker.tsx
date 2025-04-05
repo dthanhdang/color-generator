@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useCallback } from "react"
 import { Paper, Text, Button, Group, Stack, Box } from "@mantine/core"
 import { ImageUploader } from "./ImageUploader"
 import { ImageCanvas } from "./ImageCanvas"
@@ -23,21 +23,6 @@ export function ImageColorPicker({
   const [selectedColorIndex, setSelectedColorIndex] = useState<number | null>(
     null
   )
-  //const [isExtracting, setIsExtracting] = useState(false)
-
-  // Limiter le nombre de couleurs affichées selon le slider
-  //const displayColors = extractedColors.slice(0, paletteSize)
-
-  const handleImageUpload = (file: File | string) => {
-    if (typeof file === "string") {
-      console.warn("URLs are not supported yet")
-      return
-    } else {
-      setImageFile(file)
-      setSelectedColor(null)
-      setSelectedColorIndex(null)
-    }
-  }
 
   const extractColorsFromImage = useCallback(
     async (file: File) => {
@@ -69,12 +54,17 @@ export function ImageColorPicker({
     },
     [onColorsExtracted]
   )
-
-  useEffect(() => {
-    if (imageFile) {
-      extractColorsFromImage(imageFile)
+  const handleImageUpload = (file: File | string) => {
+    if (typeof file === "string") {
+      console.warn("URLs are not supported yet")
+      return
+    } else {
+      setImageFile(file)
+      setSelectedColor(null)
+      setSelectedColorIndex(null)
+      extractColorsFromImage(file)
     }
-  }, [imageFile, extractColorsFromImage])
+  }
 
   const handleColorChange = (newColor: string, index: number) => {
     if (index !== null && index >= 0 && index < extractedColors.length) {

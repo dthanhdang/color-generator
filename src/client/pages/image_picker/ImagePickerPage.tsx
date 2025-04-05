@@ -1,6 +1,6 @@
 //import { Form } from "./Form"
 
-import { ColorPalette, type ColorPaletteItem } from "../../ColorPalette"
+//import { ColorPalette, type ColorPaletteItem } from "../../ColorPalette"
 import { useState } from "react"
 import chroma, { type Color } from "chroma-js"
 
@@ -10,10 +10,11 @@ import { nanoid } from "nanoid"
 
 import { ImageColorPicker } from "#components/ImageColorPicker.tsx"
 import { getColorName } from "#utils/getColorName.ts"
-import { Form } from "../../Form"
+import { Form } from "../../components/Form"
 import { FormOklch } from "../../components/FormOklch"
 import { FormHsl } from "#components/FormHsl.tsx"
 import { PageStyle } from "#components/PageStyle.tsx"
+import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
 

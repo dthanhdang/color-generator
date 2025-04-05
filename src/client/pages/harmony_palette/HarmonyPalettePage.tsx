@@ -1,19 +1,21 @@
 import { useState } from "react"
 import chroma from "chroma-js"
 
-import { Select } from "@mantine/core"
+import { Select, Button, Group } from "@mantine/core"
+
+import { Shuffle } from "lucide-react"
 
 import { nanoid } from "nanoid"
 
-import { ColorPalette, type ColorPaletteItem } from "../../ColorPalette"
 import { getHarmonyColor, HarmonyType } from "#utils/colorHarmony.ts"
 import { HarmonySelector } from "../../components/HarmonySelector"
 import { getColorName } from "#utils/getColorName.ts"
-import { Form } from "../../Form"
+import { Form } from "../../components/Form"
 import { FormOklch } from "../../components/FormOklch"
 import { FormHsl } from "../../components/FormHsl"
 import { type Color } from "chroma-js"
 import { PageStyle } from "#components/PageStyle.tsx"
+import { ColorPaletteItem, ColorPalette } from "#components/ColorPalette.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
 //type PaletteMode = "scale" | "harmony" | "image" | "random"
@@ -36,6 +38,22 @@ function getHarmonyPalette(
   })
 }
 
+function getCountForHarmonyType(harmonyType: HarmonyType): number {
+  const harmonyCounts: Record<HarmonyType, number> = {
+    monochromatic: 5,
+    analogous: 5,
+    complementary: 5,
+    triadic: 3,
+    tetradic: 4,
+    "split-complementary": 5,
+  }
+  return harmonyCounts[harmonyType] || 5
+}
+
+function generateRandomColor(): Color {
+  return chroma.random()
+}
+
 export function HarmonyPalette() {
   const [color, setColor] = useState<Color>(chroma("#b4f2ce"))
   const [colorMode, setColorMode] = useState<ColorMode>("hex")
@@ -43,7 +61,7 @@ export function HarmonyPalette() {
   const [harmonyType, setHarmonyType] = useState<HarmonyType>("monochromatic")
 
   const [palette, setPalette] = useState<ColorPaletteItem[]>(() =>
-    getHarmonyPalette(color, harmonyType, 5)
+    getHarmonyPalette(color, harmonyType, getCountForHarmonyType(harmonyType))
   )
 
   const handleColorSubmit = (newColor: Color) => {
@@ -66,10 +84,22 @@ export function HarmonyPalette() {
     setPalette(getHarmonyPalette(color, value, 5))
   }
 
+  const handleRandomHarmonyPalette = () => {
+    const randomColor = generateRandomColor()
+    setColor(randomColor)
+    setPalette(
+      getHarmonyPalette(
+        randomColor,
+        harmonyType,
+        getCountForHarmonyType(harmonyType)
+      )
+    )
+  }
+
   return (
     <PageStyle titleHighlight="Harmony Palette">
       {" "}
-      <div className="mb-4">
+      <Group justify="space-between" mb="md">
         <Select
           data={[
             { value: "hex", label: "HEX" },
@@ -79,10 +109,19 @@ export function HarmonyPalette() {
           value={colorMode}
           onChange={handleModeChange}
         />
-      </div>
-      <div className="mt-4">
-        <HarmonySelector value={harmonyType} onChange={handleHarmonyChange} />
-      </div>
+        <Button
+          onClick={handleRandomHarmonyPalette}
+          style={{
+            backgroundColor: "oklch(0.511 0.262 276.966)",
+            color: "white",
+          }}
+          //variant="light"
+          //color="blue"
+          leftSection={<Shuffle size={16} />}
+        >
+          Generate Random Scale Palette
+        </Button>
+      </Group>
       <div className="mt-4">
         {" "}
         {colorMode === "hex" && (
@@ -94,6 +133,9 @@ export function HarmonyPalette() {
         {colorMode === "oklch" && (
           <FormOklch initialColor={color} onSubmit={handleColorSubmit} />
         )}
+      </div>
+      <div className="mt-4">
+        <HarmonySelector value={harmonyType} onChange={handleHarmonyChange} />
       </div>
       <div className="mt-8">
         <h2 className="text-xl font-bold mb-4">{harmonyType}</h2>

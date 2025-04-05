@@ -2,10 +2,10 @@ import { useEffect } from "react"
 import { Button, Stack, Box, Text } from "@mantine/core"
 //import { generateRandomColor } from "../utils/colorExtraction"
 //import { ColorDisplay } from "./ColorDisplay"
-import { ColorPaletteItem } from "../ColorPalette"
-//import { ColorPalette } from "../ColorPalette"
+//import { ColorPaletteItem } from "../ColorPalette"
 
 import chroma, { type Color } from "chroma-js"
+import { ColorPaletteItem } from "./ColorPalette"
 
 type RandomColorProps = {
   onPaletteGenerated: (palette: ColorPaletteItem[]) => void
@@ -33,7 +33,7 @@ export function RandomColor({
 
   useEffect(() => {
     generateRandomPalette()
-  }, [])
+  })
 
   return (
     <Stack>
