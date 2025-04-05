@@ -1,39 +1,30 @@
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { Button, Stack, Box, Text } from "@mantine/core"
 //import { generateRandomColor } from "../utils/colorExtraction"
 //import { ColorDisplay } from "./ColorDisplay"
 //import { ColorPaletteItem } from "../ColorPalette"
 
 import chroma, { type Color } from "chroma-js"
-import { ColorPaletteItem } from "./ColorPalette"
 
 type RandomColorProps = {
-  onPaletteGenerated: (palette: ColorPaletteItem[]) => void
-  getHarmonyPalette: (
+  onGeneratePalette: (
     baseColor: Color,
     harmonyType: "analogous",
     count: number
-  ) => ColorPaletteItem[]
+  ) => void
 }
 
-export function RandomColor({
-  onPaletteGenerated,
-  getHarmonyPalette,
-}: RandomColorProps) {
+export function RandomColor({ onGeneratePalette }: RandomColorProps) {
   //const [palette, setPalette] = useState<ColorPaletteItem[]>([])
 
-  const generateRandomPalette = () => {
+  const handleClick = useCallback(() => {
     const baseColor = chroma.random()
-    const paletteItems = getHarmonyPalette(baseColor, "analogous", 5)
-    //const newPalette = paletteItems.map((item) => chroma(item.color))
-
-    //setPalette(paletteItems)
-    onPaletteGenerated(paletteItems)
-  }
+    onGeneratePalette(baseColor, "analogous", 5)
+  }, [onGeneratePalette])
 
   useEffect(() => {
-    generateRandomPalette()
-  })
+    handleClick()
+  }, [handleClick])
 
   return (
     <Stack>
@@ -41,17 +32,11 @@ export function RandomColor({
         <Stack>
           <Text size="xl">Generate Random Palette</Text>
 
-          <Button onClick={generateRandomPalette} variant="filled" fullWidth>
+          <Button onClick={handleClick} variant="filled" fullWidth>
             Get New Palette
           </Button>
         </Stack>
       </Box>
-
-      {/*{palette.length > 0 && (
-        <Box>
-          <ColorPalette palette={palette} />
-        </Box>
-      )}*/}
     </Stack>
   )
 }
