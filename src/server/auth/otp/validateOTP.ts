@@ -30,10 +30,10 @@ export function validateOTP({
       return deleteOTPResult.andThen(() =>
         otp.code === code && validity >= new Date()
           ? okAsync(undefined)
-          : errAsync("invalid_or_expired_code" as const),
+          : errAsync("invalid_or_expired_code" as const)
       );
     })
     .orElse((error) =>
-      error === "not_found" ? err("invalid_or_expired_code") : err(error),
+      error === "not_found" ? err("invalid_or_expired_code") : err(error)
     );
 }

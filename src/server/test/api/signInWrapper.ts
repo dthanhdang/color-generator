@@ -7,7 +7,7 @@ import { getOTP } from "./getOTP.js";
 export async function signInWrapper(
   expect: ExpectStatic,
   { auth: { requestOTP, signIn } }: RPCFactoryOutput,
-  email: string,
+  email: string
 ): Promise<string> {
   await expect(requestOTP({ json: { email } })).toBeHTTPOk();
 
@@ -15,7 +15,7 @@ export async function signInWrapper(
   await expect(
     signIn({
       json: { code, email },
-    }),
+    })
   ).toBeHTTPOk(expect.objectContaining({ idToken: expect.any(String) }));
 
   return code;

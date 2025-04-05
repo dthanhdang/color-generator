@@ -13,6 +13,6 @@ export const requestOtpRoute = buildHono().post(
   (c) =>
     defaultResponse(
       c,
-      requestOTPHandler({ ...dbProps(c), ...c.req.valid("json") }),
-    ),
+      requestOTPHandler({ ...dbProps(c), ...c.req.valid("json") })
+    )
 );

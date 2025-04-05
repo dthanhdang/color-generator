@@ -1,4 +1,4 @@
-import { FeatureCard } from "./FeatureCard"
+import { FeatureCard } from "./FeatureCard";
 import {
   PaintBucket,
   PaletteIcon,
@@ -6,7 +6,7 @@ import {
   Shuffle,
   Sparkles,
   Plus,
-} from "lucide-react"
+} from "lucide-react";
 
 export const FeatureSection = () => {
   return (
@@ -80,5 +80,5 @@ export const FeatureSection = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

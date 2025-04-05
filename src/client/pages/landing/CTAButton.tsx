@@ -1,13 +1,13 @@
-import React from "react"
-import { cn } from "../../lib/utils"
+import React from "react";
+import { cn } from "../../lib/utils";
 
 type CTAButtonProps = {
-  children: React.ReactNode
-  href: string
-  variant?: "primary" | "secondary"
-  className?: string
-  onClick?: () => void
-}
+  children: React.ReactNode;
+  href: string;
+  variant?: "primary" | "secondary";
+  className?: string;
+  onClick?: () => void;
+};
 
 export const CTAButton = ({
   children,
@@ -31,5 +31,5 @@ export const CTAButton = ({
     >
       <span className="relative z-10">{children}</span>
     </a>
-  )
-}
+  );
+};

@@ -1,70 +1,70 @@
-import { useState, useEffect, useCallback } from "react"
-import { Paper, Text, Button, Slider, Box } from "@mantine/core"
-import { getDominantColors } from "../utils/colorExtraction"
+import { useState, useEffect, useCallback } from "react";
+import { Paper, Text, Button, Slider, Box } from "@mantine/core";
+import { getDominantColors } from "../utils/colorExtraction";
 
 type ColorExtractorProps = {
-  imageFile: File
-  onColorSelect: (color: string) => void
-  onColorsExtracted?: (colors: string[]) => void
-}
+  imageFile: File;
+  onColorSelect: (color: string) => void;
+  onColorsExtracted?: (colors: string[]) => void;
+};
 
 export function ColorExtractor({
   imageFile,
   onColorSelect,
   onColorsExtracted,
 }: ColorExtractorProps) {
-  const [numColors, setNumColors] = useState(5)
-  const [extractedColors, setExtractedColors] = useState<string[]>([])
-  const [imageUrl, setImageUrl] = useState<string>("")
+  const [numColors, setNumColors] = useState(5);
+  const [extractedColors, setExtractedColors] = useState<string[]>([]);
+  const [imageUrl, setImageUrl] = useState<string>("");
 
   useEffect(() => {
     if (imageFile) {
-      const url = URL.createObjectURL(imageFile)
-      setImageUrl(url)
-      return () => URL.revokeObjectURL(url)
+      const url = URL.createObjectURL(imageFile);
+      setImageUrl(url);
+      return () => URL.revokeObjectURL(url);
     }
-  }, [imageFile])
+  }, [imageFile]);
 
   const extractColors = useCallback(async () => {
-    if (!imageUrl) return
+    if (!imageUrl) return;
 
     try {
-      const img = new Image()
-      img.crossOrigin = "Anonymous"
+      const img = new Image();
+      img.crossOrigin = "Anonymous";
 
       img.onload = async () => {
         try {
-          const colors = await getDominantColors(img, numColors)
-          setExtractedColors(colors)
+          const colors = await getDominantColors(img, numColors);
+          setExtractedColors(colors);
 
           if (onColorsExtracted && colors.length > 0) {
-            console.log("Extracted colors:", colors)
-            onColorsExtracted(colors)
+            console.log("Extracted colors:", colors);
+            onColorsExtracted(colors);
           }
         } catch (error) {
-          console.error("Error extracting colors:", error)
+          console.error("Error extracting colors:", error);
         }
-      }
+      };
 
       img.onerror = (e) => {
-        console.error("Error loading image:", e)
-      }
+        console.error("Error loading image:", e);
+      };
 
-      img.src = imageUrl
+      img.src = imageUrl;
     } catch (error) {
-      console.error("Unexpected error:", error)
+      console.error("Unexpected error:", error);
     }
-  }, [imageUrl, numColors, onColorsExtracted])
+  }, [imageUrl, numColors, onColorsExtracted]);
 
   useEffect(() => {
     if (imageUrl) {
-      extractColors()
+      extractColors();
     }
-  }, [imageUrl, extractColors])
+  }, [imageUrl, extractColors]);
 
   const handleColorClick = (color: string) => {
-    onColorSelect(color)
-  }
+    onColorSelect(color);
+  };
 
   return (
     <Paper p="md" withBorder>
@@ -113,5 +113,5 @@ export function ColorExtractor({
         </Text>
       )}
     </Paper>
-  )
+  );
 }

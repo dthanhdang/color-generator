@@ -1,1 +1,1 @@
-export * from "./ImagePickerPage.jsx"
+export * from "./ImagePickerPage.jsx";

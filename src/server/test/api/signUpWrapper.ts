@@ -8,7 +8,7 @@ export async function signUpWrapper(
   expect: ExpectStatic,
   { auth: { requestOTP, signUp } }: RPCFactoryOutput,
   email: string,
-  role?: "administrator",
+  role?: "administrator"
 ): Promise<void> {
   await expect(requestOTP({ json: { email } })).toBeHTTPOk();
 
@@ -22,6 +22,6 @@ export async function signUpWrapper(
         lastName: "Doe",
         role,
       },
-    }),
+    })
   ).toBeHTTPOk(expect.objectContaining({ idToken: expect.any(String) }));
 }

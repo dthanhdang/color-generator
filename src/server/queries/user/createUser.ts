@@ -32,10 +32,10 @@ export const createUser: Query<
       .returning(["id"])
       .executeTakeFirst()
       .then((row) => (row ? { ...user, id: row.id } : errorStatus)),
-    internalServerErrorFactory,
+    internalServerErrorFactory
   ).andThen((userOrError) =>
     typeof userOrError === "string"
       ? errAsync(userOrError)
-      : okAsync(userOrError),
+      : okAsync(userOrError)
   );
 };

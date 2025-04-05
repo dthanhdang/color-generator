@@ -9,8 +9,8 @@ export const adminRegisteredUserRoute = buildHono().get(
   checkPermissions("registered_users:read"),
   (c) =>
     customResponse(c, listRegisteredUserHandler(dbProps(c)), (users) =>
-      c.json({ users }, 200),
-    ),
+      c.json({ users }, 200)
+    )
 );
 
 export type AdminRegisteredUserType = typeof adminRegisteredUserRoute;

@@ -10,7 +10,7 @@ export function getEnvironmentVariable<
   },
 >(
   c: Context<Env>,
-  key: EnvironmentVariableKey,
+  key: EnvironmentVariableKey
 ): Result<string, "internal_server_error"> {
   const value = c.env[key];
   return value === undefined ? err("internal_server_error") : ok(value);

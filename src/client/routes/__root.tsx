@@ -1,19 +1,26 @@
-import { Fragment } from "react"
+import { Fragment } from "react";
 import {
   Link,
   Outlet,
   createRootRouteWithContext,
-} from "@tanstack/react-router"
-import { QueryClient } from "@tanstack/react-query"
-import { Authenticated } from "#components/authenticated/Authenticated.tsx"
+} from "@tanstack/react-router";
+import { QueryClient } from "@tanstack/react-query";
+import { Authenticated } from "#components/authenticated/Authenticated.tsx";
 
 type MyRouterContext = {
-  queryClient: QueryClient
-}
+  queryClient: QueryClient;
+};
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: RootComponent,
-})
+  loader: () => ({
+    crumb: "Home",
+    seoDescription:
+      "ChromaGen allows you to quickly and easily create many kinds of different color palettes",
+    pageTitle: "Home",
+    seoTitle: "Home",
+  }),
+});
 
 function RootComponent() {
   return (
@@ -32,5 +39,5 @@ function RootComponent() {
       </div>
       <Outlet />
     </Fragment>
-  )
+  );
 }

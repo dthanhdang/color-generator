@@ -1,2 +1,2 @@
-export * from "./useAddFavoritePaletteMutation.js"
-export * from "./useDeleteFavoritePaletteMutation.js"
+export * from "./useAddFavoritePaletteMutation.js";
+export * from "./useDeleteFavoritePaletteMutation.js";

@@ -11,5 +11,5 @@ export const getOTP = getQuery<DB, GetOTPProps, Selectable<Otp>>(
       .selectFrom("otp")
       .select(["code", "email", "validity"])
       .where("email", "=", email)
-      .executeTakeFirst(),
+      .executeTakeFirst()
 );

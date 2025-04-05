@@ -20,5 +20,5 @@ export const updateRegisteredUser = updateQuery<
     .where("id", "=", id)
     .returning(["email", "id", "firstName", "lastName", "role"])
     .executeTakeFirst()
-    .then((row) => (row ? { ...row, id } : undefined)),
+    .then((row) => (row ? { ...row, id } : undefined))
 );

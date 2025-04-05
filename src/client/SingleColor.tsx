@@ -1,16 +1,16 @@
-import React, { useState } from "react"
-import { type Color } from "chroma-js"
-import { Copy, Check } from "lucide-react"
-import { Tooltip } from "@mantine/core"
+import React, { useState } from "react";
+import { type Color } from "chroma-js";
+import { Copy, Check } from "lucide-react";
+import { Tooltip } from "@mantine/core";
 
 type SingleColorProps = {
-  color: Color
-  index: number
-  name: string
-  weight: number
-  onClick?: () => void
-  selected?: boolean
-}
+  color: Color;
+  index: number;
+  name: string;
+  weight: number;
+  onClick?: () => void;
+  selected?: boolean;
+};
 
 export const SingleColor = ({
   color,
@@ -21,17 +21,17 @@ export const SingleColor = ({
   selected = false,
 }: SingleColorProps): React.JSX.Element => {
   //const weight = index === 0 ? 50 : index === 10 ? 950 : index * 100
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState(false);
   const copyToClipboard = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    navigator.clipboard.writeText(color.hex())
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-  const textColor = color.luminance() > 0.5 ? "text-gray-800" : "text-gray-100"
+    e.stopPropagation();
+    navigator.clipboard.writeText(color.hex());
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  const textColor = color.luminance() > 0.5 ? "text-gray-800" : "text-gray-100";
   return (
     <div
-      className={`h-64 p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-300 ${selected ? "ring-2 ring-offset-2 ring-blue-500" : ""}`}
+      className={`h-80 p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-300 ${selected ? "ring-2 ring-offset-2 ring-blue-500" : ""}`}
       style={{ backgroundColor: color.hex() }}
       onClick={onClick}
     >
@@ -58,5 +58,5 @@ export const SingleColor = ({
         {name && <p className="text-sm">{name}</p>}
       </div>
     </div>
-  )
-}
+  );
+};

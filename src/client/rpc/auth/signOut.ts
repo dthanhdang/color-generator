@@ -1,13 +1,13 @@
-import { apiClient } from "./apiClient.js"
+import { apiClient } from "./apiClient.js";
 
-const route = apiClient["sign-out"].$post
+const route = apiClient["sign-out"].$post;
 
 export async function signOut(): Promise<void> {
   try {
-    await route()
+    await route();
   } catch (error) {
     throw new Error("An error occured while signing-out", {
       cause: error,
-    })
+    });
   }
 }

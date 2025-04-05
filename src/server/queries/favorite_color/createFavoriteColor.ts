@@ -1,11 +1,11 @@
-import type { FavoriteColor, DB } from "#server/types/database"
-import type { Insertable, Selectable } from "kysely"
+import type { FavoriteColor, DB } from "#server/types/database";
+import type { Insertable, Selectable } from "kysely";
 
-import { createQuery } from "@meow-meow-dev/server-utilities/queries"
+import { createQuery } from "@meow-meow-dev/server-utilities/queries";
 
 type CreateColorProps = {
-  color: Omit<Insertable<FavoriteColor>, "id">
-}
+  color: Omit<Insertable<FavoriteColor>, "id">;
+};
 
 export const createFavoriteColor = createQuery<
   DB,
@@ -18,4 +18,4 @@ export const createFavoriteColor = createQuery<
     .returning("id")
     .executeTakeFirst()
     .then((row) => (row ? { ...color, id: row.id } : undefined))
-)
+);

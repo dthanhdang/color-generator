@@ -1,11 +1,11 @@
-import type { RegisteredUser } from "#server/types"
-import { okAsync, ResultAsync } from "neverthrow"
-import { getUserById } from "#server/queries/user"
-import { listFavoriteColors } from "#server/queries/favorite_color"
-import { listFavoritePalettes } from "#server/queries/favorite_palette"
-import { fromDatabaseFullRegisteredUser } from "#server/conversion"
+import type { RegisteredUser } from "#server/types";
+import { okAsync, ResultAsync } from "neverthrow";
+import { getUserById } from "#server/queries/user";
+import { listFavoriteColors } from "#server/queries/favorite_color";
+import { listFavoritePalettes } from "#server/queries/favorite_palette";
+import { fromDatabaseFullRegisteredUser } from "#server/conversion";
 
-type GetRegisteredUserByIdProps = { db: D1Database; userId: number }
+type GetRegisteredUserByIdProps = { db: D1Database; userId: number };
 
 export function getFullRegisteredUserById({
   db,
@@ -20,7 +20,11 @@ export function getFullRegisteredUserById({
     listFavoritePalettes({ db, userId }),
   ])
     .andThen(([user, favoriteColors, favoritePalettes]) =>
-      fromDatabaseFullRegisteredUser({ favoriteColors, favoritePalettes, user })
+      fromDatabaseFullRegisteredUser({
+        favoriteColors,
+        favoritePalettes,
+        user,
+      })
     )
-    .andThen((user) => okAsync(user))
+    .andThen((user) => okAsync(user));
 }

@@ -1,13 +1,13 @@
-import type { RegisteredUser } from "#server/types"
-import type { User as DatabaseUser } from "#server/types/database"
-import type { Selectable } from "kysely"
+import type { RegisteredUser } from "#server/types";
+import type { User as DatabaseUser } from "#server/types/database";
+import type { Selectable } from "kysely";
 
 export function fromDatabaseRegisteredUser({
   firstName,
   lastName,
   ...user
 }: Selectable<DatabaseUser>): RegisteredUser {
-  const identity = { firstName, lastName }
+  const identity = { firstName, lastName };
 
   return {
     ...user,
@@ -15,5 +15,5 @@ export function fromDatabaseRegisteredUser({
     role: "registered_user",
     favoriteColors: [],
     favoritePalettes: [],
-  }
+  };
 }

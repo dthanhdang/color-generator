@@ -1,36 +1,36 @@
-import { Button, Image, Stack, Paper, Text, rem } from "@mantine/core"
-import { useCallback } from "react"
-import { useState } from "react"
-import { useDropzone } from "react-dropzone"
-import { Upload } from "lucide-react"
+import { Button, Image, Stack, Paper, Text, rem } from "@mantine/core";
+import { useCallback } from "react";
+import { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { Upload } from "lucide-react";
 
 type ImageUploadProps = {
-  onImageUpload: (file: File | string) => void
-}
+  onImageUpload: (file: File | string) => void;
+};
 
 export function ImageUploader({ onImageUpload }: ImageUploadProps) {
-  const [preview, setPreview] = useState<string | null>(null)
+  const [preview, setPreview] = useState<string | null>(null);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0]
+      const file = acceptedFiles[0];
       if (file) {
-        const reader = new FileReader()
+        const reader = new FileReader();
         reader.onloadend = () => {
-          setPreview(reader.result as string)
+          setPreview(reader.result as string);
           //onImageUpload(reader.result as string)
-          onImageUpload(file)
-        }
-        reader.readAsDataURL(file)
+          onImageUpload(file);
+        };
+        reader.readAsDataURL(file);
       }
     },
     [onImageUpload]
-  )
+  );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "image/*": [".jpeg", ".png", ".gif"] },
     maxFiles: 1,
-  })
+  });
   return (
     <Paper
       {...getRootProps()}
@@ -57,5 +57,5 @@ export function ImageUploader({ onImageUpload }: ImageUploadProps) {
       </div>
       <Button>Pick an image</Button>
     </Paper>
-  )
+  );
 }

@@ -11,7 +11,7 @@ type ListUsersByRoleProps = {
 
 function withOptionalLimit<DB, TB extends keyof DB, O>(
   db: SelectQueryBuilder<DB, TB, O>,
-  limit: number | undefined,
+  limit: number | undefined
 ): SelectQueryBuilder<DB, TB, O> {
   return limit === undefined ? db : db.limit(limit);
 }
@@ -26,6 +26,6 @@ export const listUsersByRole = listQuery<
       .selectFrom("user")
       .select(["email", "id", "firstName", "lastName", "role"])
       .where("role", "=", role),
-    limit,
-  ).execute(),
+    limit
+  ).execute()
 );

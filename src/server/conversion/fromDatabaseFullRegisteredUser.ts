@@ -1,27 +1,27 @@
-import type { RegisteredUser } from "#server/types"
+import type { RegisteredUser } from "#server/types";
 import type {
   FavoriteColor,
   FavoritePalette,
   User,
-} from "#server/types/database"
-import type { Selectable } from "kysely"
-import { err, ok, Result } from "neverthrow"
-import * as v from "valibot"
-import { colorSchema, favoritePaletteSchema } from "#server/schemas"
+} from "#server/types/database";
+import type { Selectable } from "kysely";
+import { err, ok, Result } from "neverthrow";
+import * as v from "valibot";
+import { colorSchema, favoritePaletteSchema } from "#server/schemas";
 
 type FromDatabaseRegisteredUserProps = {
-  favoriteColors: Selectable<FavoriteColor>[]
-  favoritePalettes: Selectable<FavoritePalette>[]
-  user: Selectable<User>
-}
+  favoriteColors: Selectable<FavoriteColor>[];
+  favoritePalettes: Selectable<FavoritePalette>[];
+  user: Selectable<User>;
+};
 export function fromDatabaseFullRegisteredUser({
   favoriteColors,
   favoritePalettes,
   user: { firstName, lastName, role, ...user },
 }: FromDatabaseRegisteredUserProps): Result<RegisteredUser, "not_found"> {
-  if (role !== "registered_user") return err("not_found")
+  if (role !== "registered_user") return err("not_found");
 
-  const identity = { firstName, lastName }
+  const identity = { firstName, lastName };
 
   return ok({
     ...user,
@@ -41,5 +41,5 @@ export function fromDatabaseFullRegisteredUser({
     ),
     identity,
     role,
-  })
+  });
 }

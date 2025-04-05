@@ -1,23 +1,25 @@
 import type {
   RequiredEmailSchema,
   RequiredStringSchema,
-} from "#client/hooks/validation"
+} from "#client/hooks/validation";
 
 import {
   useRequiredEmailSchema,
   useRequiredStringSchema,
-} from "#client/hooks/validation"
-import { autoFocusProps } from "#client/lib"
-import { Button, Group, Stack, TextInput } from "@mantine/core"
-import { useForm } from "@mantine/form"
-import { standardResolver } from "mantine-form-standard-resolver"
-import * as v from "valibot"
-export type SignUpFormData = v.InferOutput<ReturnType<typeof useFormDataSchema>>
+} from "#client/hooks/validation";
+import { autoFocusProps } from "#client/lib";
+import { Button, Group, Stack, TextInput } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { standardResolver } from "mantine-form-standard-resolver";
+import * as v from "valibot";
+export type SignUpFormData = v.InferOutput<
+  ReturnType<typeof useFormDataSchema>
+>;
 
 type SignUpFormProps = {
-  defaultEmail?: string
-  onSubmit: (data: SignUpFormData) => Promise<unknown> | undefined
-}
+  defaultEmail?: string;
+  onSubmit: (data: SignUpFormData) => Promise<unknown> | undefined;
+};
 
 export function SignUpForm({
   defaultEmail,
@@ -32,9 +34,9 @@ export function SignUpForm({
     mode: "uncontrolled",
 
     validate: standardResolver(useFormDataSchema()),
-  })
+  });
 
-  const handleSubmit = form.onSubmit(onSubmit)
+  const handleSubmit = form.onSubmit(onSubmit);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -72,23 +74,23 @@ export function SignUpForm({
         </Group>
       </Stack>
     </form>
-  )
+  );
 }
 
 function useFormDataSchema(): v.StrictObjectSchema<
   {
-    readonly email: RequiredEmailSchema
-    readonly firstName: RequiredStringSchema
-    readonly lastName: RequiredStringSchema
+    readonly email: RequiredEmailSchema;
+    readonly firstName: RequiredStringSchema;
+    readonly lastName: RequiredStringSchema;
   },
   undefined
 > {
-  const email = useRequiredEmailSchema()
-  const requiredString = useRequiredStringSchema()
+  const email = useRequiredEmailSchema();
+  const requiredString = useRequiredStringSchema();
 
   return v.strictObject({
     email,
     firstName: requiredString,
     lastName: requiredString,
-  })
+  });
 }

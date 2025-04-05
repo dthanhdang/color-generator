@@ -1,1 +1,1 @@
-export * from "./RandomPalettePage.jsx"
+export * from "./RandomPalettePage.jsx";

@@ -1,15 +1,15 @@
-import { Anchor } from "@mantine/core"
-import { clsx } from "clsx"
-import { IconExternalLink } from "@tabler/icons-react"
+import { Anchor } from "@mantine/core";
+import { clsx } from "clsx";
+import { IconExternalLink } from "@tabler/icons-react";
 
-import { Gmail } from "./Gmail.jsx"
-import { Outlook } from "./Outlook.jsx"
-import { ProtonMail } from "./ProtonMail.jsx"
+import { Gmail } from "./Gmail.jsx";
+import { Outlook } from "./Outlook.jsx";
+import { ProtonMail } from "./ProtonMail.jsx";
 
 type EmailProviderLinkProps = {
-  className?: string
-  email: string
-}
+  className?: string;
+  email: string;
+};
 
 export function EmailProviderLink({
   className,
@@ -34,11 +34,13 @@ export function EmailProviderLink({
       suffix: "@outlook.com",
       url: "https://outlook.com",
     },
-  ]
-  const provider = providers.find((provider) => email.endsWith(provider.suffix))
+  ];
+  const provider = providers.find((provider) =>
+    email.endsWith(provider.suffix)
+  );
   if (provider) {
-    const IconComponent = provider.IconComponent
-    const providerLabel = provider.label
+    const IconComponent = provider.IconComponent;
+    const providerLabel = provider.label;
 
     return (
       <div className={clsx(className, "flex flex-row items-center gap-3")}>
@@ -54,8 +56,8 @@ export function EmailProviderLink({
           <IconExternalLink className="my-auto" />
         </Anchor>
       </div>
-    )
+    );
   }
 
-  return null
+  return null;
 }

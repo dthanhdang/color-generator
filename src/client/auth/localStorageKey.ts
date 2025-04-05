@@ -1,1 +1,1 @@
-export const localStorageKey = "chromagen-user"
+export const localStorageKey = "chromagen-user";

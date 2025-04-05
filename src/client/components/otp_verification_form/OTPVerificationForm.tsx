@@ -1,52 +1,52 @@
-import { showSuccessNotification } from "#client/components/notifications"
-import { autoFocusProps } from "#client/lib"
-import { Button, Flex, PinInput, Stack } from "@mantine/core"
-import { useForm } from "@mantine/form"
-import { standardResolver } from "mantine-form-standard-resolver"
-import { useState } from "react"
-import * as v from "valibot"
+import { showSuccessNotification } from "#client/components/notifications";
+import { autoFocusProps } from "#client/lib";
+import { Button, Flex, PinInput, Stack } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { standardResolver } from "mantine-form-standard-resolver";
+import { useState } from "react";
+import * as v from "valibot";
 
-import { EmailProviderLink } from "./EmailProviderLink.jsx"
+import { EmailProviderLink } from "./EmailProviderLink.jsx";
 
 export type OTPVerificationFormData = v.InferOutput<
   ReturnType<typeof useFormSchema>
->
+>;
 
 type OTPVerificationFormProps = {
-  email: string
-  onResendCode: () => Promise<void> | undefined
+  email: string;
+  onResendCode: () => Promise<void> | undefined;
   validateCode: (
     data: OTPVerificationFormData
-  ) => Promise<React.JSX.Element | undefined>
-}
+  ) => Promise<React.JSX.Element | undefined>;
+};
 
 export function OTPVerificationForm({
   email,
   onResendCode,
   validateCode,
 }: OTPVerificationFormProps): React.JSX.Element {
-  const schema = useFormSchema()
-  const [error, setError] = useState<React.JSX.Element>()
+  const schema = useFormSchema();
+  const [error, setError] = useState<React.JSX.Element>();
   const form = useForm({
     initialValues: {
       code: "",
     },
     mode: "uncontrolled",
     validate: standardResolver(schema),
-  })
+  });
 
   async function onSubmit(data: OTPVerificationFormData): Promise<void> {
-    setError(await validateCode(data))
+    setError(await validateCode(data));
   }
 
   async function handleResend(): Promise<void> {
-    await onResendCode()
-    setError(undefined)
-    form.reset()
-    showSuccessNotification("Code successfully resent")
+    await onResendCode();
+    setError(undefined);
+    form.reset();
+    showSuccessNotification("Code successfully resent");
   }
 
-  const handleSubmit = form.onSubmit(onSubmit)
+  const handleSubmit = form.onSubmit(onSubmit);
 
   return (
     <form data-testid="otp-verification-form" onSubmit={handleSubmit}>
@@ -91,18 +91,18 @@ export function OTPVerificationForm({
         </Flex>
       </Stack>
     </form>
-  )
+  );
 }
 
 function useFormSchema(): v.StrictObjectSchema<
   {
     readonly code: v.SchemaWithPipe<
       readonly [v.StringSchema<undefined>, v.RegexAction<string, string>]
-    >
+    >;
   },
   undefined
 > {
   return v.strictObject({
     code: v.pipe(v.string(), v.regex(/^\d{6}$/, "OTP must contain 6 digits")),
-  })
+  });
 }

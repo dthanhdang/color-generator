@@ -1,15 +1,15 @@
-import type { JSX, ReactNode } from "react"
+import type { JSX, ReactNode } from "react";
 
-import { useAuthentication } from "#client/hooks"
+import { useAuthentication } from "#client/hooks";
 
 type UnauthenticatedProps = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 export function Unauthenticated({
   children,
 }: UnauthenticatedProps): JSX.Element | null {
-  const { user } = useAuthentication()
+  const { user } = useAuthentication();
 
-  return user === null ? <>{children}</> : null
+  return user === null ? <>{children}</> : null;
 }

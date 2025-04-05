@@ -13,5 +13,5 @@ export const getUserById = getQuery<DB, GetUserByIdProps, Selectable<User>>(
       .selectFrom("user")
       .select(["email", "id", "firstName", "lastName", "role"])
       .where("id", "=", id)
-      .executeTakeFirst(),
+      .executeTakeFirst()
 );

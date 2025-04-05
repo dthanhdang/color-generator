@@ -1,19 +1,19 @@
-import { getOTP, rpcFactory, signUpWrapper } from "#server/test/api"
-import { generateTestSpecificEmail } from "#server/test/generators"
-import { describe, it } from "vitest"
+import { getOTP, rpcFactory, signUpWrapper } from "#server/test/api";
+import { generateTestSpecificEmail } from "#server/test/generators";
+import { describe, it } from "vitest";
 
 const signUpProps = {
   firstName: "John",
   lastName: "Doe",
-}
+};
 
 describe("signUp", () => {
   it("rejects invalid requests", async ({ expect }) => {
-    const rpc = rpcFactory()
-    const email = generateTestSpecificEmail(expect)
+    const rpc = rpcFactory();
+    const email = generateTestSpecificEmail(expect);
 
-    await rpc.auth.requestOTP({ json: { email } })
-    const code = await getOTP(email)
+    await rpc.auth.requestOTP({ json: { email } });
+    const code = await getOTP(email);
 
     // Non numerical
     await expect(
@@ -24,7 +24,7 @@ describe("signUp", () => {
           email,
         },
       })
-    ).toBeHTTPBadRequest()
+    ).toBeHTTPBadRequest();
 
     // Wrong length
     await expect(
@@ -35,7 +35,7 @@ describe("signUp", () => {
           email,
         },
       })
-    ).toBeHTTPBadRequest()
+    ).toBeHTTPBadRequest();
 
     // Not an email
     await expect(
@@ -46,16 +46,16 @@ describe("signUp", () => {
           email: "azerty",
         },
       })
-    ).toBeHTTPBadRequest()
-  })
+    ).toBeHTTPBadRequest();
+  });
 
   it("rejects invalid OTP", async ({ expect }) => {
-    const rpc = rpcFactory()
-    const email = generateTestSpecificEmail(expect)
+    const rpc = rpcFactory();
+    const email = generateTestSpecificEmail(expect);
 
-    await rpc.auth.requestOTP({ json: { email } })
-    const code = await getOTP(email)
-    const wrongCode = ((Number.parseInt(code) + 1) % 1000000).toString()
+    await rpc.auth.requestOTP({ json: { email } });
+    const code = await getOTP(email);
+    const wrongCode = ((Number.parseInt(code) + 1) % 1000000).toString();
 
     await expect(
       rpc.auth.signUp({
@@ -67,24 +67,24 @@ describe("signUp", () => {
       })
     ).toBeHTTPOk({
       error: "invalid_or_expired_code",
-    })
-  })
+    });
+  });
 
   it("accepts the correct code", async ({ expect }) => {
-    const rpc = rpcFactory()
-    const email = generateTestSpecificEmail(expect)
+    const rpc = rpcFactory();
+    const email = generateTestSpecificEmail(expect);
 
-    await signUpWrapper(expect, rpc, email)
-  })
+    await signUpWrapper(expect, rpc, email);
+  });
 
   it("rejects subsequent attempts to sign-up with the same code", async ({
     expect,
   }) => {
-    const rpc = rpcFactory()
-    const email = generateTestSpecificEmail(expect)
+    const rpc = rpcFactory();
+    const email = generateTestSpecificEmail(expect);
 
-    await rpc.auth.requestOTP({ json: { email } })
-    const code = await getOTP(email)
+    await rpc.auth.requestOTP({ json: { email } });
+    const code = await getOTP(email);
 
     await expect(
       rpc.auth.signUp({
@@ -96,7 +96,7 @@ describe("signUp", () => {
       })
     ).toBeHTTPOk({
       idToken: expect.any(String),
-    })
+    });
 
     await expect(
       rpc.auth.signUp({
@@ -108,19 +108,19 @@ describe("signUp", () => {
       })
     ).toBeHTTPOk({
       error: "invalid_or_expired_code",
-    })
-  })
+    });
+  });
 
   it("rejects duplicate attemps to sign-up with the same email", async ({
     expect,
   }) => {
-    const rpc = rpcFactory()
-    const email = generateTestSpecificEmail(expect)
+    const rpc = rpcFactory();
+    const email = generateTestSpecificEmail(expect);
 
-    await signUpWrapper(expect, rpc, email)
+    await signUpWrapper(expect, rpc, email);
 
-    await rpc.auth.requestOTP({ json: { email } })
-    const code = await getOTP(email)
+    await rpc.auth.requestOTP({ json: { email } });
+    const code = await getOTP(email);
 
     await expect(
       rpc.auth.signUp({
@@ -132,6 +132,6 @@ describe("signUp", () => {
       })
     ).toBeHTTPOk({
       error: "user_already_exists",
-    })
-  })
-})
+    });
+  });
+});

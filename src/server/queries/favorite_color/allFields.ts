@@ -3,4 +3,4 @@ export const allFields = [
   "colorSpace",
   "jsonComponents",
   "userId",
-] as const
+] as const;

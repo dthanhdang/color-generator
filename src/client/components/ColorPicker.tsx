@@ -1,31 +1,31 @@
-import { useState, useEffect } from "react"
-import { ColorPicker, Group, Button, Text, Paper, Box } from "@mantine/core"
+import { useState, useEffect } from "react";
+import { ColorPicker, Group, Button, Text, Paper, Box } from "@mantine/core";
 
 type ColorPickerProps = {
-  color: string
-  onChange: (color: string) => void
-  onApply: (color: string) => void
-}
+  color: string;
+  onChange: (color: string) => void;
+  onApply: (color: string) => void;
+};
 
 export function ColorPickerComponent({
   color,
   onChange,
   onApply,
 }: ColorPickerProps) {
-  const [selectedColor, setSelectedColor] = useState(color)
+  const [selectedColor, setSelectedColor] = useState(color);
 
   useEffect(() => {
-    setSelectedColor(color)
-  }, [color])
+    setSelectedColor(color);
+  }, [color]);
 
   const handleChange = (color: string) => {
-    setSelectedColor(color)
-    onChange(color)
-  }
+    setSelectedColor(color);
+    onChange(color);
+  };
 
   const handleApply = () => {
-    onApply(selectedColor)
-  }
+    onApply(selectedColor);
+  };
 
   return (
     <Paper p="md" withBorder>
@@ -78,5 +78,5 @@ export function ColorPickerComponent({
         </div>
       </Group>
     </Paper>
-  )
+  );
 }

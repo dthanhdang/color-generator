@@ -1,5 +1,5 @@
-import { localStorageUserSchema } from "#client/schemas"
-import * as v from "valibot"
+import { localStorageUserSchema } from "#client/schemas";
+import * as v from "valibot";
 
 export type {
   ColorSpace,
@@ -11,6 +11,6 @@ export type {
   HslColorComponents,
   RgbColorcomponents,
   RegisteredUser,
-} from "#server/types"
+} from "#server/types";
 
-export type LocalStorageUser = v.InferOutput<typeof localStorageUserSchema>
+export type LocalStorageUser = v.InferOutput<typeof localStorageUserSchema>;

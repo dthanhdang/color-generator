@@ -7,5 +7,5 @@ export const apiClient = hc<PublicCurrentUserType>(
   `${import.meta.env.CF_PAGES_URL ?? window.location.origin}/api/v1/current-user/`,
   {
     fetch: customFetch,
-  },
+  }
 );

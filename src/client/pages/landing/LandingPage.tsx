@@ -1,43 +1,45 @@
-import { useEffect } from "react"
+import { useEffect } from "react";
 
-import { ArrowRight, Palette, PaintBucket, Eye, Sparkles } from "lucide-react"
+import { ArrowRight, Palette, PaintBucket, Eye, Sparkles } from "lucide-react";
 
-import { HeroSection } from "./HeroSection"
-import { Header } from "./Header"
-import { FeatureSection } from "./FeatureSection"
-import { CTAButton } from "./CTAButton"
-import { Footer } from "./Footer"
+import { HeroSection } from "./HeroSection";
+import { Header } from "./Header";
+import { FeatureSection } from "./FeatureSection";
+import { CTAButton } from "./CTAButton";
+import { Footer } from "./Footer";
+import { SeoTags } from "#client/components/seo_tags";
 
 export const LandingPage = () => {
   useEffect(() => {
     // Animation on scroll functionality
     const animateElements = () => {
-      const elements = document.querySelectorAll(".animate-on-scroll")
+      const elements = document.querySelectorAll(".animate-on-scroll");
 
       elements.forEach((element) => {
-        const elementTop = element.getBoundingClientRect().top
-        const windowHeight = window.innerHeight
+        const elementTop = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
 
         if (elementTop < windowHeight - 100) {
-          element.classList.add("visible")
+          element.classList.add("visible");
         }
-      })
-    }
+      });
+    };
 
     // Initial check for elements in view
-    animateElements()
+    animateElements();
 
     // Add event listener for scroll
-    window.addEventListener("scroll", animateElements)
+    window.addEventListener("scroll", animateElements);
 
     // Clean up
     return () => {
-      window.removeEventListener("scroll", animateElements)
-    }
-  }, [])
+      window.removeEventListener("scroll", animateElements);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen overflow-hidden">
+      <SeoTags />
       <Header />
       <HeroSection />
 
@@ -437,5 +439,5 @@ export const LandingPage = () => {
 
       <Footer />
     </div>
-  )
-}
+  );
+};

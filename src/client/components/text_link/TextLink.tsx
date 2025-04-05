@@ -1,10 +1,10 @@
-import { LinkComponent } from "@tanstack/react-router"
-import { twMerge } from "tailwind-merge"
+import { LinkComponent } from "@tanstack/react-router";
+import { twMerge } from "tailwind-merge";
 
-import type { MantineAnchorProps } from "./MantineLinkComponent.jsx"
+import type { MantineAnchorProps } from "./MantineLinkComponent.jsx";
 
-import { CreatedLinkComponent } from "./CreatedLinkComponent.js"
-import { MantineLinkComponent } from "./MantineLinkComponent.jsx"
+import { CreatedLinkComponent } from "./CreatedLinkComponent.js";
+import { MantineLinkComponent } from "./MantineLinkComponent.jsx";
 
 // Cf https://tanstack.com/router/latest/docs/framework/react/guide/custom-link
 
@@ -21,5 +21,5 @@ export const TextLink: LinkComponent<typeof MantineLinkComponent> = ({
         className
       )}
     />
-  )
-}
+  );
+};

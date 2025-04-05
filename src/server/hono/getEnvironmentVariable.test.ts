@@ -13,10 +13,10 @@ describe("customResponse", () => {
       customResponse(
         c,
         getEnvironmentVariable(c, "CF_PAGES_URL").asyncAndThen((value) =>
-          okAsync(value),
+          okAsync(value)
         ),
-        (value) => c.json({ value }),
-      ),
+        (value) => c.json({ value })
+      )
     );
 
     // TODO replace by toBeInternalServerError
@@ -28,14 +28,14 @@ describe("customResponse", () => {
       customResponse(
         c,
         getEnvironmentVariable(c, "CF_PAGES_URL").asyncAndThen((value) =>
-          okAsync(value),
+          okAsync(value)
         ),
-        (value) => c.json({ value }),
-      ),
+        (value) => c.json({ value })
+      )
     );
 
     await expect(
-      app.request("/", undefined, { CF_PAGES_URL: "https://localhost:5173" }),
+      app.request("/", undefined, { CF_PAGES_URL: "https://localhost:5173" })
     ).toBeHTTPOk({ value: "https://localhost:5173" });
   });
 });

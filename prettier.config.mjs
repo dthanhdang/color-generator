@@ -7,8 +7,8 @@
 const config = {
   trailingComma: "es5",
   tabWidth: 2,
-  semi: false,
+  semi: true,
   singleQuote: false,
-}
+};
 
-export default config
+export default config;

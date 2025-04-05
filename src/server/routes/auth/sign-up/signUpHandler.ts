@@ -1,15 +1,15 @@
-import type { User, UserRole } from "#server/types"
-import type { HandlerDBProps } from "@meow-meow-dev/server-utilities/hono"
+import type { User, UserRole } from "#server/types";
+import type { HandlerDBProps } from "@meow-meow-dev/server-utilities/hono";
 
-import { validateOTP } from "#server/auth/otp"
-import { fromDatabaseUser } from "#server/conversion"
-import { createUser, listUsersByRole } from "#server/queries/user"
-import { administratorRoleSchema } from "#server/schemas"
-import { nonEmptyStringSchema } from "@meow-meow-dev/server-utilities/validation"
-import { errAsync, okAsync, type ResultAsync } from "neverthrow"
-import * as v from "valibot"
+import { validateOTP } from "#server/auth/otp";
+import { fromDatabaseUser } from "#server/conversion";
+import { createUser, listUsersByRole } from "#server/queries/user";
+import { administratorRoleSchema } from "#server/schemas";
+import { nonEmptyStringSchema } from "@meow-meow-dev/server-utilities/validation";
+import { errAsync, okAsync, type ResultAsync } from "neverthrow";
+import * as v from "valibot";
 
-const codeSchema = v.pipe(v.string(), v.regex(/^\d{6}$/))
+const codeSchema = v.pipe(v.string(), v.regex(/^\d{6}$/));
 
 export const signUpJSONSchema = v.strictObject({
   code: codeSchema,
@@ -17,10 +17,10 @@ export const signUpJSONSchema = v.strictObject({
   firstName: nonEmptyStringSchema,
   lastName: nonEmptyStringSchema,
   role: v.optional(administratorRoleSchema),
-})
+});
 
 type SignUpHandlerProps = HandlerDBProps &
-  v.InferOutput<typeof signUpJSONSchema>
+  v.InferOutput<typeof signUpJSONSchema>;
 
 export function signUpHandler({
   code,
@@ -41,15 +41,15 @@ export function signUpHandler({
     db,
     email,
   }).andThen(() => {
-    const role = props.role ?? "registered_user"
+    const role = props.role ?? "registered_user";
 
     return checkAdministratorUnicity(db, role).andThen(() =>
       createUser({
         db,
         user: { email, firstName, lastName, role },
       }).andThen((user) => okAsync(fromDatabaseUser(user)))
-    )
-  })
+    );
+  });
 }
 
 function checkAdministratorUnicity(
@@ -62,5 +62,5 @@ function checkAdministratorUnicity(
           ? errAsync("administrator_already_exists" as const)
           : okAsync()
       )
-    : okAsync()
+    : okAsync();
 }

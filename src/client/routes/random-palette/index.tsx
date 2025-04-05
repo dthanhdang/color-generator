@@ -1,30 +1,36 @@
-import { getCurrentUserQuery } from "#client/tanstack/query/queries/public/current_user"
-import { RandomPalette } from "#pages/random"
-import { useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
-import type { JSX } from "react"
-import * as v from "valibot"
+import { getCurrentUserQuery } from "#client/tanstack/query/queries/public/current_user";
+import { RandomPalette } from "#pages/random";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import type { JSX } from "react";
+import * as v from "valibot";
 
 export const Route = createFileRoute("/random-palette/")({
   loader: async ({ context: { queryClient } }) => {
-    const query = getCurrentUserQuery
+    const query = getCurrentUserQuery;
 
-    await queryClient.ensureQueryData(query)
+    await queryClient.ensureQueryData(query);
 
-    return { query }
+    return {
+      crumb: "Random palette",
+      query,
+      seoDescription:
+        "Feel like experimenting ? Quickly and easily generate a color palette using our random generator",
+      seoTitle: "Your Random Palette Generator",
+    };
   },
   component: PageWrapper,
   validateSearch: v.looseObject({
     palette_id: v.optional(v.pipe(v.number(), v.integer())),
   }),
-})
+});
 
 function PageWrapper(): JSX.Element {
-  const { query } = Route.useLoaderData()
+  const { query } = Route.useLoaderData();
   const {
     data: { user },
-  } = useSuspenseQuery(query)
-  const search = Route.useSearch()
+  } = useSuspenseQuery(query);
+  const search = Route.useSearch();
 
-  return <RandomPalette paletteId={search.palette_id} user={user} />
+  return <RandomPalette paletteId={search.palette_id} user={user} />;
 }

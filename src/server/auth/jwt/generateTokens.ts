@@ -1,27 +1,27 @@
-import type { IdToken, User } from "#server/types"
-import type { GenerateTokensReturn } from "@meow-meow-dev/server-utilities/auth"
+import type { IdToken, User } from "#server/types";
+import type { GenerateTokensReturn } from "@meow-meow-dev/server-utilities/auth";
 import type {
   AccessTokenPayload,
   WithoutJWTTimeStamps,
-} from "@meow-meow-dev/server-utilities/jwt"
-import type { Simplify } from "type-fest"
+} from "@meow-meow-dev/server-utilities/jwt";
+import type { Simplify } from "type-fest";
 
 import {
   buildSubjectFromUserId,
   generateTokens as generateTokensBase,
-} from "@meow-meow-dev/server-utilities/auth"
-import { internalServerErrorFactory } from "@meow-meow-dev/server-utilities/neverthrow"
-import { ResultAsync } from "neverthrow"
+} from "@meow-meow-dev/server-utilities/auth";
+import { internalServerErrorFactory } from "@meow-meow-dev/server-utilities/neverthrow";
+import { ResultAsync } from "neverthrow";
 
-import { apiAudience, issuer, subjectPrefix } from "./AccessToken.js"
-import { scopesByRole } from "./Scope.js"
+import { apiAudience, issuer, subjectPrefix } from "./AccessToken.js";
+import { scopesByRole } from "./Scope.js";
 
-const aud = [apiAudience]
+const aud = [apiAudience];
 
 type GenerateTokensProps = {
-  secret: string
-  user: User
-}
+  secret: string;
+  user: User;
+};
 
 export function generateTokens({
   secret,
@@ -30,17 +30,17 @@ export function generateTokens({
   GenerateTokensReturn,
   "internal_server_error"
 > {
-  const { id, role } = user
-  const sub = buildSubjectFromUserId(subjectPrefix, id)
+  const { id, role } = user;
+  const sub = buildSubjectFromUserId(subjectPrefix, id);
 
   // TODO add an utility to server-utilities
-  const scope = scopesByRole[role].join(" ")
+  const scope = scopesByRole[role].join(" ");
   const accessTokenPayload: WithoutJWTTimeStamps<AccessTokenPayload> = {
     aud,
     iss: issuer,
     scope,
     sub,
-  }
+  };
 
   return ResultAsync.fromPromise(
     generateTokensBase({
@@ -49,7 +49,7 @@ export function generateTokens({
       secret,
     }),
     internalServerErrorFactory
-  )
+  );
 }
 
 function userToIdTokenPayload(
@@ -60,7 +60,7 @@ function userToIdTokenPayload(
     email,
     identity: { firstName, lastName },
     role,
-  } = user
+  } = user;
 
   if (role === "registered_user") {
     return {
@@ -71,7 +71,7 @@ function userToIdTokenPayload(
         role,
       },
       sub,
-    }
+    };
   } else {
     return {
       email,
@@ -79,6 +79,6 @@ function userToIdTokenPayload(
       given_name: firstName,
       status: { role },
       sub,
-    }
+    };
   }
 }

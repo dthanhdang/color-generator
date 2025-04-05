@@ -18,7 +18,7 @@ export const signInRoute = buildHono().post(
           c,
           tokensGenerator: generateTokens,
           user,
-        }),
+        })
       )
       .match(
         (idToken) => c.json({ idToken }, 200),
@@ -31,7 +31,7 @@ export const signInRoute = buildHono().post(
             default:
               return httpErrorFromHTTPErrorType(c)(error);
           }
-        },
+        }
       );
-  },
+  }
 );

@@ -1,15 +1,15 @@
-import { Select } from "@mantine/core"
-import { HarmonyType } from "../utils/colorHarmony"
+import { Select } from "@mantine/core";
+import { HarmonyType } from "../utils/colorHarmony";
 
 type HarmonySelectorProps = {
-  value: HarmonyType
-  onChange: (value: HarmonyType) => void
-}
+  value: HarmonyType;
+  onChange: (value: HarmonyType) => void;
+};
 
 export function HarmonySelector({ value, onChange }: HarmonySelectorProps) {
   const handleChange = (newValue: string | null) => {
-    if (newValue) onChange(newValue as HarmonyType)
-  }
+    if (newValue) onChange(newValue as HarmonyType);
+  };
 
   return (
     <div className="mb-4">
@@ -27,5 +27,5 @@ export function HarmonySelector({ value, onChange }: HarmonySelectorProps) {
         ]}
       />
     </div>
-  )
+  );
 }

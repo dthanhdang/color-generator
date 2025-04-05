@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 import {
   Paper,
   Text,
@@ -7,41 +7,41 @@ import {
   ActionIcon,
   Tooltip,
   Box,
-} from "@mantine/core"
-import { Plus, Minus, Download, Copy, Check } from "lucide-react"
+} from "@mantine/core";
+import { Plus, Minus, Download, Copy, Check } from "lucide-react";
 
 type ColorDisplayProps = {
-  colors: string[]
-  onColorSelect?: (color: string) => void
-}
+  colors: string[];
+  onColorSelect?: (color: string) => void;
+};
 
 export function ColorDisplay({ colors, onColorSelect }: ColorDisplayProps) {
   const [selectedColorIndex, setSelectedColorIndex] = useState<number | null>(
     null
-  )
-  const [paletteSize, setPaletteSize] = useState<number>(5)
-  const [copied, setCopied] = useState(false)
+  );
+  const [paletteSize, setPaletteSize] = useState<number>(5);
+  const [copied, setCopied] = useState(false);
 
   // Limiter le nombre de couleurs affichées selon le slider
-  const displayColors = colors.slice(0, paletteSize)
+  const displayColors = colors.slice(0, paletteSize);
 
   const handleColorClick = (color: string, index: number) => {
-    setSelectedColorIndex(index)
+    setSelectedColorIndex(index);
     if (onColorSelect) {
-      onColorSelect(color)
+      onColorSelect(color);
     }
-  }
+  };
 
   const copyColorToClipboard = (color: string) => {
-    navigator.clipboard.writeText(color)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+    navigator.clipboard.writeText(color);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const exportPalette = () => {
-    const colorValues = displayColors.join(", ")
-    navigator.clipboard.writeText(colorValues)
-  }
+    const colorValues = displayColors.join(", ");
+    navigator.clipboard.writeText(colorValues);
+  };
 
   return (
     <Paper p="md" withBorder radius="md" className="mb-4">
@@ -149,5 +149,5 @@ export function ColorDisplay({ colors, onColorSelect }: ColorDisplayProps) {
         </Paper>
       )}
     </Paper>
-  )
+  );
 }

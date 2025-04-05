@@ -1,2 +1,2 @@
-export * from "./buildColorFromComponentsDto.js"
-export * from "./extractFavoritePaletteComponents.js"
+export * from "./buildColorFromComponentsDto.js";
+export * from "./extractFavoritePaletteComponents.js";

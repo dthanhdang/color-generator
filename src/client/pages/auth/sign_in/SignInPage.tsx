@@ -1,62 +1,62 @@
-import type { EmailFormData } from "#client/components/email_form"
-import type { OTPVerificationFormData } from "#client/components/otp_verification_form"
+import type { EmailFormData } from "#client/components/email_form";
+import type { OTPVerificationFormData } from "#client/components/otp_verification_form";
 
-import { idTokenToLocalStorageUser } from "#client/auth"
-import { EmailForm } from "#client/components/email_form"
+import { idTokenToLocalStorageUser } from "#client/auth";
+import { EmailForm } from "#client/components/email_form";
 import {
   InvalidOrExpiredCode,
   OTPVerificationForm,
-} from "#client/components/otp_verification_form"
-import { Page } from "#client/components/page"
-import { TextLink } from "#client/components/text_link"
-import { useLocalStorage } from "#client/hooks"
-import { useRequestOTP } from "#client/hooks"
-import { requestOTP } from "#client/rpc/auth"
-import { Card, Stack, Title } from "@mantine/core"
-import { useNavigate } from "@tanstack/react-router"
+} from "#client/components/otp_verification_form";
+import { Page } from "#client/components/page";
+import { TextLink } from "#client/components/text_link";
+import { useLocalStorage } from "#client/hooks";
+import { useRequestOTP } from "#client/hooks";
+import { requestOTP } from "#client/rpc/auth";
+import { Card, Stack, Title } from "@mantine/core";
+import { useNavigate } from "@tanstack/react-router";
 
-import { useSignInMutation } from "./useSignInMutation.js"
+import { useSignInMutation } from "./useSignInMutation.js";
 
 type SignInPageProps = {
-  email?: string
-  redirectTo?: string
-  role: "administrator" | "registered_user"
-}
+  email?: string;
+  redirectTo?: string;
+  role: "administrator" | "registered_user";
+};
 
 export function SignInPage({
   email: defaultEmail,
   redirectTo,
   role,
 }: SignInPageProps): React.JSX.Element {
-  const navigate = useNavigate()
-  const signIn = useSignInMutation()
+  const navigate = useNavigate();
+  const signIn = useSignInMutation();
   const { formData, handleResendOTP, handleSubmit } =
-    useRequestOTP<EmailFormData>({ requestOTP })
-  const { storeUser } = useLocalStorage()
+    useRequestOTP<EmailFormData>({ requestOTP });
+  const { storeUser } = useLocalStorage();
 
   const onSubmitOTP = formData
     ? async ({
         code,
       }: OTPVerificationFormData): Promise<React.JSX.Element | undefined> => {
-        const signInExtraProps = role === "administrator" ? { role } : {}
-        const output = await signIn({ ...formData, ...signInExtraProps, code })
+        const signInExtraProps = role === "administrator" ? { role } : {};
+        const output = await signIn({ ...formData, ...signInExtraProps, code });
 
         if ("idToken" in output) {
-          const { idToken } = output
+          const { idToken } = output;
 
-          const user = idTokenToLocalStorageUser(idToken)
+          const user = idTokenToLocalStorageUser(idToken);
           if (user) {
-            await storeUser(user)
+            await storeUser(user);
             await navigate({
               to: redirectTo ?? "/", // role === "administrator" ? "/admin" : "/dashboard",
-            })
+            });
           } else {
             // TODO
           }
         } else {
           switch (output.error) {
             case "invalid_or_expired_code":
-              return <InvalidOrExpiredCode />
+              return <InvalidOrExpiredCode />;
             case "user_does_not_exist":
               return (
                 <p>
@@ -72,11 +72,11 @@ export function SignInPage({
                   </TextLink>
                   {" ?"}
                 </p>
-              )
+              );
           }
         }
       }
-    : undefined
+    : undefined;
 
   return (
     <Page displayTitle={false}>
@@ -104,5 +104,5 @@ export function SignInPage({
         </Stack>
       </Card>
     </Page>
-  )
+  );
 }

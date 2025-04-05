@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react"
-import { cn } from "../../lib/utils"
-import { Link } from "@tanstack/react-router"
+import { useState, useEffect } from "react";
+import { cn } from "../../lib/utils";
+import { Link } from "@tanstack/react-router";
 
 export const Header = () => {
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 10
+      const isScrolled = window.scrollY > 10;
       if (isScrolled !== scrolled) {
-        setScrolled(isScrolled)
+        setScrolled(isScrolled);
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [scrolled])
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolled]);
 
   return (
     <header
@@ -72,5 +72,5 @@ export const Header = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};

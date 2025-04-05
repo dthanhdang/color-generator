@@ -1,53 +1,56 @@
 //import { Form } from "./Form"
 
-import { ColorPalette, type ColorPaletteItem } from "../../ColorPalette"
-import { useState } from "react"
-import chroma, { type Color } from "chroma-js"
+import { ColorPalette, type ColorPaletteItem } from "../../ColorPalette";
+import { useState } from "react";
+import chroma, { type Color } from "chroma-js";
 
-import { Select } from "@mantine/core"
+import { Select } from "@mantine/core";
 
-import { nanoid } from "nanoid"
+import { nanoid } from "nanoid";
 
-import { ImageColorPicker } from "#components/ImageColorPicker.tsx"
-import { getColorName } from "#utils/getColorName.ts"
-import { Form } from "../../Form"
-import { FormOklch } from "../../components/FormOklch"
-import { FormHsl } from "#components/FormHsl.tsx"
-import { ToggleFavoritePaletteButton } from "#components/toggle_favorite_palette_button/ToggleFavoritePaletteButton.tsx"
-import type { RegisteredUser } from "#server/types"
+import { ImageColorPicker } from "#components/ImageColorPicker.tsx";
+import { getColorName } from "#utils/getColorName.ts";
+import { Form } from "../../Form";
+import { FormOklch } from "../../components/FormOklch";
+import { FormHsl } from "#components/FormHsl.tsx";
+import { ToggleFavoritePaletteButton } from "#components/toggle_favorite_palette_button/ToggleFavoritePaletteButton.tsx";
+import type { RegisteredUser } from "#server/types";
+import { PageStyle } from "#components/PageStyle.tsx";
 
-type ColorMode = "hex" | "hsl" | "oklch"
+type ColorMode = "hex" | "hsl" | "oklch";
 
 type ImagePickerProps = {
-  user: RegisteredUser | undefined
-}
+  user: RegisteredUser | undefined;
+};
 
 export function ImagePicker({ user }: ImagePickerProps) {
-  console.log({ user })
-  const [color, setColor] = useState(chroma("#b4f2ce"))
-  const [colorMode, setColorMode] = useState<ColorMode>("hex")
+  console.log({ user });
+  const [color, setColor] = useState(chroma("#b4f2ce"));
+  const [colorMode, setColorMode] = useState<ColorMode>("hex");
 
-  const [extractedImageColors, setExtractedImageColors] = useState<string[]>([])
+  const [extractedImageColors, setExtractedImageColors] = useState<string[]>(
+    []
+  );
 
-  const [palette, setPalette] = useState<ColorPaletteItem[]>([])
+  const [palette, setPalette] = useState<ColorPaletteItem[]>([]);
 
   const handleColorSubmit = (newColor: Color) => {
     //const newPalette = getColorScale(newColor, 10)
     if (chroma.valid(newColor)) {
-      setColor(newColor)
+      setColor(newColor);
     } else {
-      console.error(`Invalid color : ${newColor}`)
+      console.error(`Invalid color : ${newColor}`);
     }
-  }
+  };
 
   const handleModeChange = (value: string | null) => {
     if (value === "hex" || value === "hsl" || value === "oklch")
-      setColorMode(value)
-  }
+      setColorMode(value);
+  };
 
   const handleImageColorsExtracted = (colors: string[]) => {
-    console.log("handleImageColorsExtracted")
-    setExtractedImageColors(colors)
+    console.log("handleImageColorsExtracted");
+    setExtractedImageColors(colors);
 
     setPalette(
       colors.map((color, index) => ({
@@ -56,16 +59,11 @@ export function ImagePicker({ user }: ImagePickerProps) {
         weight: index * 100 + 100,
         name: getColorName(chroma(color))?.name || "",
       }))
-    )
-  }
+    );
+  };
 
   return (
-    <main className="container mx-auto p-4">
-      <h1 className="text-center text-5xl font-bold my-8">
-        Your{" "}
-        <span style={{ color: "oklch(0.511 0.262 276.966)" }}>Image Color</span>{" "}
-        Extractor
-      </h1>
+    <PageStyle titleHighlight="Color From Image">
       <div className="mt-4">
         <ImageColorPicker
           onColorSelect={(color) => setColor(chroma(color))}
@@ -114,6 +112,6 @@ export function ImagePicker({ user }: ImagePickerProps) {
       </div>
 
       {/*<ColorPalette palette={palette} />*/}
-    </main>
-  )
+    </PageStyle>
+  );
 }

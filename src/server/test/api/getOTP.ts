@@ -6,6 +6,6 @@ export function getOTP(email: string): Promise<string> {
     ({ code }) => code,
     () => {
       throw new Error("Unable to retrieve OTP");
-    },
+    }
   );
 }

@@ -1,1 +1,1 @@
-export * from "./HarmonyPalettePage.jsx"
+export * from "./HarmonyPalettePage.jsx";

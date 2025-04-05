@@ -1,1 +1,1 @@
-export * from "./ScalePalettePage.jsx"
+export * from "./ScalePalettePage.jsx";

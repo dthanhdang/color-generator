@@ -1,36 +1,36 @@
-import type { FavoritePalette, FavoritePaletteGenerator } from "#client/types"
-import type { JSX } from "react"
-import { ActionIcon, Group, Paper, Title } from "@mantine/core"
-import { buildColorFromComponentsDto } from "#client/conversions"
-import { IconPencil, IconTrash } from "@tabler/icons-react"
-import { Link } from "@tanstack/react-router"
-import { useDeleteFavoritePaletteMutation } from "#client/tanstack/query/mutations"
+import type { FavoritePalette, FavoritePaletteGenerator } from "#client/types";
+import type { JSX } from "react";
+import { ActionIcon, Group, Paper, Title } from "@mantine/core";
+import { buildColorFromComponentsDto } from "#client/conversions";
+import { IconPencil, IconTrash } from "@tabler/icons-react";
+import { Link } from "@tanstack/react-router";
+import { useDeleteFavoritePaletteMutation } from "#client/tanstack/query/mutations";
 
 function pageRoute(
   generatorType: FavoritePaletteGenerator["type"]
 ): "/harmony-palette" | "/scale-palette" | undefined {
   switch (generatorType) {
     case "harmony":
-      return "/harmony-palette"
+      return "/harmony-palette";
     case "scale":
-      return "/scale-palette"
+      return "/scale-palette";
     default:
-      return undefined
+      return undefined;
   }
 }
 
 type PaletteProps = {
-  palette: FavoritePalette
-}
+  palette: FavoritePalette;
+};
 
 export function Palette({ palette }: PaletteProps): JSX.Element {
-  const deleteFavoritePaletteMutation = useDeleteFavoritePaletteMutation()
+  const deleteFavoritePaletteMutation = useDeleteFavoritePaletteMutation();
 
   const handleDeletePalete = (): void => {
-    deleteFavoritePaletteMutation({ paletteId: palette.id })
-  }
+    deleteFavoritePaletteMutation({ paletteId: palette.id });
+  };
 
-  const to = pageRoute(palette.generator.type)
+  const to = pageRoute(palette.generator.type);
 
   return (
     <Paper className="p-2 flex flex-col gap-4 w-max" withBorder>
@@ -54,7 +54,7 @@ export function Palette({ palette }: PaletteProps): JSX.Element {
             const color = buildColorFromComponentsDto({
               colorSpace: palette.generatedColors.colorSpace,
               components,
-            }).hex()
+            }).hex();
 
             return (
               <div
@@ -64,10 +64,10 @@ export function Palette({ palette }: PaletteProps): JSX.Element {
                   backgroundColor: color,
                 }}
               />
-            )
+            );
           })}
         </div>
       </Group>
     </Paper>
-  )
+  );
 }

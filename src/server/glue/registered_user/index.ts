@@ -1,1 +1,1 @@
-export * from "./getFullRegisteredUserById.js"
+export * from "./getFullRegisteredUserById.js";

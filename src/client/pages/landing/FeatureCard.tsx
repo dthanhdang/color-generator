@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from "react"
-import { cn } from "../../lib/utils"
+import React, { useEffect, useRef } from "react";
+import { cn } from "../../lib/utils";
 
 type FeatureCardProps = {
-  title: string
-  description: string
-  icon: React.ReactNode
-  color?: "red" | "orange" | "green" | "blue" | "purple"
-  delay?: number
-}
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  color?: "red" | "orange" | "green" | "blue" | "purple";
+  delay?: number;
+};
 
 export const FeatureCard = ({
   title,
@@ -16,30 +16,30 @@ export const FeatureCard = ({
   color = "blue",
   delay = 0,
 }: FeatureCardProps) => {
-  const cardRef = useRef<HTMLDivElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
-            entry.target.classList.add("visible")
-          }, delay)
+            entry.target.classList.add("visible");
+          }, delay);
         }
       },
       { threshold: 0.1 }
-    )
-    const currentRef = cardRef.current
+    );
+    const currentRef = cardRef.current;
     if (currentRef) {
-      observer.observe(currentRef)
+      observer.observe(currentRef);
     }
 
     return () => {
       if (currentRef) {
-        observer.unobserve(currentRef)
+        observer.unobserve(currentRef);
       }
-    }
-  }, [delay])
+    };
+  }, [delay]);
 
   const colorClasses = {
     red: {
@@ -67,7 +67,7 @@ export const FeatureCard = ({
       hover: "hover:bg-violet-100 hover:shadow-violet-100/30",
       border: "border-violet-100",
     },
-  }
+  };
 
   return (
     <div
@@ -94,5 +94,5 @@ export const FeatureCard = ({
         <p className="text-gray-600">{description}</p>
       </div>
     </div>
-  )
-}
+  );
+};

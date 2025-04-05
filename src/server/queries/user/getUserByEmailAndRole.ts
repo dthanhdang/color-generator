@@ -19,5 +19,5 @@ export const getUserByEmailAndRole = getQuery<
     .select(["email", "id", "firstName", "lastName", "role"])
     .where("email", "=", email)
     .where("role", "=", role)
-    .executeTakeFirst(),
+    .executeTakeFirst()
 );

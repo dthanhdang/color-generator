@@ -3,6 +3,6 @@ export {
   identitySchema,
   idTokenSchema,
   registeredUserRoleSchema,
-} from "#server/schemas"
+} from "#server/schemas";
 
-export * from "./userFromIdTokenSchema.js"
+export * from "./userFromIdTokenSchema.js";

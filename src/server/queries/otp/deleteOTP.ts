@@ -20,6 +20,6 @@ export const deleteOTP: Query<
       .deleteFrom("otp")
       .where("email", "=", email)
       .execute()
-      .then(() => undefined),
+      .then(() => undefined)
   );
 };

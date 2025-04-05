@@ -1,11 +1,11 @@
-import type { HandlerDBProps } from "@meow-meow-dev/server-utilities/hono"
-import type { ResultAsync } from "neverthrow"
+import type { HandlerDBProps } from "@meow-meow-dev/server-utilities/hono";
+import type { ResultAsync } from "neverthrow";
 
-import { listUsersByRole } from "#server/queries/user"
-import { RegisteredUser } from "#server/types"
-import { okAsync } from "neverthrow"
+import { listUsersByRole } from "#server/queries/user";
+import { RegisteredUser } from "#server/types";
+import { okAsync } from "neverthrow";
 
-type ListRegisteredUserHandlerHandlerProps = HandlerDBProps
+type ListRegisteredUserHandlerHandlerProps = HandlerDBProps;
 
 export function listRegisteredUserHandler({
   ...props
@@ -22,5 +22,5 @@ export function listRegisteredUserHandler({
           role: "registered_user" as const,
         }))
       )
-  )
+  );
 }

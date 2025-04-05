@@ -1,8 +1,8 @@
-import type { DB } from "#server/types/database"
+import type { DB } from "#server/types/database";
 
-import { deleteQuery } from "@meow-meow-dev/server-utilities/queries"
+import { deleteQuery } from "@meow-meow-dev/server-utilities/queries";
 
-type DeleteFavoritePaletteProps = { id: number; userId: number }
+type DeleteFavoritePaletteProps = { id: number; userId: number };
 
 export const deleteFavoritePalette = deleteQuery<
   DB,
@@ -15,4 +15,4 @@ export const deleteFavoritePalette = deleteQuery<
     .returning("id")
     .executeTakeFirst()
     .then((row) => row?.id)
-)
+);

@@ -15,9 +15,9 @@ export const storeOTP = createQuery<DB, StoreOTPProps, Selectable<Otp>>(
       .onConflict((oc) =>
         oc
           .column("email")
-          .doUpdateSet({ code: otp.code, validity: otp.validity }),
+          .doUpdateSet({ code: otp.code, validity: otp.validity })
       )
       .returning("email")
       .executeTakeFirst()
-      .then((row) => (row ? otp : undefined)),
+      .then((row) => (row ? otp : undefined))
 );

@@ -1,14 +1,14 @@
-import type { JSX, ReactNode } from "react"
-import { twMerge } from "tailwind-merge"
+import type { JSX, ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
-import { Titles } from "./Titles.jsx"
+import { Titles } from "./Titles.jsx";
 
 type PageProps = {
-  asCard?: boolean
-  children: ReactNode
-  className?: string
-  displayTitle?: boolean
-}
+  asCard?: boolean;
+  children: ReactNode;
+  className?: string;
+  displayTitle?: boolean;
+};
 
 export function Page({
   asCard = false,
@@ -28,5 +28,5 @@ export function Page({
 
       {children}
     </main>
-  )
+  );
 }

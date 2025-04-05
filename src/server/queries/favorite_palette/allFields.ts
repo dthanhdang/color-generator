@@ -3,4 +3,4 @@ export const allFields = [
   "jsonGeneratedColors",
   "jsonGenerator",
   "userId",
-] as const
+] as const;

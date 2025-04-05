@@ -22,7 +22,7 @@ describe("create user", () => {
       createUser({
         db: env.DB,
         user: { ...identity, email, role: "registered_user" },
-      }),
+      })
     );
 
     expect(
@@ -30,15 +30,15 @@ describe("create user", () => {
         createUser({
           db: env.DB,
           user: { ...identity, email, role: "registered_user" },
-        }),
-      ),
+        })
+      )
     ).toEqual("user_already_exists");
 
     await unsafeUnwrap(
       createUser({
         db: env.DB,
         user: { ...identity, email, role: "administrator" },
-      }),
+      })
     );
   });
 
@@ -48,7 +48,7 @@ describe("create user", () => {
       createUser({
         db: env.DB,
         user: { ...identity, email, role: "registered_user" },
-      }),
+      })
     );
 
     const databaseUser = await unsafeUnwrap(
@@ -56,7 +56,7 @@ describe("create user", () => {
         db: env.DB,
         email,
         role: "registered_user",
-      }),
+      })
     );
 
     expect(databaseUser).toMatchObject({
@@ -71,8 +71,8 @@ describe("create user", () => {
           db: env.DB,
           email,
           role: "administrator",
-        }),
-      ),
+        })
+      )
     ).toEqual("not_found");
   });
 
@@ -83,14 +83,14 @@ describe("create user", () => {
           db: env.DB,
           email: "a@b.com",
           role: "registered_user",
-        }),
-      ),
+        })
+      )
     ).toEqual("not_found");
   });
 
   it("doesn't find users by non-existent id", async ({ expect }) => {
     expect(
-      await unsafeUnwrapErr(getUserById({ db: env.DB, id: 10_000_000 })),
+      await unsafeUnwrapErr(getUserById({ db: env.DB, id: 10_000_000 }))
     ).toEqual("not_found");
   });
 });

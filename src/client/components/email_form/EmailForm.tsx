@@ -1,7 +1,7 @@
-import { Button, Group, TextInput } from "@mantine/core"
-import { useForm } from "@mantine/form"
-import { standardResolver } from "mantine-form-standard-resolver"
-import * as v from "valibot"
+import { Button, Group, TextInput } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { standardResolver } from "mantine-form-standard-resolver";
+import * as v from "valibot";
 
 const formDataSchema = v.strictObject({
   email: v.pipe(
@@ -9,13 +9,13 @@ const formDataSchema = v.strictObject({
     v.email("Cette adresse e-mail ne semble pas valide"),
     v.minLength(1, "Ce champ est obligatoire")
   ),
-})
-export type EmailFormData = v.InferOutput<typeof formDataSchema>
+});
+export type EmailFormData = v.InferOutput<typeof formDataSchema>;
 
 type EmailFormProps = {
-  defaultEmail?: string
-  onSubmit: (data: EmailFormData) => Promise<unknown> | undefined
-}
+  defaultEmail?: string;
+  onSubmit: (data: EmailFormData) => Promise<unknown> | undefined;
+};
 
 export function EmailForm({
   defaultEmail,
@@ -28,9 +28,9 @@ export function EmailForm({
     mode: "uncontrolled",
 
     validate: standardResolver(formDataSchema),
-  })
+  });
 
-  const handleSubmit = form.onSubmit(onSubmit)
+  const handleSubmit = form.onSubmit(onSubmit);
 
   return (
     <form data-testid="email-form" onSubmit={handleSubmit}>
@@ -52,5 +52,5 @@ export function EmailForm({
         </Button>
       </Group>
     </form>
-  )
+  );
 }

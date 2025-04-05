@@ -11,5 +11,5 @@ export const deleteRegisteredUser = deleteQuery<DB, DeleteUserProps>(
       .where("id", "=", userId)
       .returning("id")
       .executeTakeFirst()
-      .then((row) => row?.id),
+      .then((row) => row?.id)
 );

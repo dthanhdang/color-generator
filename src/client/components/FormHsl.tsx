@@ -1,27 +1,27 @@
 //import { hexToHsl, hslToHex } from "#utils/colorConverters.ts"
-import { Slider, Group, Stack, Text, Paper } from "@mantine/core"
-import type { JSX } from "react"
-import { type Color } from "chroma-js"
+import { Slider, Group, Stack, Text, Paper } from "@mantine/core";
+import type { JSX } from "react";
+import { type Color } from "chroma-js";
 
 type HSLColor = {
-  h: number
-  s: number
-  l: number
-}
+  h: number;
+  s: number;
+  l: number;
+};
 
 type FormHslProps = {
-  color: Color
-  onChange: (color: Color) => void
-}
+  color: Color;
+  onChange: (color: Color) => void;
+};
 
 export function FormHsl({ color, onChange }: FormHslProps): JSX.Element {
   //const [previewColor, setPreviewColor] = useState(initialColor)
 
   const handleHSLChange = (key: keyof HSLColor, value: number): void => {
-    const newColor = color.set(`hsl.${key}`, value)
+    const newColor = color.set(`hsl.${key}`, value);
 
-    onChange(newColor)
-  }
+    onChange(newColor);
+  };
 
   return (
     <Paper className="bg-white p-4 rounded-md shadow-md">
@@ -79,5 +79,5 @@ export function FormHsl({ color, onChange }: FormHslProps): JSX.Element {
         </div>
       </Stack>
     </Paper>
-  )
+  );
 }

@@ -1,35 +1,35 @@
-import React from "react"
-import { Slider, Group, Stack, Text, Paper } from "@mantine/core"
-import { useState } from "react"
+import React from "react";
+import { Slider, Group, Stack, Text, Paper } from "@mantine/core";
+import { useState } from "react";
 //import { hexToOklch, oklchToHex } from "../utils/colorConverters"
-import { type Color } from "chroma-js"
+import { type Color } from "chroma-js";
 
 type OKLCHColor = {
-  l: number
-  c: number
-  h: number
-}
+  l: number;
+  c: number;
+  h: number;
+};
 
 type FormOklchProps = {
-  initialColor: Color
-  onSubmit: (color: Color) => void
-}
+  initialColor: Color;
+  onSubmit: (color: Color) => void;
+};
 
 export function FormOklch({
   initialColor,
   onSubmit,
 }: FormOklchProps): React.JSX.Element {
-  const [oklchValues, setOklchValues] = useState(initialColor)
+  const [oklchValues, setOklchValues] = useState(initialColor);
 
   //const [previewColor, setPreviewColor] = useState(initialColor)
 
   const handleOklchChange = (key: keyof OKLCHColor, value: number): void => {
-    const divider = key === "l" ? 100 : 1
-    const newColor = oklchValues.set(`oklch.${key}`, value / divider)
-    setOklchValues(newColor)
+    const divider = key === "l" ? 100 : 1;
+    const newColor = oklchValues.set(`oklch.${key}`, value / divider);
+    setOklchValues(newColor);
 
-    onSubmit(newColor)
-  }
+    onSubmit(newColor);
+  };
 
   return (
     <Paper className="bg-white p-4 rounded-md shadow-md">
@@ -89,5 +89,5 @@ export function FormOklch({
         </div>
       </Stack>
     </Paper>
-  )
+  );
 }

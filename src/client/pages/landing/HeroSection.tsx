@@ -1,4 +1,4 @@
-import { CTAButton } from "./CTAButton"
+import { CTAButton } from "./CTAButton";
 
 export const HeroSection = () => {
   return (
@@ -100,5 +100,5 @@ export const HeroSection = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

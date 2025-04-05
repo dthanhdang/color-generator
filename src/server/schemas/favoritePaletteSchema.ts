@@ -1,21 +1,21 @@
-import { integerSchema } from "@meow-meow-dev/server-utilities/validation"
-import * as v from "valibot"
+import { integerSchema } from "@meow-meow-dev/server-utilities/validation";
+import * as v from "valibot";
 import {
   hslColorComponentsSchema,
   rgbColorComponentsSchema,
-} from "./colorSchema.js"
+} from "./colorSchema.js";
 
-const hslColorSpaceSchema = v.literal("hsl")
+const hslColorSpaceSchema = v.literal("hsl");
 
-const oklchColorSpaceSchema = v.literal("oklch")
+const oklchColorSpaceSchema = v.literal("oklch");
 
-const rgbColorSpaceSchema = v.literal("rgb")
+const rgbColorSpaceSchema = v.literal("rgb");
 
 export const colorSpaceSchema = v.union([
   hslColorSpaceSchema,
   oklchColorSpaceSchema,
   rgbColorSpaceSchema,
-])
+]);
 
 const generatedColorsSchema = v.union([
   v.strictObject({
@@ -30,7 +30,7 @@ const generatedColorsSchema = v.union([
     colorsComponents: v.array(rgbColorComponentsSchema),
     colorSpace: rgbColorSpaceSchema,
   }),
-])
+]);
 
 const baseColorSchema = v.union([
   v.strictObject({
@@ -45,7 +45,7 @@ const baseColorSchema = v.union([
     colorComponents: rgbColorComponentsSchema,
     colorSpace: rgbColorSpaceSchema,
   }),
-])
+]);
 
 const harmonyTypeSchema = v.picklist([
   "monochromatic",
@@ -54,61 +54,61 @@ const harmonyTypeSchema = v.picklist([
   "triadic",
   "analogous",
   "tetradic",
-])
+]);
 
 const commonPaletteFieldsSchema = v.strictObject({
   generatedColors: generatedColorsSchema,
   id: integerSchema,
   userId: integerSchema,
-})
+});
 
 export const favoriteHarmonyPaletteGeneratorSchema = v.strictObject({
   baseColor: baseColorSchema,
   harmonyType: harmonyTypeSchema,
   type: v.literal("harmony"),
-})
+});
 
 export const favoriteHarmonyPaletteSchema = v.strictObject({
   ...commonPaletteFieldsSchema.entries,
   generator: favoriteHarmonyPaletteGeneratorSchema,
-})
+});
 
 export const favoriteColorPickerPaletteGeneratorSchema = v.strictObject({
   type: v.literal("color_picker"),
-})
+});
 
 export const favoriteColorPickerPaletteSchema = v.strictObject({
   ...commonPaletteFieldsSchema.entries,
   generator: favoriteColorPickerPaletteGeneratorSchema,
-})
+});
 
 export const favoriteRandomPaletteGeneratorSchema = v.strictObject({
   type: v.literal("random"),
-})
+});
 
 export const favoriteRandomPaletteSchema = v.strictObject({
   ...commonPaletteFieldsSchema.entries,
   generator: favoriteRandomPaletteGeneratorSchema,
-})
+});
 
 export const favoriteScalePaletteGeneratorSchema = v.strictObject({
   baseColor: baseColorSchema,
   type: v.literal("scale"),
-})
+});
 
 export const favoriteScalePaletteSchema = v.strictObject({
   ...commonPaletteFieldsSchema.entries,
   generator: favoriteScalePaletteGeneratorSchema,
-})
+});
 
 export const favoritePaletteGeneratorSchema = v.variant("type", [
   favoriteColorPickerPaletteGeneratorSchema,
   favoriteHarmonyPaletteGeneratorSchema,
   favoriteRandomPaletteGeneratorSchema,
   favoriteScalePaletteGeneratorSchema,
-])
+]);
 
 export const favoritePaletteSchema = v.strictObject({
   ...commonPaletteFieldsSchema.entries,
   generator: favoritePaletteGeneratorSchema,
-})
+});

@@ -1,1 +1,1 @@
-export * from "./ToggleFavoritePaletteButton.js"
+export * from "./ToggleFavoritePaletteButton.js";

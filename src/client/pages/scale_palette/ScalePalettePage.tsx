@@ -1,23 +1,25 @@
 //import { Form } from "./Form"
 
-import { useState } from "react"
-import chroma, { type Color } from "chroma-js"
-import { Button, Select } from "@mantine/core"
+import { useState } from "react";
+import chroma, { type Color } from "chroma-js";
+import { Button, Select } from "@mantine/core";
 
-import { ColorPalette } from "../../ColorPalette"
-import { Form } from "../../Form"
-import { FormHsl } from "../../components/FormHsl"
-import { FormOklch } from "../../components/FormOklch"
-import type { RegisteredUser } from "#client/types"
-import { useGetFavoritePalette } from "#client/hooks"
-import { ToggleFavoritePaletteButton } from "#components/toggle_favorite_palette_button/ToggleFavoritePaletteButton.tsx"
-import { useInitialGeneratorState } from "./useInitialGeneratorState.ts"
-import { getColorScale } from "./getColorScale.ts"
+import { ColorPalette } from "../../ColorPalette";
+import { Form } from "../../Form";
+import { FormHsl } from "../../components/FormHsl";
+import { FormOklch } from "../../components/FormOklch";
+import { PageStyle } from "#components/PageStyle.tsx";
+
+import type { RegisteredUser } from "#client/types";
+import { useGetFavoritePalette } from "#client/hooks";
+import { ToggleFavoritePaletteButton } from "#components/toggle_favorite_palette_button/ToggleFavoritePaletteButton.tsx";
+import { useInitialGeneratorState } from "./useInitialGeneratorState.ts";
+import { getColorScale } from "./getColorScale.ts";
 
 type ScalePaletteGeneratorProps = {
-  paletteId: number | undefined
-  user: RegisteredUser | undefined
-}
+  paletteId: number | undefined;
+  user: RegisteredUser | undefined;
+};
 
 export function ScalePaletteGenerator({
   paletteId,
@@ -27,49 +29,42 @@ export function ScalePaletteGenerator({
     generatorType: "scale",
     paletteId,
     user,
-  })
+  });
   const { initialColor, initialColorMode, initialPalette } =
     useInitialGeneratorState({
       favoritePalette,
-    })
+    });
 
-  const [paletteWasModified, setPaletteWasModified] = useState(false)
+  const [paletteWasModified, setPaletteWasModified] = useState(false);
 
-  const [color, setColor] = useState(initialColor)
-  const [colorMode, setColorMode] = useState(initialColorMode)
+  const [color, setColor] = useState(initialColor);
+  const [colorMode, setColorMode] = useState(initialColorMode);
 
-  const [palette, setPalette] = useState(initialPalette)
+  const [palette, setPalette] = useState(initialPalette);
 
   const handleColorSubmit = (newColor: Color) => {
     //const newPalette = getColorScale(newColor, 10)
     if (chroma.valid(newColor)) {
-      setColor(newColor)
+      setColor(newColor);
       //if (paletteMode === "scale") {
-      setPalette(getColorScale({ baseColor: newColor, count: 11 }))
-      setPaletteWasModified(true)
+      setPalette(getColorScale({ baseColor: newColor, count: 11 }));
+      setPaletteWasModified(true);
     } else {
-      console.error(`Invalid color : ${newColor}`)
+      console.error(`Invalid color : ${newColor}`);
     }
-  }
+  };
 
   const handleModeChange = (value: string | null) => {
     if (value === "hex" || value === "hsl" || value === "oklch")
-      setColorMode(value)
-  }
+      setColorMode(value);
+  };
 
   function handleGenerateRandomBaseColor(): void {
-    handleColorSubmit(chroma.random())
+    handleColorSubmit(chroma.random());
   }
 
   return (
-    <main className="p-4">
-      <h1 className="text-center text-5xl font-bold my-8">
-        Your{" "}
-        <span style={{ color: "oklch(0.511 0.262 276.966)" }}>
-          Scale Palette
-        </span>{" "}
-        Generator
-      </h1>
+    <PageStyle titleHighlight="Scale Palette">
       <div className="mb-4">
         <Select
           data={[
@@ -116,6 +111,6 @@ export function ScalePaletteGenerator({
 
         <ColorPalette palette={palette} />
       </div>
-    </main>
-  )
+    </PageStyle>
+  );
 }

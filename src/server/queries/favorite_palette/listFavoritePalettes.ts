@@ -1,10 +1,10 @@
-import type { FavoritePalette, DB } from "#server/types/database"
-import type { Selectable } from "kysely"
+import type { FavoritePalette, DB } from "#server/types/database";
+import type { Selectable } from "kysely";
 
-import { listQuery } from "@meow-meow-dev/server-utilities/queries"
-import { allFields } from "./allFields.ts"
+import { listQuery } from "@meow-meow-dev/server-utilities/queries";
+import { allFields } from "./allFields.ts";
 
-type ListFavoritePalettesProps = { userId: number }
+type ListFavoritePalettesProps = { userId: number };
 
 export const listFavoritePalettes = listQuery<
   DB,
@@ -16,4 +16,4 @@ export const listFavoritePalettes = listQuery<
     .select(allFields)
     .where("userId", "=", userId)
     .execute()
-)
+);

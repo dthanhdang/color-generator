@@ -12,7 +12,7 @@ import { storeOTP as storeOTPBase } from "./storeOTP.js";
 import { validateOTP } from "./validateOTP.js";
 
 async function storeOTP(
-  props: Omit<StoreOTPProps["otp"], "code" | "DB">,
+  props: Omit<StoreOTPProps["otp"], "code" | "DB">
 ): Promise<void> {
   await storeOTPBase({
     db: env.DB,
@@ -33,8 +33,8 @@ describe("validateOTP", () => {
             code: "123456",
             db: env.DB,
             email,
-          }),
-        ),
+          })
+        )
       ).toEqual("invalid_or_expired_code");
     }
   });
@@ -54,7 +54,7 @@ describe("validateOTP", () => {
             db: env.DB,
             email,
           })
-        ).isOk,
+        ).isOk
       ).toBeTruthy();
     }
   });
@@ -73,8 +73,8 @@ describe("validateOTP", () => {
             code: "123457",
             db: env.DB,
             email,
-          }),
-        ),
+          })
+        )
       ).toEqual("invalid_or_expired_code");
     }
   });
@@ -93,8 +93,8 @@ describe("validateOTP", () => {
             code: "123456",
             db: env.DB,
             email,
-          }),
-        ),
+          })
+        )
       ).toEqual("invalid_or_expired_code");
     }
   });
@@ -112,7 +112,7 @@ describe("validateOTP", () => {
           code: "123456",
           db: env.DB,
           email,
-        }),
+        })
       );
 
       expect(
@@ -121,8 +121,8 @@ describe("validateOTP", () => {
             code: "123456",
             db: env.DB,
             email,
-          }),
-        ),
+          })
+        )
       ).toEqual("invalid_or_expired_code");
     }
   });
@@ -141,8 +141,8 @@ describe("validateOTP", () => {
             code: "123457",
             db: env.DB,
             email,
-          }),
-        ),
+          })
+        )
       ).toEqual("invalid_or_expired_code");
 
       await unsafeUnwrap(
@@ -150,7 +150,7 @@ describe("validateOTP", () => {
           code: "123456",
           db: env.DB,
           email,
-        }),
+        })
       );
     }
   });

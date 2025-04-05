@@ -1,1 +1,1 @@
-export * from "./FavoritePalettesPage.jsx"
+export * from "./FavoritePalettesPage.jsx";

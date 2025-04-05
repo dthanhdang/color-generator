@@ -1,11 +1,11 @@
-import type { RegisteredUser } from "#client/types"
-import type { JSX } from "react"
-import { Stack } from "@mantine/core"
-import { Palette } from "./Palette.jsx"
+import type { RegisteredUser } from "#client/types";
+import type { JSX } from "react";
+import { Stack } from "@mantine/core";
+import { Palette } from "./Palette.jsx";
 
 type FavoritePalettesPageProps = {
-  user: RegisteredUser
-}
+  user: RegisteredUser;
+};
 
 export function FavoritePalettesPage({
   user,
@@ -22,5 +22,5 @@ export function FavoritePalettesPage({
         </Stack>
       )}
     </main>
-  )
+  );
 }

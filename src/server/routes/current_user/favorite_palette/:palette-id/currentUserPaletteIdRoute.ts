@@ -1,15 +1,15 @@
-import { buildHono } from "#server/hono"
-import { vValidator } from "@meow-meow-dev/server-utilities/validation"
+import { buildHono } from "#server/hono";
+import { vValidator } from "@meow-meow-dev/server-utilities/validation";
 import {
   deleteUserFavoritePaletteHandler,
   deleteUserFavoritePaletteParamsSchema,
-} from "./deleteUserFavoritePaletteHandler.ts"
-import { checkPermissions } from "#server/auth/jwt"
+} from "./deleteUserFavoritePaletteHandler.ts";
+import { checkPermissions } from "#server/auth/jwt";
 import {
   authProps,
   dbProps,
   defaultResponse,
-} from "@meow-meow-dev/server-utilities/hono"
+} from "@meow-meow-dev/server-utilities/hono";
 
 export const currentUserPaletteIdRoute = buildHono().delete(
   "/",
@@ -24,4 +24,4 @@ export const currentUserPaletteIdRoute = buildHono().delete(
         ...c.req.valid("param"),
       })
     )
-)
+);

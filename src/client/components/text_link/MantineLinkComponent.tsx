@@ -6,7 +6,7 @@ import * as React from "react";
 export type MantineAnchorProps = Omit<AnchorProps, "href"> & {};
 
 export function MantineLinkComponent(
-  props: MantineAnchorProps,
+  props: MantineAnchorProps
 ): React.JSX.Element {
   return <Anchor {...props} />;
 }

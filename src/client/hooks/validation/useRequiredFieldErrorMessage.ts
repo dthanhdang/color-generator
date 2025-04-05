@@ -1,3 +1,3 @@
 export function useRequiredFieldErrorMessage(): string {
-  return "This field is required"
+  return "This field is required";
 }
