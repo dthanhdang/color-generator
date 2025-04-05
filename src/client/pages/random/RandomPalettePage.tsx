@@ -7,9 +7,17 @@ import { RandomColor } from "#components/RandomColor.tsx"
 import { getHarmonyColor, HarmonyType } from "#utils/colorHarmony.ts"
 import { getColorName } from "#utils/getColorName.ts"
 import { ColorPalette, ColorPaletteItem } from "../../ColorPalette"
+import { ToggleFavoritePaletteButton } from "#components/toggle_favorite_palette_button/ToggleFavoritePaletteButton.tsx"
+import type { RegisteredUser } from "#client/types"
 
-export function RandomPalette() {
+type RandomPaletteProps = {
+  paletteId: number | undefined
+  user: RegisteredUser | undefined
+}
+
+export function RandomPalette({ paletteId, user }: RandomPaletteProps) {
   const [palette, setPalette] = useState<ColorPaletteItem[]>([])
+  const [paletteWasModified, setPaletteWasModified] = useState(false)
 
   function getHarmonyPalette(
     baseColor: Color,
@@ -31,6 +39,11 @@ export function RandomPalette() {
     )
   }
 
+  function handlePaletteGenerated(palette: ColorPaletteItem[]): void {
+    setPalette(palette)
+    setPaletteWasModified(true)
+  }
+
   return (
     <main className="container mx-auto p-4">
       <h1 className="text-center text-5xl font-bold my-8">
@@ -42,11 +55,20 @@ export function RandomPalette() {
       </h1>
 
       <RandomColor
-        onPaletteGenerated={setPalette}
+        onPaletteGenerated={handlePaletteGenerated}
         getHarmonyPalette={getHarmonyPalette}
       />
 
-      <div className="mt-8">
+      <div className="mt-8 relative">
+        <ToggleFavoritePaletteButton
+          className="absolute top-0 right-0"
+          fromRoute={undefined}
+          initialFavoritePaletteId={paletteWasModified ? undefined : paletteId}
+          generator={{ type: "random" }}
+          palette={palette}
+          userId={user?.id}
+        />
+
         <h2 className="text-xl font-bold mb-4"></h2>
         <ColorPalette palette={palette} />
       </div>

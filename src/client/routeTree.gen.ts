@@ -14,8 +14,13 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as ScalePaletteIndexImport } from './routes/scale-palette/index'
 import { Route as RandomPaletteIndexImport } from './routes/random-palette/index'
+import { Route as MyPalettesIndexImport } from './routes/my-palettes/index'
 import { Route as ImagePickerIndexImport } from './routes/image-picker/index'
 import { Route as HarmonyPaletteIndexImport } from './routes/harmony-palette/index'
+import { Route as AuthSignUpImport } from './routes/auth/sign-up'
+import { Route as AuthSignInImport } from './routes/auth/sign-in'
+import { Route as AuthSignUpIndexImport } from './routes/auth/sign-up/index'
+import { Route as AuthSignInIndexImport } from './routes/auth/sign-in/index'
 
 // Create/Update Routes
 
@@ -37,6 +42,12 @@ const RandomPaletteIndexRoute = RandomPaletteIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const MyPalettesIndexRoute = MyPalettesIndexImport.update({
+  id: '/my-palettes/',
+  path: '/my-palettes/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ImagePickerIndexRoute = ImagePickerIndexImport.update({
   id: '/image-picker/',
   path: '/image-picker/',
@@ -49,6 +60,30 @@ const HarmonyPaletteIndexRoute = HarmonyPaletteIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthSignUpRoute = AuthSignUpImport.update({
+  id: '/auth/sign-up',
+  path: '/auth/sign-up',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthSignInRoute = AuthSignInImport.update({
+  id: '/auth/sign-in',
+  path: '/auth/sign-in',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthSignUpIndexRoute = AuthSignUpIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthSignUpRoute,
+} as any)
+
+const AuthSignInIndexRoute = AuthSignInIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthSignInRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -58,6 +93,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/sign-in': {
+      id: '/auth/sign-in'
+      path: '/auth/sign-in'
+      fullPath: '/auth/sign-in'
+      preLoaderRoute: typeof AuthSignInImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/sign-up': {
+      id: '/auth/sign-up'
+      path: '/auth/sign-up'
+      fullPath: '/auth/sign-up'
+      preLoaderRoute: typeof AuthSignUpImport
       parentRoute: typeof rootRoute
     }
     '/harmony-palette/': {
@@ -74,6 +123,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ImagePickerIndexImport
       parentRoute: typeof rootRoute
     }
+    '/my-palettes/': {
+      id: '/my-palettes/'
+      path: '/my-palettes'
+      fullPath: '/my-palettes'
+      preLoaderRoute: typeof MyPalettesIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/random-palette/': {
       id: '/random-palette/'
       path: '/random-palette'
@@ -88,73 +144,143 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScalePaletteIndexImport
       parentRoute: typeof rootRoute
     }
+    '/auth/sign-in/': {
+      id: '/auth/sign-in/'
+      path: '/'
+      fullPath: '/auth/sign-in/'
+      preLoaderRoute: typeof AuthSignInIndexImport
+      parentRoute: typeof AuthSignInImport
+    }
+    '/auth/sign-up/': {
+      id: '/auth/sign-up/'
+      path: '/'
+      fullPath: '/auth/sign-up/'
+      preLoaderRoute: typeof AuthSignUpIndexImport
+      parentRoute: typeof AuthSignUpImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AuthSignInRouteChildren {
+  AuthSignInIndexRoute: typeof AuthSignInIndexRoute
+}
+
+const AuthSignInRouteChildren: AuthSignInRouteChildren = {
+  AuthSignInIndexRoute: AuthSignInIndexRoute,
+}
+
+const AuthSignInRouteWithChildren = AuthSignInRoute._addFileChildren(
+  AuthSignInRouteChildren,
+)
+
+interface AuthSignUpRouteChildren {
+  AuthSignUpIndexRoute: typeof AuthSignUpIndexRoute
+}
+
+const AuthSignUpRouteChildren: AuthSignUpRouteChildren = {
+  AuthSignUpIndexRoute: AuthSignUpIndexRoute,
+}
+
+const AuthSignUpRouteWithChildren = AuthSignUpRoute._addFileChildren(
+  AuthSignUpRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth/sign-in': typeof AuthSignInRouteWithChildren
+  '/auth/sign-up': typeof AuthSignUpRouteWithChildren
   '/harmony-palette': typeof HarmonyPaletteIndexRoute
   '/image-picker': typeof ImagePickerIndexRoute
+  '/my-palettes': typeof MyPalettesIndexRoute
   '/random-palette': typeof RandomPaletteIndexRoute
   '/scale-palette': typeof ScalePaletteIndexRoute
+  '/auth/sign-in/': typeof AuthSignInIndexRoute
+  '/auth/sign-up/': typeof AuthSignUpIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/harmony-palette': typeof HarmonyPaletteIndexRoute
   '/image-picker': typeof ImagePickerIndexRoute
+  '/my-palettes': typeof MyPalettesIndexRoute
   '/random-palette': typeof RandomPaletteIndexRoute
   '/scale-palette': typeof ScalePaletteIndexRoute
+  '/auth/sign-in': typeof AuthSignInIndexRoute
+  '/auth/sign-up': typeof AuthSignUpIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/auth/sign-in': typeof AuthSignInRouteWithChildren
+  '/auth/sign-up': typeof AuthSignUpRouteWithChildren
   '/harmony-palette/': typeof HarmonyPaletteIndexRoute
   '/image-picker/': typeof ImagePickerIndexRoute
+  '/my-palettes/': typeof MyPalettesIndexRoute
   '/random-palette/': typeof RandomPaletteIndexRoute
   '/scale-palette/': typeof ScalePaletteIndexRoute
+  '/auth/sign-in/': typeof AuthSignInIndexRoute
+  '/auth/sign-up/': typeof AuthSignUpIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth/sign-in'
+    | '/auth/sign-up'
     | '/harmony-palette'
     | '/image-picker'
+    | '/my-palettes'
     | '/random-palette'
     | '/scale-palette'
+    | '/auth/sign-in/'
+    | '/auth/sign-up/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/harmony-palette'
     | '/image-picker'
+    | '/my-palettes'
     | '/random-palette'
     | '/scale-palette'
+    | '/auth/sign-in'
+    | '/auth/sign-up'
   id:
     | '__root__'
     | '/'
+    | '/auth/sign-in'
+    | '/auth/sign-up'
     | '/harmony-palette/'
     | '/image-picker/'
+    | '/my-palettes/'
     | '/random-palette/'
     | '/scale-palette/'
+    | '/auth/sign-in/'
+    | '/auth/sign-up/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthSignInRoute: typeof AuthSignInRouteWithChildren
+  AuthSignUpRoute: typeof AuthSignUpRouteWithChildren
   HarmonyPaletteIndexRoute: typeof HarmonyPaletteIndexRoute
   ImagePickerIndexRoute: typeof ImagePickerIndexRoute
+  MyPalettesIndexRoute: typeof MyPalettesIndexRoute
   RandomPaletteIndexRoute: typeof RandomPaletteIndexRoute
   ScalePaletteIndexRoute: typeof ScalePaletteIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthSignInRoute: AuthSignInRouteWithChildren,
+  AuthSignUpRoute: AuthSignUpRouteWithChildren,
   HarmonyPaletteIndexRoute: HarmonyPaletteIndexRoute,
   ImagePickerIndexRoute: ImagePickerIndexRoute,
+  MyPalettesIndexRoute: MyPalettesIndexRoute,
   RandomPaletteIndexRoute: RandomPaletteIndexRoute,
   ScalePaletteIndexRoute: ScalePaletteIndexRoute,
 }
@@ -170,8 +296,11 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/auth/sign-in",
+        "/auth/sign-up",
         "/harmony-palette/",
         "/image-picker/",
+        "/my-palettes/",
         "/random-palette/",
         "/scale-palette/"
       ]
@@ -179,17 +308,40 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.ts"
     },
+    "/auth/sign-in": {
+      "filePath": "auth/sign-in.ts",
+      "children": [
+        "/auth/sign-in/"
+      ]
+    },
+    "/auth/sign-up": {
+      "filePath": "auth/sign-up.ts",
+      "children": [
+        "/auth/sign-up/"
+      ]
+    },
     "/harmony-palette/": {
-      "filePath": "harmony-palette/index.ts"
+      "filePath": "harmony-palette/index.tsx"
     },
     "/image-picker/": {
-      "filePath": "image-picker/index.ts"
+      "filePath": "image-picker/index.tsx"
+    },
+    "/my-palettes/": {
+      "filePath": "my-palettes/index.tsx"
     },
     "/random-palette/": {
-      "filePath": "random-palette/index.ts"
+      "filePath": "random-palette/index.tsx"
     },
     "/scale-palette/": {
-      "filePath": "scale-palette/index.ts"
+      "filePath": "scale-palette/index.tsx"
+    },
+    "/auth/sign-in/": {
+      "filePath": "auth/sign-in/index.tsx",
+      "parent": "/auth/sign-in"
+    },
+    "/auth/sign-up/": {
+      "filePath": "auth/sign-up/index.tsx",
+      "parent": "/auth/sign-up"
     }
   }
 }

@@ -1,14 +1,14 @@
-import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import "./index.css"
 //import { App } from "./App.tsx"
-import { MantineProvider } from "@mantine/core"
 //import { LandingPage } from "#pages/landing"
 import { createRouter, RouterProvider } from "@tanstack/react-router"
 import { routeTree } from "./routeTree.gen"
+import { AppWrapper } from "#client/components/app_wrapper"
+import { queryClient } from "#client/tanstack/query/client"
 
 // Create a new router instance
-const router = createRouter({ routeTree })
+const router = createRouter({ context: { queryClient }, routeTree })
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
@@ -18,11 +18,7 @@ declare module "@tanstack/react-router" {
 }
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <MantineProvider>
-      {/*<App />*/}
-      {/*<LandingPage />*/}
-      <RouterProvider router={router} />
-    </MantineProvider>
-  </StrictMode>
+  <AppWrapper queryClient={queryClient}>
+    <RouterProvider router={router} />
+  </AppWrapper>
 )

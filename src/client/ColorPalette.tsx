@@ -2,7 +2,14 @@ import { useState } from "react"
 import { SingleColor } from "./SingleColor"
 import { type Color } from "chroma-js"
 import { Copy, Check } from "lucide-react"
-import { Card, Text, CopyButton, ActionIcon, Tooltip } from "@mantine/core"
+import {
+  Card,
+  Text,
+  CopyButton,
+  ActionIcon,
+  Tooltip,
+  Group,
+} from "@mantine/core"
 
 export type ColorPaletteItem = {
   id: string
@@ -36,9 +43,11 @@ export function ColorPalette({ palette }: ColorPaletteProps) {
   }
   return (
     <div>
-      <p className="text-sm text-gray-600 text-center mb-3 px-4">
-        Click on any color below to view its detailed information
-      </p>
+      <Group justify="center" className="mb-3 px-4">
+        <p className="text-sm text-gray-600 text-center">
+          Click on any color below to view its detailed information
+        </p>
+      </Group>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-4 p-4">
         {palette.map((item, index) => (
           <SingleColor

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import chroma from "chroma-js"
 
-import { Select } from "@mantine/core"
+import { Button, Select } from "@mantine/core"
 
 import { nanoid } from "nanoid"
 
@@ -13,9 +13,10 @@ import { Form } from "../../Form"
 import { FormOklch } from "../../components/FormOklch"
 import { FormHsl } from "../../components/FormHsl"
 import { type Color } from "chroma-js"
-
-type ColorMode = "hex" | "hsl" | "oklch"
-//type PaletteMode = "scale" | "harmony" | "image" | "random"
+import type { RegisteredUser } from "#client/types"
+import { useGetFavoritePalette } from "#client/hooks"
+import { ToggleFavoritePaletteButton } from "#components/toggle_favorite_palette_button/ToggleFavoritePaletteButton.tsx"
+import { useInitialGeneratorState } from "./useInitialGeneratorState.ts"
 
 function getHarmonyPalette(
   baseColor: Color,
@@ -35,20 +36,34 @@ function getHarmonyPalette(
   })
 }
 
-export function HarmonyPalette() {
-  const [color, setColor] = useState<Color>(chroma("#b4f2ce"))
-  const [colorMode, setColorMode] = useState<ColorMode>("hex")
+type HarmonyPaletteProps = {
+  paletteId: number | undefined
+  user: RegisteredUser | undefined
+}
 
-  const [harmonyType, setHarmonyType] = useState<HarmonyType>("monochromatic")
+export function HarmonyPalette({ paletteId, user }: HarmonyPaletteProps) {
+  const favoritePalette = useGetFavoritePalette({
+    generatorType: "harmony",
+    paletteId,
+    user,
+  })
+  const { initialColor, initialColorMode, initialHarmonyType, initialPalette } =
+    useInitialGeneratorState({
+      favoritePalette,
+    })
 
-  const [palette, setPalette] = useState<ColorPaletteItem[]>(() =>
-    getHarmonyPalette(color, harmonyType, 5)
-  )
+  const [paletteWasModified, setPaletteWasModified] = useState(false)
+  const [harmonyType, setHarmonyType] =
+    useState<HarmonyType>(initialHarmonyType)
+  const [colorMode, setColorMode] = useState(initialColorMode)
+  const [palette, setPalette] = useState(initialPalette)
+  const [color, setColor] = useState(initialColor)
 
   const handleColorSubmit = (newColor: Color) => {
     if (chroma.valid(newColor)) {
       setColor(newColor)
       setPalette(getHarmonyPalette(newColor, harmonyType, 5))
+      setPaletteWasModified(true)
     } else {
       console.error(`Invalid color: ${newColor}`)
     }
@@ -63,6 +78,11 @@ export function HarmonyPalette() {
     setHarmonyType(value)
 
     setPalette(getHarmonyPalette(color, value, 5))
+    setPaletteWasModified(true)
+  }
+
+  function handleGenerateRandomBaseColor(): void {
+    handleColorSubmit(chroma.random())
   }
 
   return (
@@ -90,20 +110,41 @@ export function HarmonyPalette() {
         <HarmonySelector value={harmonyType} onChange={handleHarmonyChange} />
       </div>
 
-      <div className="mt-4">
-        {" "}
+      <div className="mt-4 relative">
+        <Button
+          className="absolute top-0 right-0"
+          onClick={handleGenerateRandomBaseColor}
+          variant="subtle"
+        >
+          Random color
+        </Button>
+
         {colorMode === "hex" && (
           <Form onSubmit={handleColorSubmit} initialColor={color} />
         )}
         {colorMode === "hsl" && (
-          <FormHsl initialColor={color} onSubmit={handleColorSubmit} />
+          <FormHsl color={color} onChange={handleColorSubmit} />
         )}
         {colorMode === "oklch" && (
           <FormOklch initialColor={color} onSubmit={handleColorSubmit} />
         )}
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 relative">
+        <ToggleFavoritePaletteButton
+          className="absolute top-0 right-0"
+          fromRoute="/harmony-palette"
+          initialFavoritePaletteId={paletteWasModified ? undefined : paletteId}
+          generator={{
+            baseColor: color,
+            colorSpace: colorMode === "hex" ? "rgb" : colorMode,
+            harmonyType,
+            type: "harmony",
+          }}
+          palette={palette}
+          userId={user?.id}
+        />
+
         <h2 className="text-xl font-bold mb-4">{harmonyType}</h2>
         <ColorPalette palette={palette} />
       </div>

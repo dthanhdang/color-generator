@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { cn } from "../../lib/utils"
+import { Link } from "@tanstack/react-router"
 
 export const Header = () => {
   const [scrolled, setScrolled] = useState(false)
@@ -56,12 +57,12 @@ export const Header = () => {
         </nav>
 
         <div className="flex items-center space-x-4">
-          <a
-            href="#"
+          <Link
+            to="/auth/sign-in"
             className="text-sm font-medium hover:text-black/70 transition-colors hidden md:block"
           >
             Log in
-          </a>
+          </Link>
           <a
             href="#"
             className="text-sm font-medium bg-black text-white px-4 py-2 rounded-full transition-all hover:bg-opacity-90"

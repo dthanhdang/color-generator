@@ -13,10 +13,17 @@ import { getColorName } from "#utils/getColorName.ts"
 import { Form } from "../../Form"
 import { FormOklch } from "../../components/FormOklch"
 import { FormHsl } from "#components/FormHsl.tsx"
+import { ToggleFavoritePaletteButton } from "#components/toggle_favorite_palette_button/ToggleFavoritePaletteButton.tsx"
+import type { RegisteredUser } from "#server/types"
 
 type ColorMode = "hex" | "hsl" | "oklch"
 
-export function ImagePicker() {
+type ImagePickerProps = {
+  user: RegisteredUser | undefined
+}
+
+export function ImagePicker({ user }: ImagePickerProps) {
+  console.log({ user })
   const [color, setColor] = useState(chroma("#b4f2ce"))
   const [colorMode, setColorMode] = useState<ColorMode>("hex")
 
@@ -39,6 +46,7 @@ export function ImagePicker() {
   }
 
   const handleImageColorsExtracted = (colors: string[]) => {
+    console.log("handleImageColorsExtracted")
     setExtractedImageColors(colors)
 
     setPalette(
@@ -65,7 +73,18 @@ export function ImagePicker() {
         />
       </div>
       {extractedImageColors.length > 0 && (
-        <div className="mt-8">
+        <div className="mt-8 relative">
+          <ToggleFavoritePaletteButton
+            className="absolute top-0 right-0"
+            fromRoute={undefined}
+            initialFavoritePaletteId={undefined}
+            generator={{
+              type: "color_picker",
+            }}
+            palette={palette}
+            userId={user?.id}
+          />
+
           <h2 className="text-xl font-bold mb-4">Extracted Colors</h2>
           <ColorPalette palette={palette} />
         </div>
@@ -87,7 +106,7 @@ export function ImagePicker() {
           <Form onSubmit={handleColorSubmit} initialColor={color} />
         )}
         {colorMode === "hsl" && (
-          <FormHsl initialColor={color} onSubmit={handleColorSubmit} />
+          <FormHsl color={color} onChange={handleColorSubmit} />
         )}
         {colorMode === "oklch" && (
           <FormOklch initialColor={color} onSubmit={handleColorSubmit} />

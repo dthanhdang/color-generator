@@ -1,0 +1,16 @@
+name = "color-generator"
+pages_build_output_dir = "./dist"
+compatibility_flags = [ "nodejs_compat" ]
+compatibility_date = "2024-09-23"
+
+services = [
+  { binding = "COLOR_GENERATOR", service = "color-generator" },
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "color-generator"
+database_id = "e7de210f-b6ac-4d92-bf9b-ec73ff5ff90d"
+
+[vars]
+CF_PAGES_URL="http://localhost:5173"

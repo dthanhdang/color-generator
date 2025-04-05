@@ -61,6 +61,7 @@ export function getTriadic(baseColor: Color, count: number = 3): Color[] {
   const color2 = chroma.hsl(h2, s, l)
   const color3 = chroma.hsl(h3, s, l)
 
+  console.log(baseColor.hex(), color1.hex(), count)
   const perGroup = Math.ceil(count / 3)
 
   const group1 = chroma
@@ -149,9 +150,9 @@ export function getHarmonyColor(
     case "analogous":
       return getAnalogous(baseColor, count)
     case "triadic":
-      return getTriadic(baseColor, (count = 3))
+      return getTriadic(baseColor, 3)
     case "tetradic":
-      return getTetradic(baseColor, (count = 4))
+      return getTetradic(baseColor, 4)
     default:
       return getMonochromatic(baseColor, count)
   }
