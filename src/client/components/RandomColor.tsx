@@ -33,7 +33,7 @@ export function RandomColor({
 
   useEffect(() => {
     generateRandomPalette()
-  }, [])
+  })
 
   return (
     <Stack>
