@@ -15,7 +15,7 @@ import { FormOklch } from "../../components/FormOklch"
 import { FormHsl } from "#components/FormHsl.tsx"
 import { PageStyle } from "#components/PageStyle.tsx"
 import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
-
+import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
 type ColorMode = "hex" | "hsl" | "oklch"
 
 export function ImagePicker() {
@@ -25,6 +25,8 @@ export function ImagePicker() {
   const [extractedImageColors, setExtractedImageColors] = useState<string[]>([])
 
   const [palette, setPalette] = useState<ColorPaletteItem[]>([])
+
+  const primaryColorId = palette[0]?.id
 
   const handleColorSubmit = (newColor: Color) => {
     //const newPalette = getColorScale(newColor, 10)
@@ -92,6 +94,9 @@ export function ImagePicker() {
       </div>
 
       {/*<ColorPalette palette={palette} />*/}
+      <div className="mt-12">
+        <PaletteVisualizer palette={palette} primaryColorId={primaryColorId} />
+      </div>
     </PageStyle>
   )
 }

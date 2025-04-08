@@ -16,6 +16,7 @@
     "unit_tests": "vitest --run"
   },
   "dependencies": {
+    "@mantine/charts": "^7.17.3",
     "@mantine/core": "^7.17.0",
     "@mantine/dates": "^7.17.0",
     "@mantine/form": "^7.17.0",
@@ -34,6 +35,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.8",
+    "recharts": "2",
     "tailwind-merge": "^3.0.2",
     "tailwind-preset-mantine": "^2.0.1",
     "tailwindcss": "^4.0.6",

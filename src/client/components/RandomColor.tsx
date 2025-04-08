@@ -9,7 +9,7 @@ import chroma, { type Color } from "chroma-js"
 type RandomColorProps = {
   onGeneratePalette: (
     baseColor: Color,
-    harmonyType: "analogous",
+    harmonyType: "split-complementary",
     count: number
   ) => void
 }
@@ -19,7 +19,7 @@ export function RandomColor({ onGeneratePalette }: RandomColorProps) {
 
   const handleClick = useCallback(() => {
     const baseColor = chroma.random()
-    onGeneratePalette(baseColor, "analogous", 5)
+    onGeneratePalette(baseColor, "split-complementary", 5)
   }, [onGeneratePalette])
 
   useEffect(() => {

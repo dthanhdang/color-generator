@@ -32,15 +32,26 @@ export function FormOklch({
   }
 
   return (
-    <Paper className="bg-white p-4 rounded-md shadow-md">
+    <Paper className="bg-white p-6 rounded-lg shadow-md">
       <Stack className="flex flex-col space-y-4">
         <Group className="flex justify-between items-center">
-          <Text className="text-lg font-medium">OKLCH</Text>
-          <p>{oklchValues.hex()}</p>
-          <div style={{ backgroundColor: oklchValues.hex() }} />
+          {/*<Text className="text-lg font-medium">OKLCH</Text>
+          <p>{oklchValues.hex()}</p>*/}
+          <div className="flex justify-between">
+            <span className="text-sm font-medium text-gray-500">OKLCH</span>
+            <span className="font-mono text-sm">
+              {`(${oklchValues.oklch()[0].toFixed(2)} ${oklchValues.oklch()[1].toFixed(3)} ${Math.round(oklchValues.oklch()[2])}°)`}
+            </span>
+          </div>
         </Group>
         <div>
-          <Text>Luminance : {Math.round(oklchValues.oklch()[0] * 100)}%</Text>
+          <div className="flex justify-between mb-2">
+            <Text className="text-sm font-medium text-gray-700">Luminance</Text>
+            <span className="text-blue-600 font-semibold">
+              {Math.round(oklchValues.oklch()[0] * 100)}%
+            </span>
+          </div>
+
           <Slider
             min={0}
             max={100}
@@ -52,11 +63,18 @@ export function FormOklch({
               { value: 50, label: "50%" },
               { value: 100, label: "100%" },
             ]}
+            className="h-2 bg-gradient-to-r from-gray-300 to-white rounded-full"
           />
         </div>
 
         <div>
-          <Text>Chroma : {oklchValues.oklch()[1].toFixed(3)}</Text>
+          <div className="flex justify-between mb-2">
+            <Text className="text-sm font-medium text-gray-700">Chroma</Text>
+            <span className="text-blue-600 font-semibold">
+              {oklchValues.oklch()[1].toFixed(3)}
+            </span>
+          </div>
+          {/*<Text>Chroma : {oklchValues.oklch()[1].toFixed(3)}</Text>*/}
           <Slider
             min={0}
             max={0.4}
@@ -73,7 +91,12 @@ export function FormOklch({
         </div>
 
         <div>
-          <Text>Hue : {Math.round(oklchValues.oklch()[2])}°</Text>
+          <div className="flex justify-between mb-2">
+            <Text className="text-sm font-medium text-gray-700">Hue</Text>
+            <span className="text-blue-600 font-semibold">
+              {Math.round(oklchValues.oklch()[2])}°
+            </span>
+          </div>
           <Slider
             min={0}
             max={360}

@@ -31,7 +31,7 @@ export const SingleColor = ({
   const textColor = color.luminance() > 0.5 ? "text-gray-800" : "text-gray-100"
   return (
     <div
-      className={`h-96 p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-300 ${selected ? "ring-2 ring-offset-2 ring-blue-500" : ""}`}
+      className={`h-80 p-4 rounded-lg shadow-md hover:scale-105 transition-transform duration-300 ${selected ? "ring-2 ring-offset-2 ring-blue-500" : ""}`}
       style={{ backgroundColor: color.hex() }}
       onClick={onClick}
     >

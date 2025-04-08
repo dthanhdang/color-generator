@@ -9,12 +9,18 @@ import { getColorName } from "#utils/getColorName.ts"
 //import { ColorPalette, ColorPaletteItem } from "../../ColorPalette"
 import { PageStyle } from "#components/PageStyle.tsx"
 import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
-
+import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
 export function RandomPalette() {
   const [palette, setPalette] = useState<ColorPaletteItem[]>([])
 
+  const primaryColorId = palette[0]?.id
+
   const handleGeneratePalette = useCallback(
-    (baseColor: Color, harmonyType: "analogous", count: number): void => {
+    (
+      baseColor: Color,
+      harmonyType: "split-complementary",
+      count: number
+    ): void => {
       const palette = getHarmonyColor(baseColor, harmonyType, count).map(
         (color, index) => {
           const colorObject = chroma(color)
@@ -41,6 +47,9 @@ export function RandomPalette() {
       <div className="mt-8">
         <h2 className="text-xl font-bold mb-4"></h2>
         <ColorPalette palette={palette} />
+      </div>
+      <div className="mt-12">
+        <PaletteVisualizer palette={palette} primaryColorId={primaryColorId} />
       </div>
     </PageStyle>
   )

@@ -31,7 +31,7 @@ export const Header = () => {
           className="text-xl font-semibold flex items-center space-x-2"
         >
           <div className="w-8 h-8 rounded-md bg-gradient-to-tr from-blue-500 to-teal-400"></div>
-          <span>ChromaGen</span>
+          <span>chromaxxx</span>
         </a>
 
         <nav className="hidden md:flex items-center space-x-8">

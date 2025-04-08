@@ -425,7 +425,7 @@ export const LandingPage = () => {
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
             Join thousands of designers creating beautiful color palettes with
-            ChromaGen.
+            UColorr.
           </p>
           <CTAButton
             href="#"

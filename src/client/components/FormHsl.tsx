@@ -32,15 +32,27 @@ export function FormHsl({
   }
 
   return (
-    <Paper className="bg-white p-4 rounded-md shadow-md">
+    <Paper className="bg-white p-6 rounded-md shadow-md">
       <Stack className="flex flex-col space-y-4">
         <Group className="flex justify-between items-center">
-          <Text className="text-lg font-medium">HSL</Text>
-          <p>{hslValues.hex()}</p>
+          {/*<Text className="text-lg font-medium">HSL</Text>
+          <p>{hslValues.hex()}</p>*/}
+          <div className="flex justify-between">
+            <span className="text-sm font-medium text-gray-500">HSL</span>
+            <span className="font-mono text-sm">
+              {`(${Math.round(hslValues.hsl()[0])}° ${Math.round(hslValues.hsl()[1] * 100)}% ${Math.round(hslValues.hsl()[2] * 100)}%)`}
+            </span>
+          </div>
           <div style={{ backgroundColor: hslValues.hex() }} />
         </Group>
         <div>
-          <Text>Hue : {Math.round(hslValues.hsl()[0])}°</Text>
+          <div className="flex justify-between mb-2">
+            <Text className="text-sm font-medium text-gray-700">Hue</Text>
+            <span className="text-blue-600 font-semibold">
+              {Math.round(hslValues.hsl()[0])}°
+            </span>
+          </div>
+
           <Slider
             min={0}
             max={360}
@@ -55,7 +67,16 @@ export function FormHsl({
           />
         </div>
         <div>
-          <Text>Saturation: {Math.round(hslValues.hsl()[1] * 100)}%</Text>
+          <div className="flex justify-between mb-2">
+            <Text className="text-sm font-medium text-gray-700">
+              Saturation
+            </Text>
+            <span className="text-blue-600 font-semibold">
+              {Math.round(hslValues.hsl()[1] * 100)}%
+            </span>
+          </div>
+
+          {/*<Text>Saturation: {Math.round(hslValues.hsl()[1] * 100)}%</Text>*/}
           <Slider
             min={0}
             max={100}
@@ -71,7 +92,13 @@ export function FormHsl({
         </div>
 
         <div>
-          <Text>Lightness: {Math.round(hslValues.hsl()[2] * 100)}%</Text>
+          <div className="flex justify-between mb-2">
+            <Text className="text-sm font-medium text-gray-700">Lightness</Text>
+            <span className="text-blue-600 font-semibold">
+              {Math.round(hslValues.hsl()[2] * 100)}%
+            </span>
+          </div>
+
           <Slider
             min={0}
             max={100}

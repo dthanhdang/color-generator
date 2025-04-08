@@ -14,6 +14,7 @@ import { FormOklch } from "../../components/FormOklch"
 import { getColorName } from "#utils/getColorName.ts"
 import { PageStyle } from "#components/PageStyle.tsx"
 import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
+import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
 //type PaletteMode = "scale" | "harmony" | "image" | "random"
@@ -58,17 +59,25 @@ function generateRandomColor(): Color {
 export function ScalePaletteGenerator() {
   const [color, setColor] = useState(chroma("#3b82f6"))
   const [colorMode, setColorMode] = useState<ColorMode>("hex")
-
-  const [palette, setPalette] = useState<ColorPaletteItem[]>(
-    getColorScale({ baseColor: color, count: 11 })
+  const [primaryColorId, setPrimaryColorId] = useState<string | undefined>(
+    undefined
   )
+
+  const [palette, setPalette] = useState<ColorPaletteItem[]>(() => {
+    const initialPalette = getColorScale({ baseColor: color, count: 11 })
+    if (initialPalette.length > 5) {
+      setPrimaryColorId(initialPalette[5].id)
+    }
+    return initialPalette
+  })
 
   const handleColorSubmit = (newColor: Color) => {
     //const newPalette = getColorScale(newColor, 10)
     if (chroma.valid(newColor)) {
       setColor(newColor)
       //if (paletteMode === "scale") {
-      setPalette(getColorScale({ baseColor: newColor, count: 11 }))
+      const newPalette = getColorScale({ baseColor: newColor, count: 11 })
+      setPalette(newPalette)
     } else {
       console.error(`Invalid color : ${newColor}`)
     }
@@ -82,7 +91,12 @@ export function ScalePaletteGenerator() {
   const handleGenerateRandomScalePalette = () => {
     const RandomColor = generateRandomColor()
     setColor(RandomColor)
-    setPalette(getColorScale({ baseColor: RandomColor, count: 11 }))
+    const newPalette = getColorScale({ baseColor: RandomColor, count: 11 })
+    setPalette(newPalette)
+
+    if (newPalette.length > 5) {
+      setPrimaryColorId(newPalette[5].id)
+    }
   }
 
   return (
@@ -126,6 +140,9 @@ export function ScalePaletteGenerator() {
       </div>
       <div className="mt-8">
         <ColorPalette palette={palette} />
+      </div>
+      <div className="mt-12">
+        <PaletteVisualizer palette={palette} primaryColorId={primaryColorId} />
       </div>
     </PageStyle>
   )

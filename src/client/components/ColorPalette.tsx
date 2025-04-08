@@ -82,7 +82,7 @@ export function ColorPalette({ palette }: ColorPaletteProps) {
       <p className="text-sm text-gray-600 text-center mb-3 px-4">
         Click on any color below to view its detailed information
       </p>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 p-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-4 p-4">
         {palette.map((item, index) => (
           <SingleColor
             key={item.id}

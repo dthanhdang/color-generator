@@ -17,6 +17,8 @@ import { type Color } from "chroma-js"
 import { PageStyle } from "#components/PageStyle.tsx"
 import { ColorPaletteItem, ColorPalette } from "#components/ColorPalette.tsx"
 
+import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
+
 type ColorMode = "hex" | "hsl" | "oklch"
 //type PaletteMode = "scale" | "harmony" | "image" | "random"
 
@@ -63,6 +65,8 @@ export function HarmonyPalette() {
   const [palette, setPalette] = useState<ColorPaletteItem[]>(() =>
     getHarmonyPalette(color, harmonyType, getCountForHarmonyType(harmonyType))
   )
+
+  const primaryColorId = palette[0]?.id
 
   const handleColorSubmit = (newColor: Color) => {
     if (chroma.valid(newColor)) {
@@ -119,7 +123,7 @@ export function HarmonyPalette() {
           //color="blue"
           leftSection={<Shuffle size={16} />}
         >
-          Generate Random Scale Palette
+          Generate Random Harmony Palette
         </Button>
       </Group>
       <div className="mt-4">
@@ -140,6 +144,9 @@ export function HarmonyPalette() {
       <div className="mt-8">
         <h2 className="text-xl font-bold mb-4">{harmonyType}</h2>
         <ColorPalette palette={palette} />
+      </div>
+      <div className="mt-12">
+        <PaletteVisualizer palette={palette} primaryColorId={primaryColorId} />
       </div>
     </PageStyle>
   )
