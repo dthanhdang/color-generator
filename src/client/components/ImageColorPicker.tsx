@@ -1,11 +1,12 @@
-import { useState, useCallback } from "react"
+import { useState, useCallback, useRef } from "react"
 import { Paper, Text, Button, Group, Stack, Box } from "@mantine/core"
 import { ImageUploader } from "./ImageUploader"
-import { ImageCanvas } from "./ImageCanvas"
+import { ImageCanvas, Position } from "./ImageCanvas.jsx"
 
 import { getDominantColors } from "../utils/colorExtraction"
 
-import { ColorPickerComponent } from "./ColorPicker"
+import chroma from "chroma-js"
+import { findColorPosition } from "./findColorPosition.js"
 
 type ImageColorPickerProps = {
   onColorSelect: (color: string) => void
@@ -18,18 +19,40 @@ export function ImageColorPicker({
 }: ImageColorPickerProps) {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
-  const [extractedColors, setExtractedColors] = useState<string[]>([])
+  const [extractedColors, setExtractedColors] = useState<
+    { color: string; x: number; y: number }[]
+  >([])
+  const interactiveCanvasRef = useRef<HTMLCanvasElement>(null)
+  const [offscreenCanvas, setOffscreenCanvas] = useState<
+    OffscreenCanvas | undefined
+  >() // We need a separate canvas in order to pick the image color
+  const imageRef = useRef<HTMLImageElement>(null)
   //const [paletteSize, setPaletteSize] = useState<number>(5)
-  const [selectedColorIndex, setSelectedColorIndex] = useState<number | null>(
-    null
-  )
+
+  const getColor = ({ x, y }: Position): string | undefined => {
+    const ctx = offscreenCanvas?.getContext("2d")
+
+    if (!ctx) return
+
+    const pixel = ctx.getImageData(x, y, 1, 1).data
+    return `rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})`
+  }
+
+  const handleColorsChange = (
+    colors: { color: string; x: number; y: number }[]
+  ): void => {
+    setExtractedColors(colors)
+    if (onColorsExtracted) onColorsExtracted(colors.map(({ color }) => color))
+  }
 
   const extractColorsFromImage = useCallback(
     async (file: File) => {
       try {
         //setIsExtracting(true)
 
-        const img = new Image()
+        const img = imageRef.current
+        if (!img) return
+
         img.crossOrigin = "Anonymous"
 
         const loadImage = new Promise<void>((resolve, reject) => {
@@ -40,8 +63,32 @@ export function ImageColorPicker({
 
         await loadImage
 
+        const offscreenCanvas = new OffscreenCanvas(
+          img.naturalWidth,
+          img.naturalHeight
+        )
+        setOffscreenCanvas(offscreenCanvas)
+
+        const ctx = offscreenCanvas.getContext("2d")
+        if (!ctx) return
+
+        // Redessiner l'image de base
+        ctx.drawImage(img, 0, 0)
+
         const colors = await getDominantColors(img, 10)
-        setExtractedColors(colors)
+
+        const newExtractedColors = colors.map((color) => {
+          const position = findColorPosition(
+            offscreenCanvas,
+            img,
+            chroma(color)
+          )
+          return {
+            ...position,
+            color,
+          }
+        })
+        setExtractedColors(newExtractedColors)
 
         if (onColorsExtracted) {
           onColorsExtracted(colors)
@@ -54,6 +101,7 @@ export function ImageColorPicker({
     },
     [onColorsExtracted]
   )
+
   const handleImageUpload = (file: File | string) => {
     if (typeof file === "string") {
       console.warn("URLs are not supported yet")
@@ -61,35 +109,7 @@ export function ImageColorPicker({
     } else {
       setImageFile(file)
       setSelectedColor(null)
-      setSelectedColorIndex(null)
       extractColorsFromImage(file)
-    }
-  }
-
-  const handleColorChange = (newColor: string, index: number) => {
-    if (index !== null && index >= 0 && index < extractedColors.length) {
-      const newColors = [...extractedColors]
-      newColors[index] = newColor
-      setExtractedColors(newColors)
-
-      if (selectedColorIndex === index) {
-        setSelectedColor(newColor)
-      }
-
-      if (onColorsExtracted) {
-        onColorsExtracted(newColors)
-      }
-    }
-  }
-
-  const handleColorSelect = (color: string) => {
-    setSelectedColor(color)
-    // Rechercher si la couleur existe déjà dans la palette
-    const colorIndex = extractedColors.findIndex((c) => c === color)
-    if (colorIndex >= 0) {
-      setSelectedColorIndex(colorIndex)
-    } else {
-      setSelectedColorIndex(null)
     }
   }
 
@@ -129,8 +149,11 @@ export function ImageColorPicker({
           </Group>
 
           <ImageCanvas
-            imageFile={imageFile}
-            onColorSelect={handleColorSelect}
+            canvasRef={interactiveCanvasRef}
+            colors={extractedColors}
+            getColor={getColor}
+            imageRef={imageRef}
+            onColorsChange={handleColorsChange}
           />
 
           {selectedColor && (
@@ -157,25 +180,12 @@ export function ImageColorPicker({
                   Use this color
                 </Button>
               </Group>
-
-              {selectedColorIndex !== null && (
-                <div className="mt-4">
-                  <Text size="sm" fw={500} mb="xs">
-                    Adjust Color
-                  </Text>
-                  <ColorPickerComponent
-                    color={extractedColors[selectedColorIndex]}
-                    onChange={(color) => setSelectedColor(color)}
-                    onApply={(color) =>
-                      handleColorChange(color, selectedColorIndex)
-                    }
-                  />
-                </div>
-              )}
             </Paper>
           )}
         </>
       )}
+
+      <img className="hidden" ref={imageRef} />
     </Stack>
   )
 }
