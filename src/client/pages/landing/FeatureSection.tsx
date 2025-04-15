@@ -24,43 +24,48 @@ export const FeatureSection = () => {
 
         <div className="grid md:grid-cols-3 gap-8">
           <FeatureCard
-            title="Scale Generator"
-            description="Create perfect color scales and gradients with fine-tuned control over hue, saturation, and brightness."
+            title="Scale Palette Generator"
+            description="Create perfect color scales by switching between HEX, HSL and OKLCH modes to fine-tuned hue, saturation, lightness and chroma value."
             icon={<PaintBucket size={48} />}
             color="red"
             delay={100}
+            to="/scale-palette"
           />
 
           <FeatureCard
             title="Harmony Generator"
-            description="Generate harmonious color combinations using color theory principles like complementary, analogous, and triadic."
+            description="Generate harmonious color combinations using color theory principles like complementary, split-complementary, monochromatic, analogous, triadic and tetradic."
             icon={<PaletteIcon size={48} />}
             color="orange"
             delay={200}
+            to="/harmony-palette"
           />
 
           <FeatureCard
-            title="Image Color Picker"
-            description="Extract beautiful color palettes from your favorite images and photos with a single click."
+            title="Image Color Extractor"
+            description="Extract stunning color palettes from any image or photo in just one click. Perfect for designers looking to capture inspiration directly from viduals."
             icon={<Image size={48} />}
             color="green"
             delay={300}
+            to="/image-picker"
           />
 
           <FeatureCard
-            title="Color Listing"
-            description="Browse and search through thousands of named colors, from web standards to brand-specific collections."
+            title="Palette Visualizer"
+            description="Preview your generated palette applied to common UI components. Perfect for testing harmony and readability in real-world contexts."
             icon={<Sparkles size={48} />}
             color="blue"
             delay={400}
+            to="/harmony-palette"
           />
 
           <FeatureCard
             title="Random Palette Generator"
-            description="Discover unexpected color combinations with our intelligent randomization algorithm."
+            description="Discover unexpected and unique color combinations generated instantly by our random palette tool."
             icon={<Shuffle size={48} />}
             color="purple"
             delay={500}
+            to="/random-palette"
           />
 
           <div className="bg-gradient-to-br from-blue-50 to-white rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full group">

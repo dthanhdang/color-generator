@@ -1,4 +1,5 @@
 import { CTAButton } from "./CTAButton"
+import { PreviewImageLanding } from "./PreviewImageLanding"
 
 export const HeroSection = () => {
   return (
@@ -22,50 +23,39 @@ export const HeroSection = () => {
             className="text-4xl md:text-6xl font-bold mb-6 leading-tight animate-fade-in"
             style={{ animationDelay: "0.2s" }}
           >
-            Create beautiful color palettes with precision
+            Create stunning color palettes instantly
           </h1>
 
           <p
             className="text-xl text-gray-600 mb-8 animate-fade-in"
             style={{ animationDelay: "0.4s" }}
           >
-            Advanced color tools to help you design with confidence. Generate
-            perfect scales, extract colors from images, and build harmonious
-            palettes.
+            UColorr is a FREE color palette generator that help you design with
+            confidence. You can generate perfect scales, build hamonious
+            palettes, get beautiful random palettes, extract colors from images
+            and much more{" "}
           </p>
 
           <div
             className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in"
             style={{ animationDelay: "0.6s" }}
           >
-            <CTAButton href="#" variant="primary">
-              Get started for free
+            <CTAButton
+              href="/harmony-palette"
+              variant="primary"
+              className="animate-fade-in text-lg"
+            >
+              Get Your Palette
             </CTAButton>
-            <CTAButton href="#features" variant="secondary">
+            <CTAButton href="#features" variant="secondary" className="text-lg">
               Explore features
             </CTAButton>
           </div>
         </div>
 
         {/* Preview image */}
-        <div className="mt-16 rounded-xl overflow-hidden shadow-2xl max-w-4xl mx-auto animate-fade-in-delay">
-          <div className="aspect-[16/9] bg-gradient-to-r from-gray-100 to-gray-50 flex items-center justify-center">
-            <div className="flex space-x-4">
-              {["#FE4365", "#FC9D9A", "#F9CDAD", "#C8C8A9", "#83AF9B"].map(
-                (color, index) => (
-                  <div
-                    key={index}
-                    className="w-16 h-16 md:w-24 md:h-24 rounded-lg shadow-md transition-transform hover:scale-105 hover:shadow-lg"
-                    style={{
-                      backgroundColor: color,
-                      transitionDelay: `${index * 50}ms`,
-                    }}
-                  />
-                )
-              )}
-            </div>
-          </div>
-        </div>
+
+        <PreviewImageLanding />
 
         {/* Stats or social proof */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center max-w-3xl mx-auto">

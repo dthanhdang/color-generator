@@ -2,25 +2,25 @@
 
 //import { ColorPalette, type ColorPaletteItem } from "../../ColorPalette"
 import { useState } from "react"
-import chroma, { type Color } from "chroma-js"
+import chroma /*type Color */ from "chroma-js"
 
-import { Select } from "@mantine/core"
+//import { Select } from "@mantine/core"
 
 import { nanoid } from "nanoid"
 
 import { ImageColorPicker } from "#components/ImageColorPicker.tsx"
 import { getColorName } from "#utils/getColorName.ts"
-import { Form } from "../../components/Form"
-import { FormOklch } from "../../components/FormOklch"
-import { FormHsl } from "#components/FormHsl.tsx"
+//import { Form } from "../../components/Form"
+//import { FormOklch } from "../../components/FormOklch"
+//import { FormHsl } from "#components/FormHsl.tsx"
 import { PageStyle } from "#components/PageStyle.tsx"
 import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
 import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
-type ColorMode = "hex" | "hsl" | "oklch"
+//type ColorMode = "hex" | "hsl" | "oklch"
 
 export function ImagePicker() {
-  const [color, setColor] = useState(chroma("#b4f2ce"))
-  const [colorMode, setColorMode] = useState<ColorMode>("hex")
+  //const [color, setColor] = useState(chroma("#b4f2ce"))
+  //const [colorMode, setColorMode] = useState<ColorMode>("hex")
 
   const [extractedImageColors, setExtractedImageColors] = useState<string[]>([])
 
@@ -28,18 +28,22 @@ export function ImagePicker() {
 
   const primaryColorId = palette[0]?.id
 
-  const handleColorSubmit = (newColor: Color) => {
+  {
+    /*const handleColorSubmit = (newColor: Color) => {
     //const newPalette = getColorScale(newColor, 10)
     if (chroma.valid(newColor)) {
       setColor(newColor)
     } else {
       console.error(`Invalid color : ${newColor}`)
     }
+  }*/
   }
 
-  const handleModeChange = (value: string | null) => {
+  {
+    /*const handleModeChange = (value: string | null) => {
     if (value === "hex" || value === "hsl" || value === "oklch")
       setColorMode(value)
+  }*/
   }
 
   const handleImageColorsExtracted = (colors: string[]) => {
@@ -59,7 +63,7 @@ export function ImagePicker() {
     <PageStyle titleHighlight="Color From Image">
       <div className="mt-4">
         <ImageColorPicker
-          onColorSelect={(color) => setColor(chroma(color))}
+          //onColorSelect={(color) => setColor(chroma(color))}
           onColorsExtracted={handleImageColorsExtracted}
         />
       </div>
@@ -69,7 +73,7 @@ export function ImagePicker() {
           <ColorPalette palette={palette} />
         </div>
       )}
-      <div className="mb-4">
+      {/*<div className="mb-4">
         <Select
           data={[
             { value: "hex", label: "HEX" },
@@ -91,7 +95,7 @@ export function ImagePicker() {
         {colorMode === "oklch" && (
           <FormOklch initialColor={color} onSubmit={handleColorSubmit} />
         )}
-      </div>
+      </div>*/}
 
       {/*<ColorPalette palette={palette} />*/}
       <div className="mt-12">

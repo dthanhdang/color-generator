@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import { cn } from "../../lib/utils"
+import { Link } from "@tanstack/react-router"
 
 type FeatureCardProps = {
   title: string
@@ -7,6 +8,7 @@ type FeatureCardProps = {
   icon: React.ReactNode
   color?: "red" | "orange" | "green" | "blue" | "purple"
   delay?: number
+  to?: string
 }
 
 export const FeatureCard = ({
@@ -15,6 +17,7 @@ export const FeatureCard = ({
   icon,
   color = "blue",
   delay = 0,
+  to,
 }: FeatureCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null)
 
@@ -92,6 +95,14 @@ export const FeatureCard = ({
       <div className="p-6">
         <h3 className="text-xl font-bold mb-3">{title}</h3>
         <p className="text-gray-600">{description}</p>
+        {to && (
+          <Link
+            to={to}
+            className="text-sm font-medium text-blue-600 hover:underline"
+          >
+            Get Your Palette →
+          </Link>
+        )}
       </div>
     </div>
   )

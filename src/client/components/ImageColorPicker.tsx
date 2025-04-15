@@ -8,12 +8,12 @@ import { getDominantColors } from "../utils/colorExtraction"
 import { ColorPickerComponent } from "./ColorPicker"
 
 type ImageColorPickerProps = {
-  onColorSelect: (color: string) => void
+  //onColorSelect: (color: string) => void
   onColorsExtracted?: (colors: string[]) => void
 }
 
 export function ImageColorPicker({
-  onColorSelect,
+  //onColorSelect,
   onColorsExtracted,
 }: ImageColorPickerProps) {
   const [imageFile, setImageFile] = useState<File | null>(null)
@@ -93,10 +93,12 @@ export function ImageColorPicker({
     }
   }
 
-  const handleUseColor = () => {
+  {
+    /*const handleUseColor = () => {
     if (selectedColor) {
       onColorSelect(selectedColor)
     }
+  }*/
   }
 
   {
@@ -153,9 +155,6 @@ export function ImageColorPicker({
                     </Text>
                   </div>
                 </Group>
-                <Button onClick={handleUseColor} /*disabled={isExtracting*/>
-                  Use this color
-                </Button>
               </Group>
 
               {selectedColorIndex !== null && (

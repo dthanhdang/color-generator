@@ -49,6 +49,8 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --color-premium: rgb(123, 97, 255);
+  --color-premium-oklch: oklch(0.511 0.262 276.966);
 }
 
 .dark {
@@ -160,5 +162,28 @@
   .animate-on-scroll.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@supports (color: oklch(0% 0 0)) {
+  :root {
+    --color-premium: oklch(0.511 0.262 276.966);
+  }
+}
+
+@layer utilities {
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.4s ease-out;
   }
 }
