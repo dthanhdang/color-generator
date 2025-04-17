@@ -25,7 +25,10 @@ function getColor(
 type UseDndHandlersProps = {
   circleRadius: number
   offscreenCanvasContext: OffscreenCanvasRenderingContext2D | undefined
-  onSwatchesChange: (swatches: readonly Swatch[]) => void
+  onSwatchesChange: (
+    swatches: readonly Swatch[],
+    draggedIndex: number | undefined
+  ) => void
   swatches: readonly Swatch[]
 }
 
@@ -35,7 +38,7 @@ export function useDndHandlers({
   onSwatchesChange,
   swatches,
 }: UseDndHandlersProps): ComponentProps<"canvas"> & {
-  draggedIndex: number | undefined
+  draggedSwatchColor: string | undefined
 } {
   const [draggedIndex, setDraggedIndex] = useState<number>()
 
@@ -53,9 +56,13 @@ export function useDndHandlers({
     )
     if (matchIndex !== -1) {
       setDraggedIndex(matchIndex)
+      onSwatchesChange(swatches, matchIndex)
     } else {
       setDraggedIndex(swatches.length)
-      onSwatchesChange([...swatches, { color: "", position: { x, y } }])
+      onSwatchesChange(
+        [...swatches, { color: "", position: { x, y } }],
+        swatches.length
+      )
     }
   }
 
@@ -68,7 +75,8 @@ export function useDndHandlers({
       swatches.toSpliced(draggedIndex, 1, {
         color: getColor(offscreenCanvasContext, position),
         position,
-      })
+      }),
+      draggedIndex
     )
   }
 
@@ -82,7 +90,8 @@ export function useDndHandlers({
       swatches.toSpliced(draggedIndex, 1, {
         ...currentSwatch,
         color: getColor(offscreenCanvasContext, position),
-      })
+      }),
+      undefined
     )
     setDraggedIndex(undefined)
   }
@@ -91,5 +100,12 @@ export function useDndHandlers({
     setDraggedIndex(undefined)
   }
 
-  return { draggedIndex, onMouseLeave, onMouseDown, onMouseMove, onMouseUp }
+  return {
+    draggedSwatchColor:
+      draggedIndex === undefined ? undefined : swatches[draggedIndex].color,
+    onMouseLeave,
+    onMouseDown,
+    onMouseMove: onMouseMove,
+    onMouseUp,
+  }
 }

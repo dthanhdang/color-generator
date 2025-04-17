@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { Text, Button, Group, Stack } from "@mantine/core"
 import { ImageUploader } from "./ImageUploader"
 import type { JSX } from "react"
@@ -10,6 +10,7 @@ import { computeEuclidianDistance } from "#utils/computeEuclidianDistance.ts"
 import type { Swatch } from "./Swatch.ts"
 import { useDndHandlers } from "./useDndHandlers.ts"
 import type { Position } from "./Position.ts"
+import { useDebouncedCallback } from "@mantine/hooks"
 
 function computeCanvasSize(
   image: HTMLImageElement,
@@ -165,33 +166,40 @@ export function ImageColorPicker({
   const [swatches, setSwatches] = useState<readonly Swatch[]>([])
   const [offscreenCanvasContext, setOffscreenCanvasContext] =
     useState<OffscreenCanvasRenderingContext2D>()
-  const onSwatchesChange = (swatches: readonly Swatch[]): void => {
-    setSwatches(swatches)
-    if (onColorsExtracted) onColorsExtracted(swatches.map(({ color }) => color))
-  }
-  const { draggedIndex, ...dndHandlers } = useDndHandlers({
+
+  // Use a debouncer in order to limity the number of updates when a stupid meow
+  // drags a swatch around for a long time
+
+  const onSwatchesChange = useDebouncedCallback(
+    (swatches: readonly Swatch[], draggedIndex: number | undefined): void => {
+      setSwatches(swatches)
+      if (onColorsExtracted)
+        onColorsExtracted(swatches.map(({ color }) => color))
+
+      const canvas = canvasRef.current
+      const img = imgRef.current
+      const ctx = canvas?.getContext("2d")
+      if (ctx && img) {
+        drawImage(ctx, img)
+
+        // Draw dragged swatch first so that we can zoom on the freshly painted image
+        if (draggedIndex !== undefined)
+          drawSwatch(ctx, swatches[draggedIndex], true)
+
+        swatches.forEach((swatch, index) => {
+          if (index !== draggedIndex) drawSwatch(ctx, swatch, false)
+        })
+      }
+    },
+    { delay: 10 }
+  )
+
+  const { draggedSwatchColor, ...dndHandlers } = useDndHandlers({
     circleRadius,
     offscreenCanvasContext,
     onSwatchesChange,
     swatches,
   })
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    const img = imgRef.current
-    const ctx = canvas?.getContext("2d")
-    if (ctx && img) {
-      drawImage(ctx, img)
-
-      // Draw dragged swatch first so that we can zoom on the freshly painted image
-      if (draggedIndex !== undefined)
-        drawSwatch(ctx, swatches[draggedIndex], true)
-
-      swatches.forEach((swatch, index) => {
-        if (index !== draggedIndex) drawSwatch(ctx, swatch, false)
-      })
-    }
-  }, [draggedIndex, swatches])
 
   const handleLoad = (): void => {
     const canvas = canvasRef.current
@@ -211,7 +219,7 @@ export function ImageColorPicker({
       if (ctx) {
         setOffscreenCanvasContext(ctx)
 
-        onSwatchesChange(extractColors(img, ctx))
+        onSwatchesChange(extractColors(img, ctx), undefined)
       }
     }
   }
@@ -237,7 +245,7 @@ export function ImageColorPicker({
           <Button
             variant="subtle"
             onClick={() => {
-              onSwatchesChange([])
+              onSwatchesChange([], undefined)
             }}
           >
             {" "}
@@ -250,7 +258,7 @@ export function ImageColorPicker({
         <canvas
           {...dndHandlers}
           className={clsx(
-            draggedIndex !== undefined && "cursor-none",
+            draggedSwatchColor !== undefined && "cursor-none",
             swatches.length === 0 && "hidden"
           )}
           ref={canvasRef}
@@ -260,11 +268,11 @@ export function ImageColorPicker({
           }}
         />
 
-        {draggedIndex === undefined ? null : (
+        {draggedSwatchColor === undefined ? null : (
           <div
             className="absolute left-0 top-full h-16"
             style={{
-              backgroundColor: swatches[draggedIndex].color,
+              backgroundColor: draggedSwatchColor,
               width: canvasSize?.width,
             }}
           />
