@@ -1,31 +1,32 @@
 import { Button, Image, Stack, Paper, Text, rem } from "@mantine/core"
-import { useCallback } from "react"
+import type { RefObject } from "react"
 import { useState } from "react"
 import { useDropzone } from "react-dropzone"
 import { Upload } from "lucide-react"
 
 type ImageUploadProps = {
-  onImageUpload: (file: File | string) => void
+  imgRef: RefObject<HTMLImageElement | null>
 }
 
-export function ImageUploader({ onImageUpload }: ImageUploadProps) {
+export function ImageUploader({ imgRef }: ImageUploadProps) {
   const [preview, setPreview] = useState<string | null>(null)
 
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0]
-      if (file) {
-        const reader = new FileReader()
-        reader.onloadend = () => {
-          setPreview(reader.result as string)
-          //onImageUpload(reader.result as string)
-          onImageUpload(file)
-        }
-        reader.readAsDataURL(file)
+  const onDrop = (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0]
+    if (file) {
+      if (imgRef.current) URL.revokeObjectURL(imgRef.current.src)
+      if (imgRef.current) imgRef.current.src = URL.createObjectURL(file)
+      return
+
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setPreview(reader.result as string)
+        //onImageUpload(reader.result as string)
       }
-    },
-    [onImageUpload]
-  )
+      reader.readAsDataURL(file)
+    }
+  }
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "image/*": [".jpeg", ".png", ".gif"] },
