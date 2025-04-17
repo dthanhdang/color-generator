@@ -8,7 +8,7 @@ type ImageUploadProps = {
 }
 
 export function ImageUploader({ imgRef }: ImageUploadProps): JSX.Element {
-  const onDrop = (acceptedFiles: File[]) => {
+  const onDrop = (acceptedFiles: File[]): void => {
     const file = acceptedFiles[0]
     if (file) {
       if (imgRef.current) URL.revokeObjectURL(imgRef.current.src)
@@ -21,6 +21,7 @@ export function ImageUploader({ imgRef }: ImageUploadProps): JSX.Element {
     accept: { "image/*": [".jpeg", ".png", ".gif"] },
     maxFiles: 1,
   })
+
   return (
     <Paper
       {...getRootProps()}
@@ -28,19 +29,18 @@ export function ImageUploader({ imgRef }: ImageUploadProps): JSX.Element {
     >
       <input {...getInputProps()} />
 
-      <div>
-        <Stack>
-          <Upload size={24} color="#868e96" />
-          <Text>
-            {isDragActive
-              ? "Drop your image here"
-              : "Drag and drop your image or browse an image"}
-          </Text>
-          <Text size="sm" c="dimmed">
-            PNG, JPG, GIF to 5MB
-          </Text>
-        </Stack>
-      </div>
+      <Stack>
+        <Upload size={24} color="#868e96" />
+        <Text>
+          {isDragActive
+            ? "Drop your image here"
+            : "Drag and drop your image or browse an image"}
+        </Text>
+        <Text size="sm" c="dimmed">
+          PNG, JPG, GIF to 5MB
+        </Text>
+      </Stack>
+
       <Button>Pick an image</Button>
     </Paper>
   )

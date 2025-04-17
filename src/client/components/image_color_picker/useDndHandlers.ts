@@ -87,5 +87,9 @@ export function useDndHandlers({
     setDraggedIndex(undefined)
   }
 
-  return { draggedIndex, onMouseDown, onMouseMove, onMouseUp }
+  const onMouseLeave: MouseEventHandler<HTMLCanvasElement> = () => {
+    setDraggedIndex(undefined)
+  }
+
+  return { draggedIndex, onMouseLeave, onMouseDown, onMouseMove, onMouseUp }
 }
