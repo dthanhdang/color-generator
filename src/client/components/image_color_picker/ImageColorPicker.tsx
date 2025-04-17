@@ -1,20 +1,15 @@
 import { useEffect, useRef, useState } from "react"
 import { Text, Button, Group, Stack } from "@mantine/core"
 import { ImageUploader } from "./ImageUploader"
-import type { ComponentProps, JSX, MouseEventHandler } from "react"
-import {} from "react"
+import type { JSX } from "react"
 import ColorThief from "colorthief"
 import type { RGB } from "colorthief"
 import clsx from "clsx"
 import chroma from "chroma-js"
-
-type Position = { x: number; y: number }
-
-function computeEuclidianDistance(positions: [number, number][]): number {
-  return Math.sqrt(
-    positions.reduce((total, [d1, d2]) => total + Math.pow(d2 - d1, 2), 0)
-  )
-}
+import { computeEuclidianDistance } from "#utils/computeEuclidianDistance.ts"
+import type { Swatch } from "./Swatch.ts"
+import { useDndHandlers } from "./useDndHandlers.ts"
+import type { Position } from "./Position.ts"
 
 function computeCanvasSize(
   image: HTMLImageElement,
@@ -84,94 +79,6 @@ function extractColors(
   }
 
   return palette.map((color) => findColor(color))
-}
-
-function eventPosition(
-  event: React.MouseEvent<HTMLCanvasElement, MouseEvent>
-): Position {
-  const rect = event.currentTarget.getBoundingClientRect()
-
-  return { x: event.clientX - rect.left, y: event.clientY - rect.top }
-}
-
-function getColor(
-  ctx: OffscreenCanvasRenderingContext2D,
-  { x, y }: Position
-): string {
-  const [r, g, b] = ctx.getImageData(x, y, 1, 1).data
-
-  return chroma.rgb(r, g, b).hex()
-}
-
-type Swatch = {
-  color: string
-  position: Position
-}
-
-type UseDndHandlersProps = {
-  offscreenCanvasContext: OffscreenCanvasRenderingContext2D | undefined
-  onSwatchesChange: (swatches: readonly Swatch[]) => void
-  swatches: readonly Swatch[]
-}
-
-function useDndHandlers({
-  offscreenCanvasContext,
-  onSwatchesChange,
-  swatches,
-}: UseDndHandlersProps): ComponentProps<"canvas"> & {
-  draggedIndex: number | undefined
-} {
-  const [draggedIndex, setDraggedIndex] = useState<number>()
-
-  const onMouseDown: MouseEventHandler<HTMLCanvasElement> = (event) => {
-    if (event.button !== 0) return
-
-    const { x, y } = eventPosition(event)
-
-    const matchIndex = swatches.findIndex(
-      ({ position }) =>
-        computeEuclidianDistance([
-          [position.x, x],
-          [position.y, y],
-        ]) < circleRadius
-    )
-    if (matchIndex !== -1) {
-      setDraggedIndex(matchIndex)
-    } else {
-      setDraggedIndex(swatches.length)
-      onSwatchesChange([...swatches, { color: "", position: { x, y } }])
-    }
-  }
-
-  const onMouseMove: MouseEventHandler<HTMLCanvasElement> = (event) => {
-    if (!(offscreenCanvasContext && draggedIndex !== undefined)) return
-
-    const position = eventPosition(event)
-
-    onSwatchesChange(
-      swatches.toSpliced(draggedIndex, 1, {
-        color: getColor(offscreenCanvasContext, position),
-        position,
-      })
-    )
-  }
-
-  const onMouseUp: MouseEventHandler<HTMLCanvasElement> = (event) => {
-    if (!(offscreenCanvasContext && draggedIndex !== undefined)) return
-
-    const position = eventPosition(event)
-
-    const currentSwatch = swatches[draggedIndex]
-    onSwatchesChange(
-      swatches.toSpliced(draggedIndex, 1, {
-        ...currentSwatch,
-        color: getColor(offscreenCanvasContext, position),
-      })
-    )
-    setDraggedIndex(undefined)
-  }
-
-  return { draggedIndex, onMouseDown, onMouseMove, onMouseUp }
 }
 
 function drawImage(
@@ -263,6 +170,7 @@ export function ImageColorPicker({
     if (onColorsExtracted) onColorsExtracted(swatches.map(({ color }) => color))
   }
   const { draggedIndex, ...dndHandlers } = useDndHandlers({
+    circleRadius,
     offscreenCanvasContext,
     onSwatchesChange,
     swatches,

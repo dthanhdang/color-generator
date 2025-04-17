@@ -1,6 +1,5 @@
-import { Button, Image, Stack, Paper, Text, rem } from "@mantine/core"
-import type { RefObject } from "react"
-import { useState } from "react"
+import { Button, Stack, Paper, Text } from "@mantine/core"
+import type { JSX, RefObject } from "react"
 import { useDropzone } from "react-dropzone"
 import { Upload } from "lucide-react"
 
@@ -8,22 +7,12 @@ type ImageUploadProps = {
   imgRef: RefObject<HTMLImageElement | null>
 }
 
-export function ImageUploader({ imgRef }: ImageUploadProps) {
-  const [preview, setPreview] = useState<string | null>(null)
-
+export function ImageUploader({ imgRef }: ImageUploadProps): JSX.Element {
   const onDrop = (acceptedFiles: File[]) => {
     const file = acceptedFiles[0]
     if (file) {
       if (imgRef.current) URL.revokeObjectURL(imgRef.current.src)
       if (imgRef.current) imgRef.current.src = URL.createObjectURL(file)
-      return
-
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setPreview(reader.result as string)
-        //onImageUpload(reader.result as string)
-      }
-      reader.readAsDataURL(file)
     }
   }
 
@@ -41,17 +30,13 @@ export function ImageUploader({ imgRef }: ImageUploadProps) {
 
       <div>
         <Stack>
-          {preview ? (
-            <Image src={preview} alt="Preview" maw={rem(200)} radius="md" />
-          ) : (
-            <Upload size={24} color="#868e96" />
-          )}
+          <Upload size={24} color="#868e96" />
           <Text>
             {isDragActive
               ? "Drop your image here"
               : "Drag and drop your image or browse an image"}
           </Text>
-          <Text size="sm" color="dimmed">
+          <Text size="sm" c="dimmed">
             PNG, JPG, GIF to 5MB
           </Text>
         </Stack>
