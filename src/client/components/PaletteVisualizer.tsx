@@ -8,6 +8,7 @@ import {
   Container,
   Flex,
   Grid,
+  Group,
   Input,
   Paper,
   Progress,
@@ -75,12 +76,15 @@ function SwatchLegend({
     <span
       {...props}
       className={twMerge(
-        clsx("border-solid border-2 border-[#909090] rounded-sm p-1 mr-2", {
-          "": role !== undefined,
-          "border-solid": role === "primary",
-          "border-dashed": role === "secondary",
-          "border-dotted": role === "tertiary",
-        }),
+        clsx(
+          "border-solid border-2 border-[#909090] rounded-sm px-1 py-1/2 mr-2",
+          {
+            "": role !== undefined,
+            "border-solid": role === "primary",
+            "border-dashed": role === "secondary",
+            "border-dotted": role === "tertiary",
+          }
+        ),
         className
       )}
     >
@@ -151,9 +155,11 @@ export function PaletteVisualizer(props: PaletteVisualizerProps) {
         <Swatches roles={roles} onRolesChange={setRoles} palette={palette} />
         <Text size="sm" color="dimmed">
           Click on a swatch to change the color's role
-          <SwatchLegend className="ml-2" role="primary" />
-          <SwatchLegend className="ml-2" role="secondary" />
-          <SwatchLegend className="ml-2" role="tertiary" />
+          <Group className="gap-1">
+            <SwatchLegend role="primary" />
+            <SwatchLegend role="secondary" />
+            <SwatchLegend role="tertiary" />
+          </Group>
         </Text>
       </Paper>
 
