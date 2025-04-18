@@ -14,10 +14,11 @@ import {
   Tabs,
   Text,
   Title,
-  useMantineTheme,
 } from "@mantine/core"
 import { BarChart, LineChart, PieChart, DonutChart } from "@mantine/charts"
-import { type Color } from "chroma-js"
+import type { Color } from "chroma-js"
+import type { Roles } from "./Swatches.tsx"
+import { Swatches } from "./Swatches.tsx"
 
 export type ColorPaletteItem = {
   id: string
@@ -26,29 +27,12 @@ export type ColorPaletteItem = {
   name: string
 }
 
-type PaletteVisualizerProps = {
-  palette: ColorPaletteItem[]
-  primaryColorId?: string
-  secondaryColorId?: string
-  tertiaryColorId?: string
-}
-
-export function PaletteVisualizer({
+function buildInitialRoles({
   palette,
   primaryColorId,
   secondaryColorId,
   tertiaryColorId,
-}: PaletteVisualizerProps) {
-  const theme = useMantineTheme()
-  const [activeTab, setActiveTab] = useState<string | null>("buttons")
-  if (palette.length === 0) {
-    return (
-      <Container size="xl" p="md">
-        <Text>No palette to visualize</Text>
-      </Container>
-    )
-  }
-
+}: PaletteVisualizerProps): Roles {
   const primaryItem = primaryColorId
     ? palette.find((item) => item.id === primaryColorId) || palette[0]
     : palette[0]
@@ -66,9 +50,38 @@ export function PaletteVisualizer({
     : palette.length > 3
       ? palette[3]
       : secondaryItem
-  const primaryColor = primaryItem.color.hex()
-  const secondaryColor = secondaryItem.color.hex()
-  const tertiaryColor = tertiaryItem.color.hex()
+
+  return {
+    primary: primaryItem,
+    secondary: secondaryItem,
+    tertiary: tertiaryItem,
+  }
+}
+
+type PaletteVisualizerProps = {
+  palette: ColorPaletteItem[]
+  primaryColorId?: string
+  secondaryColorId?: string
+  tertiaryColorId?: string
+}
+
+export function PaletteVisualizer(props: PaletteVisualizerProps) {
+  const [activeTab, setActiveTab] = useState<string | null>("buttons")
+  const [roles, setRoles] = useState(buildInitialRoles(props))
+
+  const { palette } = props
+
+  if (palette.length === 0) {
+    return (
+      <Container size="xl" p="md">
+        <Text>No palette to visualize</Text>
+      </Container>
+    )
+  }
+
+  const primaryColor = roles.primary.color.hex()
+  const secondaryColor = roles.secondary.color.hex()
+  const tertiaryColor = roles.tertiary.color.hex()
 
   const chartData = [
     { month: "Jan", Series1: 12, Series2: 8 },
@@ -94,13 +107,6 @@ export function PaletteVisualizer({
     color: item.color.hex(),
   }))
 
-  const getBorderStyle = (itemId: string) => {
-    if (itemId === primaryItem.id) return "2px solid black"
-    if (itemId === secondaryItem.id) return "2px dashed black"
-    if (itemId === tertiaryItem.id) return "2px dotted black"
-    return "none"
-  }
-
   return (
     <Container size="xl" p="md">
       <Title order={2} mb="md">
@@ -111,37 +117,18 @@ export function PaletteVisualizer({
         <Text fw={500} mb="xs">
           Your Palette
         </Text>
-        <Flex gap="md" mb="md" wrap="wrap">
-          {palette.map((item) => (
-            <Box
-              key={item.id}
-              style={{
-                width: 50,
-                height: 50,
-                backgroundColor: item.color.hex(),
-                borderRadius: theme.radius.sm,
-                border: getBorderStyle(item.id),
-              }}
-            >
-              <Flex
-                direction="column"
-                align="center"
-                justify="center"
-                h="100%"
-                style={{
-                  color: item.color.luminance() > 0.5 ? "#000" : "#fff",
-                  fontSize: "10px",
-                  textAlign: "center",
-                }}
-              >
-                {item.weight && <Text size="xs">{item.weight}</Text>}
-              </Flex>
-            </Box>
-          ))}
-        </Flex>
+        <Swatches roles={roles} onRolesChange={setRoles} palette={palette} />
         <Text size="sm" color="dimmed">
-          Solid border: primary color, dashed border: secondary color, dotted
-          border: tertiary color.
+          <span className="border-2 border-current border-solid rounded-sm p-1 mr-2">
+            Primary
+          </span>
+          <span className="border-2 border-current border-dashed rounded-sm p-1 mr-2">
+            Secondary
+          </span>
+          <span className="border-2 border-current border-dotted rounded-sm p-1 mr-2">
+            Tertiary
+          </span>
+          Click on a swatch to change the color's role
         </Text>
       </Paper>
 
