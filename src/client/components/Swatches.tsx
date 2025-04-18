@@ -1,22 +1,18 @@
 import type { JSX } from "react"
 import { ColorPaletteItem } from "./PaletteVisualizer.jsx"
 import { Flex, Menu, Text, useMantineTheme } from "@mantine/core"
-import clsx from "clsx"
-
-const allRoles = ["primary", "secondary", "tertiary"] as const
-export type Role = (typeof allRoles)[number]
-export type Roles = Record<Role, ColorPaletteItem>
-
-const roleLabel = {
-  primary: "Primary",
-  secondary: "Secondary",
-  tertiary: "Tertiary",
-}
+import { clsx } from "clsx"
+import {
+  allSwatchesRoles,
+  swatchRoleLabel,
+  type SwatchIdByRole,
+  type SwatchRole,
+} from "./SwatchRole.js"
 
 type SwatchesProps = {
-  onRolesChange: (roles: Roles) => void
+  onRolesChange: (roles: SwatchIdByRole) => void
   palette: ColorPaletteItem[]
-  roles: Roles
+  roles: SwatchIdByRole
 }
 
 export function Swatches({
@@ -26,7 +22,7 @@ export function Swatches({
 }: SwatchesProps): JSX.Element {
   const theme = useMantineTheme()
 
-  const setRole = (role: Role, item: ColorPaletteItem): void => {
+  const setRole = (role: SwatchRole, item: ColorPaletteItem): void => {
     const updates = { [role]: item }
     const currentItemRole = getRole(item.id)
     if (currentItemRole) {
@@ -39,8 +35,8 @@ export function Swatches({
     onRolesChange({ ...roles, ...updates })
   }
 
-  const getRole = (id: string): Role | undefined => {
-    return allRoles.find((role) => roles[role].id === id)
+  const getRole = (id: string): SwatchRole | undefined => {
+    return allSwatchesRoles.find((role) => roles[role].id === id)
   }
 
   return (
@@ -77,13 +73,13 @@ export function Swatches({
             </Menu.Target>
 
             <Menu.Dropdown>
-              {allRoles.map((role) => (
+              {allSwatchesRoles.map((role) => (
                 <Menu.Item
                   className={itemRole === role ? "font-bold" : ""}
                   key={role}
                   onClick={() => setRole(role, item)}
                 >
-                  {roleLabel[role]}
+                  {swatchRoleLabel[role]}
                 </Menu.Item>
               ))}
             </Menu.Dropdown>

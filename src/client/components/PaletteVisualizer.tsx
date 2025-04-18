@@ -1,3 +1,4 @@
+import type { ComponentProps, JSX } from "react"
 import { useState } from "react"
 import {
   Box,
@@ -17,8 +18,11 @@ import {
 } from "@mantine/core"
 import { BarChart, LineChart, PieChart, DonutChart } from "@mantine/charts"
 import type { Color } from "chroma-js"
-import type { Roles } from "./Swatches.tsx"
+import type { SwatchRole, SwatchIdByRole } from "./SwatchRole.ts"
+import { swatchRoleLabel } from "./SwatchRole.ts"
 import { Swatches } from "./Swatches.tsx"
+import clsx from "clsx"
+import { twMerge } from "tailwind-merge"
 
 export type ColorPaletteItem = {
   id: string
@@ -27,12 +31,12 @@ export type ColorPaletteItem = {
   name: string
 }
 
-function buildInitialRoles({
+function buildSwatchIdByRole({
   palette,
   primaryColorId,
   secondaryColorId,
   tertiaryColorId,
-}: PaletteVisualizerProps): Roles {
+}: PaletteVisualizerProps): SwatchIdByRole {
   const primaryItem = primaryColorId
     ? palette.find((item) => item.id === primaryColorId) || palette[0]
     : palette[0]
@@ -58,6 +62,33 @@ function buildInitialRoles({
   }
 }
 
+type SwatchLegendProps = Omit<ComponentProps<"span">, "children"> & {
+  role: SwatchRole
+}
+
+function SwatchLegend({
+  className,
+  role,
+  ...props
+}: SwatchLegendProps): JSX.Element {
+  return (
+    <span
+      {...props}
+      className={twMerge(
+        clsx("border-solid border-2 border-[#909090] rounded-sm p-1 mr-2", {
+          "": role !== undefined,
+          "border-solid": role === "primary",
+          "border-dashed": role === "secondary",
+          "border-dotted": role === "tertiary",
+        }),
+        className
+      )}
+    >
+      {swatchRoleLabel[role]}
+    </span>
+  )
+}
+
 type PaletteVisualizerProps = {
   palette: ColorPaletteItem[]
   primaryColorId?: string
@@ -67,7 +98,7 @@ type PaletteVisualizerProps = {
 
 export function PaletteVisualizer(props: PaletteVisualizerProps) {
   const [activeTab, setActiveTab] = useState<string | null>("buttons")
-  const [roles, setRoles] = useState(buildInitialRoles(props))
+  const [roles, setRoles] = useState(buildSwatchIdByRole(props))
 
   const { palette } = props
 
@@ -119,16 +150,10 @@ export function PaletteVisualizer(props: PaletteVisualizerProps) {
         </Text>
         <Swatches roles={roles} onRolesChange={setRoles} palette={palette} />
         <Text size="sm" color="dimmed">
-          <span className="border-2 border-current border-solid rounded-sm p-1 mr-2">
-            Primary
-          </span>
-          <span className="border-2 border-current border-dashed rounded-sm p-1 mr-2">
-            Secondary
-          </span>
-          <span className="border-2 border-current border-dotted rounded-sm p-1 mr-2">
-            Tertiary
-          </span>
           Click on a swatch to change the color's role
+          <SwatchLegend className="ml-2" role="primary" />
+          <SwatchLegend className="ml-2" role="secondary" />
+          <SwatchLegend className="ml-2" role="tertiary" />
         </Text>
       </Paper>
 
