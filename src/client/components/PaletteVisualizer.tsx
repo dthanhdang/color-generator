@@ -1,5 +1,5 @@
 import type { ComponentProps, JSX } from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Box,
   Button,
@@ -37,7 +37,9 @@ function buildSwatchIdByRole({
   primaryColorId,
   secondaryColorId,
   tertiaryColorId,
-}: PaletteVisualizerProps): SwatchIdByRole {
+}: PaletteVisualizerProps): SwatchIdByRole | undefined {
+  if (palette.length === 0) return undefined
+
   const primaryItem = primaryColorId
     ? palette.find((item) => item.id === primaryColorId) || palette[0]
     : palette[0]
@@ -56,6 +58,11 @@ function buildSwatchIdByRole({
       ? palette[3]
       : secondaryItem
 
+  console.log({
+    primary: primaryItem,
+    secondary: secondaryItem,
+    tertiary: tertiaryItem,
+  })
   return {
     primary: primaryItem,
     secondary: secondaryItem,
@@ -102,17 +109,20 @@ type PaletteVisualizerProps = {
 
 export function PaletteVisualizer(props: PaletteVisualizerProps) {
   const [activeTab, setActiveTab] = useState<string | null>("buttons")
-  const [roles, setRoles] = useState(buildSwatchIdByRole(props))
+  const [roles, setRoles] = useState(() => buildSwatchIdByRole(props))
+  useEffect(() => {
+    setRoles(buildSwatchIdByRole(props))
+  }, [props])
 
-  const { palette } = props
-
-  if (palette.length === 0) {
+  if (!roles) {
     return (
       <Container size="xl" p="md">
         <Text>No palette to visualize</Text>
       </Container>
     )
   }
+
+  const { palette } = props
 
   const primaryColor = roles.primary.color.hex()
   const secondaryColor = roles.secondary.color.hex()

@@ -5,6 +5,8 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
 
 // https://vite.dev/config/
 export default defineConfig({
+  // TODO enable in dev only
+  // // build: { sourcemap: true },
   plugins: [
     tailwindcss(),
     TanStackRouterVite({
