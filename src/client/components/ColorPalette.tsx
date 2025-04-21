@@ -2,7 +2,14 @@ import { useState } from "react"
 
 import { type Color } from "chroma-js"
 import { Copy, Check } from "lucide-react"
-import { Card, Text, CopyButton, ActionIcon, Tooltip } from "@mantine/core"
+import {
+  Card,
+  Text,
+  CopyButton,
+  ActionIcon,
+  Tooltip,
+  Divider,
+} from "@mantine/core"
 import { SingleColor } from "../SingleColor"
 
 export type ColorPaletteItem = {
@@ -72,14 +79,13 @@ export function ColorPalette({ palette }: ColorPaletteProps) {
     }
     return basicFormats
   }
-  {
-    /*const getExtendedFormats = (color: Color): ExtendedColorFormats => {
+  const getExtendedFormats = (color: Color): ExtendedColorFormats => {
     return getColorFormats(color, true) as ExtendedColorFormats
-  }*/
   }
+
   return (
     <div>
-      <p className="text-sm text-gray-600 text-center mb-3 px-4">
+      <p className="text-sm text-indigo-700 text-center mb-3 px-4">
         Click on any color below to view its detailed information
       </p>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-4 p-4">
@@ -223,6 +229,115 @@ export function ColorPalette({ palette }: ColorPaletteProps) {
                     </Tooltip>
                   )}
                 </CopyButton>
+              </div>
+            </div>
+            <Divider my="sm" />
+
+            <Text fw={600} size="sm" className="mb-2">
+              CSS
+            </Text>
+            <div className="space-y-4">
+              <div>
+                <Text size="sm" className="font-mono">
+                  CSS Variables
+                </Text>
+                <div className="p-2 bg-gray-50 rounded-md">
+                  <div className="flex items-start justify-between">
+                    <Text size="sm" className="font-mono whitespace-pre-wrap">
+                      {getExtendedFormats(selectedColor.color).cssVariables}
+                    </Text>
+                    <CopyButton
+                      value={
+                        getExtendedFormats(selectedColor.color).cssVariables
+                      }
+                      timeout={2000}
+                    >
+                      {({ copied, copy }) => (
+                        <Tooltip
+                          label={copied ? "Copied !" : "Copy"}
+                          withArrow
+                          position="top"
+                        >
+                          <ActionIcon
+                            size="sm"
+                            color={copied ? "teal" : "gray"}
+                            onClick={copy}
+                          >
+                            {copied ? <Check size={14} /> : <Copy size={14} />}
+                          </ActionIcon>
+                        </Tooltip>
+                      )}
+                    </CopyButton>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Text size="sm" className="font-mono">
+                  CSS Classes
+                </Text>
+                <div className="p-2 bg-gray-50 rounded-md">
+                  <div className="flex items-start justify-between">
+                    <Text size="sm" className="font-mono whitespace-pre-wrap">
+                      {getExtendedFormats(selectedColor.color).cssClasses}
+                    </Text>
+                    <CopyButton
+                      value={getExtendedFormats(selectedColor.color).cssClasses}
+                      timeout={2000}
+                    >
+                      {({ copied, copy }) => (
+                        <Tooltip
+                          label={copied ? "Copied !" : "Copy"}
+                          withArrow
+                          position="top"
+                        >
+                          <ActionIcon
+                            size="sm"
+                            color={copied ? "teal" : "gray"}
+                            onClick={copy}
+                          >
+                            {copied ? <Check size={14} /> : <Copy size={14} />}
+                          </ActionIcon>
+                        </Tooltip>
+                      )}
+                    </CopyButton>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Text size="sm" className="font-mono">
+                  Tailwind Config
+                </Text>
+                <div className="p-2 bg-gray-50 rounded-md">
+                  <div className="flex items-start justify-between">
+                    <Text size="sm" className="font-mono whitespace-pre-wrap">
+                      {getExtendedFormats(selectedColor.color).tailwindConfig}
+                    </Text>
+                    <CopyButton
+                      value={
+                        getExtendedFormats(selectedColor.color).tailwindConfig
+                      }
+                      timeout={2000}
+                    >
+                      {({ copied, copy }) => (
+                        <Tooltip
+                          label={copied ? "Copied !" : "Copy"}
+                          withArrow
+                          position="top"
+                        >
+                          <ActionIcon
+                            size="sm"
+                            color={copied ? "teal" : "gray"}
+                            onClick={copy}
+                          >
+                            {copied ? <Check size={14} /> : <Copy size={14} />}
+                          </ActionIcon>
+                        </Tooltip>
+                      )}
+                    </CopyButton>
+                  </div>
+                </div>
               </div>
             </div>
           </Card>

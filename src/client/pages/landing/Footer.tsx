@@ -6,7 +6,7 @@ export const Footer = () => {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 rounded-md bg-gradient-to-tr from-blue-500 to-teal-400"></div>
-              <span className="text-xl font-semibold">chromaxxx</span>
+              <span className="text-xl font-semibold">ucolorr</span>
             </div>
             <p className="text-gray-600 max-w-xs">
               Advanced color tools for designers and developers to create
@@ -147,7 +147,7 @@ export const Footer = () => {
 
         <div className="border-t border-gray-200 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-600 text-sm">
-            © 2025 xxxx. All rights reserved.
+            © 2025 ucolorr. All rights reserved.
           </p>
 
           <div className="flex space-x-6 mt-4 md:mt-0">

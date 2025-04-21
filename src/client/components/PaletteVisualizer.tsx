@@ -70,20 +70,6 @@ export function PaletteVisualizer({
   const secondaryColor = secondaryItem.color.hex()
   const tertiaryColor = tertiaryItem.color.hex()
 
-  //const mainColors = [primaryColor, secondaryColor, tertiaryColor]
-  //const paletteColors = palette.map((item) => item.color.hex())
-
-  {
-    /*const chartData = [
-    { month: "Jan", value: 12 },
-    { month: "Feb", value: 21 },
-    { month: "March", value: 15 },
-    { month: "April", value: 24 },
-    { month: "May", value: 17 },
-    { month: "June", value: 14 },
-  ]*/
-  }
-
   const chartData = [
     { month: "Jan", Series1: 12, Series2: 8 },
     { month: "Feb", Series1: 21, Series2: 15 },
@@ -93,7 +79,6 @@ export function PaletteVisualizer({
     { month: "June", Series1: 14, Series2: 9 },
   ]
 
-  // Correction des données pour le LineChart
   const lineChartData = [
     { month: "Jan", Primary: 12, Secondary: 8, Tertiary: 5 },
     { month: "Feb", Primary: 21, Secondary: 15, Tertiary: 9 },

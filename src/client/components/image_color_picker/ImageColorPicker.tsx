@@ -154,7 +154,6 @@ function drawSwatch(
 }
 
 type ImageColorPickerProps = {
-  onColorSelect: (color: string) => void
   onColorsExtracted?: (colors: string[]) => void
 }
 

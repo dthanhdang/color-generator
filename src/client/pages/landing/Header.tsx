@@ -31,7 +31,7 @@ export const Header = () => {
           className="text-xl font-semibold flex items-center space-x-2"
         >
           <div className="w-8 h-8 rounded-md bg-gradient-to-tr from-blue-500 to-teal-400"></div>
-          <span>chromaxxx</span>
+          <span>ucolorr</span>
         </a>
 
         <nav className="hidden md:flex items-center space-x-8">
@@ -64,9 +64,10 @@ export const Header = () => {
           </a>
           <a
             href="#"
-            className="text-sm font-medium bg-black text-white px-4 py-2 rounded-full transition-all hover:bg-opacity-90"
+            className="text-sm font-medium text-white px-4 py-2 rounded-full transition-all hover:bg-opacity-90"
+            style={{ backgroundColor: "oklch(0.511 0.262 276.966)" }}
           >
-            Try for free
+            Start for free
           </a>
         </div>
       </div>
