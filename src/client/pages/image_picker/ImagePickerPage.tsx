@@ -8,7 +8,7 @@ import chroma /*type Color */ from "chroma-js"
 
 import { nanoid } from "nanoid"
 
-import { ImageColorPicker } from "#components/ImageColorPicker.tsx"
+import { ImageColorPicker } from "#components/image_color_picker/ImageColorPicker.jsx"
 import { getColorName } from "#utils/getColorName.ts"
 //import { Form } from "../../components/Form"
 //import { FormOklch } from "../../components/FormOklch"
@@ -62,10 +62,7 @@ export function ImagePicker() {
   return (
     <PageStyle titleHighlight="Color From Image">
       <div className="mt-4">
-        <ImageColorPicker
-          //onColorSelect={(color) => setColor(chroma(color))}
-          onColorsExtracted={handleImageColorsExtracted}
-        />
+        <ImageColorPicker onColorsExtracted={handleImageColorsExtracted} />
       </div>
       {extractedImageColors.length > 0 && (
         <div className="mt-8">

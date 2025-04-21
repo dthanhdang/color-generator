@@ -24,6 +24,7 @@
     "@mantine/modals": "^7.17.0",
     "@mantine/notifications": "^7.17.0",
     "@tailwindcss/vite": "^4.0.6",
+    "@tanstack/react-pacer": "^0.1.0",
     "@tanstack/react-router": "^1.114.27",
     "chroma-js": "^3.1.2",
     "class-variance-authority": "^0.7.1",
@@ -65,7 +66,8 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "sharp"
     ]
   },
   "exports": {
