@@ -1,18 +1,24 @@
-import type { ReactNode } from "react"
+import type { JSX, ReactNode } from "react"
 import { SeoTags } from "#client/components/seo_tags"
 import { clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
 
 type PageStyleProps = {
   children: ReactNode
+  className?: string
   title: string
 }
 
-export function PageStyle({ title, children }: PageStyleProps) {
+export function PageStyle({
+  children,
+  className,
+  title,
+}: PageStyleProps): JSX.Element {
   const parts = title.split("*").filter((part) => part !== "")
   const highlightedModulo = title[0] === "*" ? 0 : 1
 
   return (
-    <main className="container mx-auto p-4">
+    <main className={twMerge("container mx-auto p-4", className)}>
       <SeoTags />
 
       <h1 className="text-center text-5xl font-bold mb-14 mt-8">

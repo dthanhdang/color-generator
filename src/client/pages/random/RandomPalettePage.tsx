@@ -42,12 +42,16 @@ export function RandomPalette() {
 
   return (
     <PageStyle title="Your *Random Palette* Generator">
-      {" "}
-      <RandomColor onGeneratePalette={handleGeneratePalette} />
+      <RandomColor
+        onGeneratePalette={handleGeneratePalette}
+        palette={palette}
+      />
+
       <div className="mt-8">
         <h2 className="text-xl font-bold mb-4"></h2>
         <ColorPalette palette={palette} />
       </div>
+
       <div className="mt-12">
         <PaletteVisualizer palette={palette} primaryColorId={primaryColorId} />
       </div>
