@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router"
+
 export const Footer = () => {
   return (
     <footer className="bg-gray-50 py-12 px-6 md:px-12">
@@ -118,12 +120,12 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/contact"
                   className="text-gray-600 hover:text-black transition-colors"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
               <li>
                 <a

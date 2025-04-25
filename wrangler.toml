@@ -1,0 +1,16 @@
+name = "ucolorr"
+pages_build_output_dir = "./dist"
+compatibility_flags = [ "nodejs_compat" ]
+compatibility_date = "2024-09-23"
+
+services = [
+  { binding = "UCOLORR", service = "ucolorr" },
+]
+
+send_email = [
+  { name = "EMAIL", destination_address = "dev@ucolorr.app" },
+]
+
+[vars]
+CF_PAGES_URL="http://localhost:5173"
+CONTACT_EMAIL_RECIPIENT="dev@ucolorr.app"

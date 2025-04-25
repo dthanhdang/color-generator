@@ -42,8 +42,8 @@ jobs:
         if: false # TODO activate once we need a backend
         run: pnpm wrangler:apply_migrations
 
-      - name: Generate code # TODO add pnpm wrangler:generate_types && pnpm kysely:generate_types
-        run: pnpm tsr:generate_routes
+      - name: Generate code # TODO add pnpm kysely:generate_types
+        run: pnpm tsr:generate_routes && pnpm wrangler:generate_types
 
       - name: Run lint
         run: pnpm lint:check

@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+.dev.vars
+.vite
+.wrangler
+src/client/routeTree.gen.ts
+src/server/_generated/worker-configuration.d.ts
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

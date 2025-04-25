@@ -60,7 +60,7 @@ export function ImagePicker() {
   }
 
   return (
-    <PageStyle titleHighlight="Color From Image">
+    <PageStyle title="Your *Color From Image* Generator">
       <div className="mt-4">
         <ImageColorPicker onColorsExtracted={handleImageColorsExtracted} />
       </div>

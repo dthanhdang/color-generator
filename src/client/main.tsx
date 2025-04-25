@@ -17,9 +17,36 @@ declare module "@tanstack/react-router" {
   }
 }
 
+const inputClassNames = {
+  description: "text-base",
+  error: "text-lg",
+  label: "text-lg font-[Inter] text-[#707070]",
+  root: "flex flex-col gap-1",
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <MantineProvider>
+    <MantineProvider
+      theme={{
+        components: {
+          InputWrapper: {
+            classNames: inputClassNames,
+          },
+          Textarea: {
+            classNames: {
+              ...inputClassNames,
+              input: "text-lg font-[Inter] text-[#202020]",
+            },
+          },
+          TextInput: {
+            classNames: {
+              ...inputClassNames,
+              input: "text-lg rounded-sm font-[Inter] text-[#202020]",
+            },
+          },
+        },
+      }}
+    >
       {/*<App />*/}
       {/*<LandingPage />*/}
       <RouterProvider router={router} />
