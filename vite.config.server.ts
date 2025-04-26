@@ -5,7 +5,6 @@ import devServer from "@hono/vite-dev-server"
 import cloudflareAdapter from "@hono/vite-dev-server/cloudflare"
 import { generateDotenv } from "@meow-meow-dev/vite-plugin-generate-dotenv"
 import { defineConfig } from "vite"
-import { cloudflare } from "@cloudflare/vite-plugin"
 
 export default defineConfig(({ mode }): UserConfig => {
   const entry = "src/server/index.ts"
@@ -25,7 +24,6 @@ export default defineConfig(({ mode }): UserConfig => {
       build({
         entry,
       }),
-      cloudflare(),
       devServerPlugin,
       generateDotenv({
         outputFile: ".dev.vars",

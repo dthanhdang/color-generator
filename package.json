@@ -13,7 +13,7 @@
     "tsc:check": "tsc -noEmit --project tsconfig.app.json",
     "tsr:generate_routes": "tsr generate",
     "unit_tests": "pnpm vitest:client:run && pnpm vitest:server:run",
-    "vite:build": "vite build --config vite.config.client.ts && vite build --config vite.config.server.ts",
+    "vite:build": "pnpm vite build --config vite.config.client.ts && pnpm vite build --config vite.config.server.ts",
     "vitest:client:run": "vitest run --config=vite.config.client.ts --mode development",
     "vitest:client:watch": "vitest watch --config=vite.config.client.ts --mode development",
     "vite:dev": "concurrently \"vite --config vite.config.server.ts\" \"vite --config vite.config.client.ts\"",
@@ -61,7 +61,6 @@
     "valibot": "^1.0.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.0.10",
     "@cloudflare/vitest-pool-workers": "^0.8.8",
     "@eslint/js": "^9.19.0",
     "@hono/vite-cloudflare-pages": "^0.4.2",
