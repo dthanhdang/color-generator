@@ -3,3 +3,5 @@ README.md
 src/client/routeTree.gen.ts
 src/server/_generated/worker-configuration.d.ts
 
+# Ignoring as it adds trailing commas
+wrangler.jsonc

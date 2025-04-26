@@ -7,6 +7,6 @@
 
   "vars": {
     "CF_PAGES_URL": "http://localhost:5173",
-    "CONTACT_EMAIL_RECIPIENT": "dev@ucolorr.app",
-  },
+    "CONTACT_EMAIL_RECIPIENT": "dev@ucolorr.app"
+  }
 }
