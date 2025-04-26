@@ -16,6 +16,9 @@ export default defineConfig({
     react(),
     // ...,
   ],
+  resolve: {
+    alias: { find: "react-dom/server", replacement: "react-dom/server.edge" },
+  },
   server: {
     cors: true,
     host: true,

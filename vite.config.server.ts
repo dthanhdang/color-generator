@@ -31,6 +31,9 @@ export default defineConfig(({ mode }): UserConfig => {
         requiredKeys: ["CONTACT_EMAIL", "RESEND_API_KEY"],
       }),
     ],
+    resolve: {
+      alias: { find: "react-dom/server", replacement: "react-dom/server.edge" },
+    },
     server: {
       port: 3000,
     },
