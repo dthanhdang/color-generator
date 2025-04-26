@@ -1,7 +1,23 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "ucolorr",
-  "pages_build_output_dir": "./dist",
-  "compatibility_flags": ["nodejs_compat"],
-  "compatibility_date": "2024-09-23"
-}
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "ucolorr",
+    "pages_build_output_dir": "./dist",
+    "compatibility_flags": ["nodejs_compat"],
+    "compatibility_date": "2024-09-23",
+    "vars": {
+      "CONTACT_EMAIL": "contact@ucolorr.app"
+    },  
+    "env": {
+      "preview": {
+        "vars": {
+          "CONTACT_EMAIL": "contact@ucolorr.app"
+        }
+      },
+      "production": {
+        "vars": {
+          "CONTACT_EMAIL": "contact@ucolorr.app"
+        }
+      }
+    }
+  }
+  
