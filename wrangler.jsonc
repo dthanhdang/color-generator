@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ucolorr",
+  "pages_build_output_dir": "./dist",
+  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_date": "2024-09-23",
+
+  "vars": {
+    "CF_PAGES_URL": "http://localhost:5173",
+    "CONTACT_EMAIL_RECIPIENT": "dev@ucolorr.app",
+  },
+}
