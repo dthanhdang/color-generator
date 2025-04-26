@@ -21,7 +21,7 @@ export default defineWorkersProject(async () => {
           },
           singleWorker: true,
           wrangler: {
-            configPath: "./wrangler.toml",
+            configPath: "./wrangler.jsonc",
           },
         },
       },
