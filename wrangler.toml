@@ -7,10 +7,6 @@ services = [
   { binding = "UCOLORR", service = "ucolorr" },
 ]
 
-send_email = [
-  { name = "EMAIL", destination_address = "dev@ucolorr.app" },
-]
-
 [vars]
 CF_PAGES_URL="http://localhost:5173"
 CONTACT_EMAIL_RECIPIENT="dev@ucolorr.app"
