@@ -1,4 +1,5 @@
 import * as React from "react"
+
 import { Link, Outlet, createRootRoute } from "@tanstack/react-router"
 
 export const Route = createRootRoute({
@@ -6,7 +7,7 @@ export const Route = createRootRoute({
   loader: () => ({
     crumb: "Home",
     seoDescription:
-      "ChromaGen allows you to quickly and easily create many kinds of different color palettes",
+      "Ucolorr allows you to quickly and easily create many kinds of different color palettes",
     pageTitle: "Home",
     seoTitle: "Home",
   }),

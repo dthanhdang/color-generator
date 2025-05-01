@@ -1,5 +1,3 @@
-//import { Form } from "./Form"
-
 import { useState } from "react"
 import chroma, { type Color } from "chroma-js"
 import { Select, Button, Group } from "@mantine/core"
@@ -7,7 +5,6 @@ import { Shuffle } from "lucide-react"
 
 import { nanoid } from "nanoid"
 
-//import { ColorPalette, ColorPaletteItem } from "../../ColorPalette"
 import { Form } from "../../components/Form"
 import { FormHsl } from "../../components/FormHsl"
 import { FormOklch } from "../../components/FormOklch"
@@ -17,7 +14,6 @@ import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
 import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
-//type PaletteMode = "scale" | "harmony" | "image" | "random"
 
 type GetColorScaleProps = {
   baseColor: Color
@@ -72,10 +68,9 @@ export function ScalePaletteGenerator() {
   })
 
   const handleColorSubmit = (newColor: Color) => {
-    //const newPalette = getColorScale(newColor, 10)
     if (chroma.valid(newColor)) {
       setColor(newColor)
-      //if (paletteMode === "scale") {
+
       const newPalette = getColorScale({ baseColor: newColor, count: 11 })
       setPalette(newPalette)
     } else {
@@ -113,13 +108,10 @@ export function ScalePaletteGenerator() {
         />
         <Button
           onClick={handleGenerateRandomScalePalette}
-          //className="bg-[oklch(0.511_0.262_276.966)] text-white"
           style={{
             backgroundColor: "oklch(0.511 0.262 276.966)",
             color: "white",
           }}
-          //variant="oklch(0.511 0.262 276.966)"
-          //color="blue"
           leftSection={<Shuffle size={16} />}
         >
           Generate Random Scale Palette

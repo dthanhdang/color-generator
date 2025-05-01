@@ -20,7 +20,6 @@ import { ColorPaletteItem, ColorPalette } from "#components/ColorPalette.tsx"
 import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
-//type PaletteMode = "scale" | "harmony" | "image" | "random"
 
 function getHarmonyPalette(
   baseColor: Color,

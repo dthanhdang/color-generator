@@ -1,3 +1,6 @@
+import UcolorrLogo from "../../assets/ucolorr.svg"
+import { Link } from "@tanstack/react-router"
+
 export const Footer = () => {
   return (
     <footer className="bg-gray-50 py-12 px-6 md:px-12">
@@ -5,95 +8,73 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 rounded-md bg-gradient-to-tr from-blue-500 to-teal-400"></div>
+              <img
+                src={UcolorrLogo}
+                alt="ucolorr logo"
+                className="w-8 h-8 object-contain"
+              />
               <span className="text-xl font-semibold">ucolorr</span>
             </div>
             <p className="text-gray-600 max-w-xs">
-              Advanced color tools for designers and developers to create
-              beautiful color palettes.
+              I wanted a simple, intuitive, and well-designed color palette
+              generator — so I made one. No clutter, just smooth color
+              exploration. If you enjoy using it or have suggestions, feel free
+              to
+              <a href="/contact" className="text-indigo-600 hover:underline">
+                {" "}
+                let me know
+              </a>
+              . I’d love to hear your feedback!
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Features</h3>
+            <h3 className="font-semibold mb-4">Free Tools</h3>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
+                <Link
+                  to="/scale-palette"
+                  className="text-gray-600 hover:text-[#503AF7] transition-colors duration-300"
+                  activeProps={{
+                    className: "text-[#503AF7] font-medium", // Couleur brand quand actif
+                  }}
                 >
-                  Scale Generator
-                </a>
+                  Scale Palette Generator
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
+                <Link
+                  to="/harmony-palette"
+                  className="text-gray-600 hover:text-[#503AF7] transition-colors duration-300"
+                  activeProps={{
+                    className: "text-[#503AF7] font-medium",
+                  }}
                 >
-                  Harmony Generator
-                </a>
+                  Harmony Palette Generator
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
+                <Link
+                  to="/image-picker"
+                  className="text-gray-600 hover:text-[#503AF7] transition-colors duration-300"
+                  activeProps={{
+                    className: "text-[#503AF7] font-medium",
+                  }}
                 >
-                  Image Color Picker
-                </a>
+                  Image Color Extractor
+                </Link>
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
-                >
-                  Color Listing
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
-                >
-                  Random Palette
-                </a>
-              </li>
-            </ul>
-          </div>
 
-          <div>
-            <h3 className="font-semibold mb-4">Resources</h3>
-            <ul className="space-y-3">
               <li>
-                <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
+                <Link
+                  to="/random-palette"
+                  className="text-gray-600 hover:text-[#503AF7] transition-colors duration-300"
+                  activeProps={{
+                    className: "text-[#503AF7] font-medium",
+                  }}
                 >
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
-                >
-                  Tutorials
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
-                >
-                  API
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
-                >
-                  Blog
-                </a>
+                  Random Palette Generator
+                </Link>
               </li>
             </ul>
           </div>
@@ -139,6 +120,36 @@ export const Footer = () => {
                   className="text-gray-600 hover:text-black transition-colors"
                 >
                   Privacy
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-4">Built With</h3>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-600 hover:text-black transition-colors"
+                >
+                  Chroma.js
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-600 hover:text-black transition-colors"
+                >
+                  Lucide-react
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-600 hover:text-black transition-colors"
+                >
+                  Colorthief.js
                 </a>
               </li>
             </ul>
