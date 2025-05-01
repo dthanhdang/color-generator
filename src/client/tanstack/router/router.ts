@@ -8,6 +8,7 @@ import { ScalePaletteGenerator } from "#pages/scale_palette"
 import { RandomPalette } from "#pages/random"
 import { HarmonyPalette } from "#pages/harmony_palette"
 import { ImagePicker } from "#pages/image_picker"
+import { ContrastCheckerPage } from "#pages/contrast_checker"
 
 const rootRoute = createRootRoute({
   component: LandingPage,
@@ -37,18 +38,17 @@ const randomPaletteRoute = createRoute({
   getParentRoute: () => rootRoute,
 })
 
+const contrastCheckerRoute = createRoute({
+  path: "/contrast-checker",
+  component: ContrastCheckerPage,
+  getParentRoute: () => rootRoute,
+})
+
 const routeTree = rootRoute.addChildren([
   scalePaletteRoute,
   harmonyPaletteRoute,
   imagePickerRoute,
   randomPaletteRoute,
+  contrastCheckerRoute,
 ])
 export const router = createRouter({ routeTree })
-
-{
-  /*declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router
-  }
-}*/
-}

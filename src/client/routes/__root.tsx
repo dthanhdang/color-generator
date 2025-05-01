@@ -6,7 +6,7 @@ export const Route = createRootRoute({
   loader: () => ({
     crumb: "Home",
     seoDescription:
-      "ChromaGen allows you to quickly and easily create many kinds of different color palettes",
+      "Ucolorr allows you to quickly and easily create many kinds of different color palettes",
     pageTitle: "Home",
     seoTitle: "Home",
   }),
@@ -43,6 +43,12 @@ function RootComponent() {
               className="hover:text-indigo-600 transition-colors"
             >
               Random Palette
+            </Link>
+            <Link
+              to="/contrast-checker"
+              className="hover:text-indigo-600 transition-colors"
+            >
+              Contrast Checker
             </Link>
           </div>
         </nav>

@@ -17,6 +17,7 @@ import { Route as RandomPaletteIndexImport } from './routes/random-palette/index
 import { Route as PaletteEditorIndexImport } from './routes/palette-editor/index'
 import { Route as ImagePickerIndexImport } from './routes/image-picker/index'
 import { Route as HarmonyPaletteIndexImport } from './routes/harmony-palette/index'
+import { Route as ContrastCheckerIndexImport } from './routes/contrast-checker/index'
 import { Route as ContactIndexImport } from './routes/contact/index'
 
 // Create/Update Routes
@@ -57,6 +58,12 @@ const HarmonyPaletteIndexRoute = HarmonyPaletteIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ContrastCheckerIndexRoute = ContrastCheckerIndexImport.update({
+  id: '/contrast-checker/',
+  path: '/contrast-checker/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ContactIndexRoute = ContactIndexImport.update({
   id: '/contact/',
   path: '/contact/',
@@ -79,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/contrast-checker/': {
+      id: '/contrast-checker/'
+      path: '/contrast-checker'
+      fullPath: '/contrast-checker'
+      preLoaderRoute: typeof ContrastCheckerIndexImport
       parentRoute: typeof rootRoute
     }
     '/harmony-palette/': {
@@ -124,6 +138,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactIndexRoute
+  '/contrast-checker': typeof ContrastCheckerIndexRoute
   '/harmony-palette': typeof HarmonyPaletteIndexRoute
   '/image-picker': typeof ImagePickerIndexRoute
   '/palette-editor': typeof PaletteEditorIndexRoute
@@ -134,6 +149,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactIndexRoute
+  '/contrast-checker': typeof ContrastCheckerIndexRoute
   '/harmony-palette': typeof HarmonyPaletteIndexRoute
   '/image-picker': typeof ImagePickerIndexRoute
   '/palette-editor': typeof PaletteEditorIndexRoute
@@ -145,6 +161,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/contact/': typeof ContactIndexRoute
+  '/contrast-checker/': typeof ContrastCheckerIndexRoute
   '/harmony-palette/': typeof HarmonyPaletteIndexRoute
   '/image-picker/': typeof ImagePickerIndexRoute
   '/palette-editor/': typeof PaletteEditorIndexRoute
@@ -157,6 +174,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/contact'
+    | '/contrast-checker'
     | '/harmony-palette'
     | '/image-picker'
     | '/palette-editor'
@@ -166,6 +184,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contact'
+    | '/contrast-checker'
     | '/harmony-palette'
     | '/image-picker'
     | '/palette-editor'
@@ -175,6 +194,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/contact/'
+    | '/contrast-checker/'
     | '/harmony-palette/'
     | '/image-picker/'
     | '/palette-editor/'
@@ -186,6 +206,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactIndexRoute: typeof ContactIndexRoute
+  ContrastCheckerIndexRoute: typeof ContrastCheckerIndexRoute
   HarmonyPaletteIndexRoute: typeof HarmonyPaletteIndexRoute
   ImagePickerIndexRoute: typeof ImagePickerIndexRoute
   PaletteEditorIndexRoute: typeof PaletteEditorIndexRoute
@@ -196,6 +217,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactIndexRoute: ContactIndexRoute,
+  ContrastCheckerIndexRoute: ContrastCheckerIndexRoute,
   HarmonyPaletteIndexRoute: HarmonyPaletteIndexRoute,
   ImagePickerIndexRoute: ImagePickerIndexRoute,
   PaletteEditorIndexRoute: PaletteEditorIndexRoute,
@@ -215,6 +237,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/contact/",
+        "/contrast-checker/",
         "/harmony-palette/",
         "/image-picker/",
         "/palette-editor/",
@@ -227,6 +250,9 @@ export const routeTree = rootRoute
     },
     "/contact/": {
       "filePath": "contact/index.ts"
+    },
+    "/contrast-checker/": {
+      "filePath": "contrast-checker/index.ts"
     },
     "/harmony-palette/": {
       "filePath": "harmony-palette/index.ts"
