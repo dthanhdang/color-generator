@@ -14,13 +14,12 @@ type SingleColorProps = {
 
 export const SingleColor = ({
   color,
-  //index,
+
   name,
   weight,
   onClick,
   selected = false,
 }: SingleColorProps): React.JSX.Element => {
-  //const weight = index === 0 ? 50 : index === 10 ? 950 : index * 100
   const [copied, setCopied] = useState(false)
   const copyToClipboard = (e: React.MouseEvent) => {
     e.stopPropagation()

@@ -6,7 +6,7 @@ import { nanoid } from "nanoid"
 import { RandomColor } from "#components/RandomColor.tsx"
 import { getHarmonyColor } from "#utils/colorHarmony.ts"
 import { getColorName } from "#utils/getColorName.ts"
-//import { ColorPalette, ColorPaletteItem } from "../../ColorPalette"
+
 import { PageStyle } from "#components/PageStyle.tsx"
 import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
 import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"

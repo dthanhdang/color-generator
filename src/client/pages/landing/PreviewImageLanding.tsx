@@ -9,11 +9,11 @@ export const PreviewImageLanding = () => {
       <div className="aspect-[16/9] bg-gradient-to-r from-gray-100 to-gray-50 flex items-center justify-center p-8">
         <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-4 w-full">
           {[
-            { color: "#f2a1c5", name: "Illusion" },
-            { color: "#a4d6d4", name: "Sinbad" },
-            { color: "#cea1f2", name: "Perfume" },
-            { color: "#f4cf3e", name: "Saffron" },
-            { color: "#f2a1ee", name: "Lavender" },
+            { color: "#f4bf44", name: "Casablanca" },
+            { color: "#fc69b8", name: "Hot Pink" },
+            { color: "#05e8a2", name: "Caribbean" },
+            { color: "#f48752", name: "Jaffa" },
+            { color: "#b384fd", name: "Heliotrope" },
           ].map((item) => (
             <div
               key={item.color}

@@ -23,7 +23,15 @@ export const HeroSection = () => {
             className="text-4xl md:text-6xl font-bold mb-6 leading-tight animate-fade-in"
             style={{ animationDelay: "0.2s" }}
           >
-            Create stunning color palettes instantly
+            Generate your perfect{" "}
+            <span
+              style={{
+                //color: '#9D4EDD', // Fallback
+                color: "oklch(0.511 0.262 276.966)",
+              }}
+            >
+              color palettes instantly
+            </span>
           </h1>
 
           <p
@@ -58,7 +66,7 @@ export const HeroSection = () => {
         <PreviewImageLanding />
 
         {/* Stats or social proof */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center max-w-3xl mx-auto">
+        {/*<div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center max-w-3xl mx-auto">
           <div
             className="animate-fade-in-delay"
             style={{ animationDelay: "0.8s" }}
@@ -87,7 +95,7 @@ export const HeroSection = () => {
             <div className="text-3xl font-bold">4.9</div>
             <div className="text-gray-600">Rating</div>
           </div>
-        </div>
+        </div>*/}
       </div>
     </section>
   )
