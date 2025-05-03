@@ -6,10 +6,18 @@ export function WCAGContrastCard() {
       </h2>
       <p className="text-sm mb-4">
         The contrast ratio between text and its background is crucial for web
-        accessibility. WCAG guidelines define minimum thresholds to ensure
-        content readability for all users, including those with visual
-        impairments. A higher ratio indicates better contrast and better
-        readability.
+        accessibility.{" "}
+        <a
+          href="https://www.wcag.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-indigo-600 underline"
+        >
+          WCAG guidelines
+        </a>{" "}
+        define minimum thresholds to ensure content readability for all users,
+        including those with visual impairments. A higher ratio indicates better
+        contrast and better readability.
       </p>
 
       <div className="overflow-x-auto">

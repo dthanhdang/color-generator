@@ -1,9 +1,11 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Stack, Text, Group, ActionIcon } from "@mantine/core"
 import { ColorInput } from "@mantine/core"
 
 import { ArrowLeftRight } from "lucide-react"
 import { toHex } from "./contrastUtils"
+import chroma from "chroma-js"
+//import { value } from "valibot"
 //import { R } from "vitest/dist/chunks/environment.d8YfPkTm.js"
 
 type ColorContrastSelectorProps = {
@@ -21,6 +23,15 @@ export function ColorContrastSelector({
   onTextColorChange,
   onSwapColors,
 }: ColorContrastSelectorProps): React.JSX.Element {
+  const [bgInputValue, setBgInputValue] = useState(toHex(backgroundColor))
+  const [textInputValue, setTextInputValue] = useState(toHex(textColor))
+
+  useEffect(() => {
+    setBgInputValue(toHex(backgroundColor))
+  }, [backgroundColor])
+  useEffect(() => {
+    setTextInputValue(toHex(textColor))
+  }, [textColor])
   return (
     <Stack gap="md">
       <div>
@@ -28,8 +39,13 @@ export function ColorContrastSelector({
           Background Color
         </Text>
         <ColorInput
-          value={toHex(backgroundColor)}
-          onChange={onBackgroundColorChange}
+          value={bgInputValue}
+          onChange={(value) => {
+            setBgInputValue(value)
+            if (chroma.valid(value)) {
+              onBackgroundColorChange(value)
+            }
+          }}
           format="hex"
           swatches={[
             "#2F61A6",
@@ -68,8 +84,13 @@ export function ColorContrastSelector({
         </Group>
 
         <ColorInput
-          value={toHex(textColor)}
-          onChange={onTextColorChange}
+          value={textInputValue}
+          onChange={(value) => {
+            setTextInputValue(value)
+            if (chroma.valid(value)) {
+              onTextColorChange(value)
+            }
+          }}
           format="hex"
           swatches={[
             "#FFFFFF",
