@@ -130,24 +130,30 @@ export const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
+                  href="https://gka.github.io/chroma.js/"
+                  className="text-gray-600 hover:text-[#503AF7] transition-colors duration-300"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Chroma.js
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
+                  href="https://lucide.dev/guide/packages/lucide-react"
+                  className="text-gray-600 hover:text-[#503AF7] transition-colors duration-300"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Lucide-react
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
-                  className="text-gray-600 hover:text-black transition-colors"
+                  href="https://www.npmjs.com/package/color-thief"
+                  className="text-gray-600 hover:text-[#503AF7] transition-colors duration-300"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Colorthief.js
                 </a>
