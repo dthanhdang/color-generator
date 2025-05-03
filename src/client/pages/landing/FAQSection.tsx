@@ -25,17 +25,27 @@ const faqs = [
   {
     question: "Can I adjust the contrast or brightness of my color?",
     answer:
-      "Yes! Use sliders when you are on scale palette generator mode adjust lightness, hue or chroma.",
+      "Yes! Use sliders when you are on scale palette generator mode to adjust lightness, hue or chroma.",
   },
   {
     question: "Is there a premium version with more features?",
     answer:
       "All of the features are free to use. The free version includes all features with ads, while premium option offers all features without ads.",
   },
+  {
+    question: "Why are there often 5 colors in a generated palette?",
+    answer:
+      "This number is a common design standard - it's enough to include key roles like primary, secondary, accent, background and text colors without overwhelming you. It also works well with popular color harmony rules and fits neatly into most UI layouts.",
+  },
 ]
 
-const colorPalette = ["#f2a1c5", "#a4d6d4", "#cea1f2", "#f4cf3e", "#f2a1ee"]
-const borderColor = "oklch(0.511 0.262 276.966)"
+const colorPalette = [
+  "#f4bf44", // Casablanca
+  "#fc69b8", // Hot Pink
+  "#05e8a2", // Caribbean
+  "#f48752", // Jaffa
+  "#b384fd", // Heliotrope
+]
 
 export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -54,7 +64,7 @@ export function FAQSection() {
       <div className="space-y-4">
         {faqs.map((faq, index) => {
           const isOpen = index === openIndex
-          const bgColor = colorPalette[index % colorPalette.length]
+          const borderColor = colorPalette[index % colorPalette.length]
 
           return (
             <div
@@ -63,8 +73,8 @@ export function FAQSection() {
                 isOpen ? "border-l-4" : "border-l-4 opacity-90"
               }`}
               style={{
-                backgroundColor: bgColor,
-                borderColor: borderColor, // Utilisation de la couleur OKLCH pour la bordure
+                backgroundColor: "white", // Fond blanc comme demandé
+                borderColor: borderColor,
               }}
             >
               <button
@@ -74,7 +84,7 @@ export function FAQSection() {
                 <div className="flex items-start gap-3">
                   <span
                     className="w-2.5 h-2.5 mt-1 rounded-full shrink-0"
-                    style={{ backgroundColor: borderColor }} // Utilisation de la couleur OKLCH pour le rond
+                    style={{ backgroundColor: borderColor }} // Points bullets avec les nouvelles couleurs
                   />
                   <h3 className="text-lg font-medium text-black group-hover:underline">
                     {faq.question}
@@ -84,7 +94,7 @@ export function FAQSection() {
                   className={`h-5 w-5 mt-1 transition-transform duration-300 ${
                     isOpen ? "rotate-180" : ""
                   }`}
-                  style={{ color: borderColor }} // Utilisation de la couleur OKLCH pour l'icône
+                  style={{ color: borderColor }} // Couleur de l'icône correspondant à la bordure
                 />
               </button>
               <div

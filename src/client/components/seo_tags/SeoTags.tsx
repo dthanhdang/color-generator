@@ -11,8 +11,8 @@ export function SeoTags(): JSX.Element | null {
 
   const displayedTitle = seoTitle
     ? mode === "production"
-      ? `${seoTitle} | ChromaGen`
-      : `${seoTitle} | ChromaGen [${mode}]`
+      ? `${seoTitle} | Ucolorr`
+      : `${seoTitle} | Ucolorr [${mode}]`
     : undefined
 
   return (

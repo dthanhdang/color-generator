@@ -1,5 +1,5 @@
 import { useState } from "react"
-import chroma /*type Color */ from "chroma-js"
+import chroma from "chroma-js"
 
 import { nanoid } from "nanoid"
 

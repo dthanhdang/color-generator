@@ -265,7 +265,7 @@ export const LandingPage = () => {
             variant="primary"
             className="bg-white text-black hover:bg-gray-100"
           >
-            Get started — it's free
+            Start It Free
           </CTAButton>
         </div>
       </section>

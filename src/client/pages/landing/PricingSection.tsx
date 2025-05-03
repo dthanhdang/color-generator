@@ -109,7 +109,7 @@ export const PricingSection = () => {
                 <div className="text-indigo-700 mt-1 mr-2">
                   <Sparkles size={16} />
                 </div>
-                <span>All features with NO Adds</span>
+                <span>All features with NO Ads</span>
               </li>
               <li className="flex items-start">
                 <div className="text-indigo-700 mt-1 mr-2">

@@ -1,5 +1,7 @@
 import * as React from "react"
+
 import { Link, Outlet, createRootRoute } from "@tanstack/react-router"
+import { Header } from "../pages/landing/Header"
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -16,7 +18,7 @@ function RootComponent() {
   return (
     <React.Fragment>
       <div>
-        {" "}
+        <Header />{" "}
         <nav className="container mx-auto flex items-center justify-center py-4 px-6 mt-10">
           <div className="flex gap-6 bg-gray-50 px-6 py-3 rounded-full shadow-sm">
             {" "}

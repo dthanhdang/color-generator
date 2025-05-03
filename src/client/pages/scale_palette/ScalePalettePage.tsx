@@ -4,7 +4,6 @@ import { Select, Group } from "@mantine/core"
 
 import { nanoid } from "nanoid"
 
-//import { ColorPalette, ColorPaletteItem } from "../../ColorPalette"
 import { Form } from "../../components/Form"
 import { FormHsl } from "../../components/FormHsl"
 import { FormOklch } from "../../components/FormOklch"
@@ -18,7 +17,6 @@ import {
 } from "#components/PaletteGeneratorButtons.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
-//type PaletteMode = "scale" | "harmony" | "image" | "random"
 
 type GetColorScaleProps = {
   baseColor: Color
@@ -73,10 +71,9 @@ export function ScalePaletteGenerator() {
   })
 
   const handleColorSubmit = (newColor: Color) => {
-    //const newPalette = getColorScale(newColor, 10)
     if (chroma.valid(newColor)) {
       setColor(newColor)
-      //if (paletteMode === "scale") {
+
       const newPalette = getColorScale({ baseColor: newColor, count: 11 })
       setPalette(newPalette)
     } else {

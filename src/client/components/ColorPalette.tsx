@@ -19,7 +19,7 @@ export function ColorPalette({ palette }: ColorPaletteProps) {
   const [selectedColor, setSelectedColor] = useState<ColorPaletteItem | null>(
     null
   )
-  //const [showCssCode, setShowCssCode] = useState(false)
+
   const handleColorClick = (item: ColorPaletteItem) => {
     setSelectedColor(item === selectedColor ? null : item)
   }

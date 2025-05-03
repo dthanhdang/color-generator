@@ -22,7 +22,6 @@ import {
 } from "#components/PaletteGeneratorButtons.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
-//type PaletteMode = "scale" | "harmony" | "image" | "random"
 
 function getHarmonyPalette(
   baseColor: Color,
