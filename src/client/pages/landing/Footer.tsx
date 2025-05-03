@@ -99,12 +99,12 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/contact"
                   className="text-gray-600 hover:text-black transition-colors"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
               <li>
                 <a

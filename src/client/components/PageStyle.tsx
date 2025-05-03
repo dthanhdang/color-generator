@@ -1,29 +1,38 @@
-import { ReactNode } from "react"
+import type { JSX, ReactNode } from "react"
 import { SeoTags } from "#client/components/seo_tags"
+import { clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
 
 type PageStyleProps = {
-  titleStart?: string
-  titleHighlight: string
-  titleEnd?: string
   children: ReactNode
+  className?: string
+  title: string
 }
 
 export function PageStyle({
-  titleStart = "Your",
-  titleHighlight,
-  titleEnd = "Generator",
   children,
-}: PageStyleProps) {
+  className,
+  title,
+}: PageStyleProps): JSX.Element {
+  const parts = title.split("*").filter((part) => part !== "")
+  const highlightedModulo = title[0] === "*" ? 0 : 1
+
   return (
-    <main className="container mx-auto p-4">
+    <main className={twMerge("container mx-auto p-4", className)}>
       <SeoTags />
 
       <h1 className="text-center text-5xl font-bold mb-14 mt-8">
-        {titleStart}{" "}
-        <span style={{ color: "oklch(0.511 0.262 276.966)" }}>
-          {titleHighlight}
-        </span>{" "}
-        {titleEnd}
+        {parts.map((part, index) => (
+          <span
+            className={clsx({
+              "text-[oklch(0.511_0.262_276.966)]":
+                index % 2 === highlightedModulo,
+            })}
+            key={index}
+          >
+            {part}
+          </span>
+        ))}
       </h1>
       {children}
     </main>

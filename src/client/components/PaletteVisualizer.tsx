@@ -84,7 +84,7 @@ function SwatchLegend({
       {...props}
       className={twMerge(
         clsx(
-          "border-solid border-2 border-[#909090] rounded-sm px-1 py-1/2 mr-2",
+          "border-solid border-2 border-[#909090] rounded-sm px-1 py-1/2 mr-2 text-[var(--mantine-color-dimmed)]",
           {
             "": role !== undefined,
             "border-solid": role === "primary",
@@ -163,14 +163,14 @@ export function PaletteVisualizer(props: PaletteVisualizerProps) {
           Your Palette
         </Text>
         <Swatches roles={roles} onRolesChange={setRoles} palette={palette} />
-        <Text size="sm" color="dimmed">
+        <Text size="sm" c="dimmed">
           Click on a swatch to change the color's role
-          <Group className="gap-1">
-            <SwatchLegend role="primary" />
-            <SwatchLegend role="secondary" />
-            <SwatchLegend role="tertiary" />
-          </Group>
         </Text>
+        <Group className="gap-1">
+          <SwatchLegend role="primary" />
+          <SwatchLegend role="secondary" />
+          <SwatchLegend role="tertiary" />
+        </Group>
       </Paper>
 
       <Tabs value={activeTab} onChange={setActiveTab} mb="md">

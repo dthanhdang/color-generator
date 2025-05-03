@@ -1,3 +1,8 @@
 pnpm-lock.yaml
 README.md
 src/client/routeTree.gen.ts
+src/server/_generated/worker-configuration.d.ts
+public/site.webmanifest
+
+# Ignoring as it adds trailing commas
+wrangler.jsonc
