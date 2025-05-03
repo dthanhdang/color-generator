@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { cn } from "../../lib/utils"
-import UcolorrLogo from "../../assets/ucolorr.svg"
+import { Link } from "@tanstack/react-router"
 
 export const Header = () => {
   const [scrolled, setScrolled] = useState(false)
@@ -29,33 +29,33 @@ export const Header = () => {
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <a
-          href="#"
+        <Link
+          to="/"
           className="text-2xl font-semibold tracking-wide flex items-center space-x-2"
         >
           <img
-            src={UcolorrLogo}
+            src="/ucolorr.svg"
             alt="ucolorr logo"
             className="w-8 h-8 object-contain"
           />
           <span>ucolorr</span>
-        </a>
-
-        <nav className="hidden md:flex items-center space-x-8">
+        </Link>
+        <nav className="text-sm font-bold text-gray-600 flex flex-col gap-4 md:flex-row md:items-center md:gap-8">
           <a
-            href="#features"
+            href="/#features"
             className="text-sm font-medium hover:text-black/70 transition-colors"
           >
             Features
           </a>
+
           <a
-            href="#how-it-works"
+            href="/#how-it-works"
             className="text-sm font-medium hover:text-black/70 transition-colors"
           >
             How It Works
           </a>
           <a
-            href="#pricing"
+            href="/#pricing"
             className="text-sm font-medium hover:text-black/70 transition-colors"
           >
             Pricing

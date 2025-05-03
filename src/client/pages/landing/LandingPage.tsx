@@ -11,6 +11,7 @@ import { SeoTags } from "#client/components/seo_tags"
 //import {Pricing}
 import { PricingSection } from "./PricingSection"
 import { FAQSection } from "./FAQSection"
+import { Divider } from "@mantine/core"
 
 export const LandingPage = () => {
   useEffect(() => {
@@ -39,6 +40,7 @@ export const LandingPage = () => {
       window.removeEventListener("scroll", animateElements)
     }
   }, [])
+  //const customColor = "#503AF7";
 
   return (
     <div className="min-h-screen overflow-hidden">
@@ -62,11 +64,11 @@ export const LandingPage = () => {
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="relative animate-on-scroll">
-              <div className="absolute -left-4 -top-4 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-xl">
+              <div className="absolute -left-4 -top-4 w-12 h-12 rounded-full bg-[#503AF7] text-white flex items-center justify-center font-bold text-xl z-20">
                 1
               </div>
               <div className="glass-card p-6 rounded-xl h-full">
-                <div className="w-12 h-12 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-[#503AF7] text-white rounded-lg flex items-center justify-center mb-4">
                   <Palette size={24} />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">Choose a tool</h3>
@@ -84,11 +86,11 @@ export const LandingPage = () => {
               className="relative animate-on-scroll"
               style={{ transitionDelay: "200ms" }}
             >
-              <div className="absolute -left-4 -top-4 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-xl">
+              <div className="absolute -left-4 -top-4 w-12 h-12 rounded-full bg-[#503AF7] text-white flex items-center justify-center font-bold text-xl z-20">
                 2
               </div>
               <div className="glass-card p-6 rounded-xl h-full">
-                <div className="w-12 h-12 bg-green-50 text-green-500 rounded-lg flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-[#503AF7] text-white rounded-lg flex items-center justify-center mb-4">
                   <PaintBucket size={24} />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">Generate colors</h3>
@@ -106,11 +108,11 @@ export const LandingPage = () => {
               className="relative animate-on-scroll"
               style={{ transitionDelay: "400ms" }}
             >
-              <div className="absolute -left-4 -top-4 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-xl">
+              <div className="absolute -left-4 -top-4 w-12 h-12 rounded-full bg-[#503AF7] text-white flex items-center justify-center font-bold text-xl z-20">
                 3
               </div>
               <div className="glass-card p-6 rounded-xl h-full">
-                <div className="w-12 h-12 bg-purple-50 text-purple-500 rounded-lg flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-[#503AF7] text-white rounded-lg flex items-center justify-center mb-4">
                   <Heart size={24} />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">Save & use</h3>
@@ -127,7 +129,7 @@ export const LandingPage = () => {
       {/* Demo/Preview Section */}
       <section className="py-20 px-6 md:px-12 overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-8 md:p-16 relative">
+          <div className="bg-[#503AF7] rounded-3xl p-8 md:p-16 relative">
             <div className="absolute top-0 right-0 opacity-50 transform translate-x-1/4 -translate-y-1/4">
               <div className="w-64 h-64 rounded-full bg-blue-500/20 blur-3xl"></div>
             </div>
@@ -147,9 +149,9 @@ export const LandingPage = () => {
                 <CTAButton
                   href="#"
                   variant="primary"
-                  className="bg-white text-black hover:bg-gray-100"
+                  className="!bg-white !hover:bg-gray-100 !text-[#503AF7]"
                 >
-                  Get started for free
+                  Start It Free
                 </CTAButton>
               </div>
             </div>
@@ -251,14 +253,14 @@ export const LandingPage = () => {
       <PricingSection />
 
       {/* Final CTA */}
-      <section className="py-20 px-6 md:px-12 bg-black text-white">
+      <section className="py-20 px-6 md:px-12 text-[#503AF7] bg-[#F5F5FF]">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Ready to elevate your color game?
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-            Join thousands of designers creating beautiful color palettes with
-            UColorr.
+          <p className="text-xl text-[#503AF7]/80 max-w-2xl mx-auto mb-8">
+            Join thousands of designers and developers creating beautiful color
+            palettes with Ucolorr.
           </p>
           <CTAButton
             href="#"
@@ -270,6 +272,7 @@ export const LandingPage = () => {
         </div>
       </section>
       <FAQSection />
+      <Divider />
 
       <Footer />
     </div>

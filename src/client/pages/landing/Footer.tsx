@@ -1,15 +1,14 @@
-import UcolorrLogo from "../../assets/ucolorr.svg"
 import { Link } from "@tanstack/react-router"
 
 export const Footer = () => {
   return (
-    <footer className="bg-gray-50 py-12 px-6 md:px-12">
+    <footer className="py-12 px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <img
-                src={UcolorrLogo}
+                src="/ucolorr.svg"
                 alt="ucolorr logo"
                 className="w-8 h-8 object-contain"
               />
@@ -36,7 +35,7 @@ export const Footer = () => {
                   to="/scale-palette"
                   className="text-gray-600 hover:text-[#503AF7] transition-colors duration-300"
                   activeProps={{
-                    className: "text-[#503AF7] font-medium", // Couleur brand quand actif
+                    className: "text-[#503AF7] font-medium",
                   }}
                 >
                   Scale Palette Generator
@@ -92,7 +91,7 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#pricing"
                   className="text-gray-600 hover:text-black transition-colors"
                 >
                   Pricing
@@ -167,7 +166,7 @@ export const Footer = () => {
             © 2025 ucolorr. All rights reserved.
           </p>
 
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          {/*<div className="flex space-x-6 mt-4 md:mt-0">
             <a
               href="#"
               className="text-gray-600 hover:text-black transition-colors"
@@ -200,7 +199,7 @@ export const Footer = () => {
                 />
               </svg>
             </a>
-          </div>
+          </div>*/}
         </div>
       </div>
     </footer>
