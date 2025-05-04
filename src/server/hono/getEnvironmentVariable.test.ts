@@ -7,7 +7,7 @@ import type { HonoEnv } from "./buildHono.js"
 
 import { getEnvironmentVariable } from "./getEnvironmentVariable.js"
 
-describe("customResponse", () => {
+describe("getEnvironmentVariable", () => {
   it("returns an error for undefined variables", async ({ expect }) => {
     const app = new Hono<HonoEnv>().get("/", (c) =>
       customResponse(

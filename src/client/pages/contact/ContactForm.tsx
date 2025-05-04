@@ -1,26 +1,33 @@
 import { useState, type JSX } from "react"
 import { Form, useForm } from "@mantine/form"
-import { valibotResolver } from "mantine-form-valibot-resolver"
+import { standardResolver } from "mantine-form-standard-resolver"
 import { Button, Textarea, TextInput } from "@mantine/core"
 import { SubmitStatus as SubmitStatusElement } from "./SubmitStatus.tsx"
 import type { SubmitStatus } from "./SubmitStatus.tsx"
 import type { ContactFormData } from "./ContactFormData.ts"
 import { schema } from "./ContactFormData.ts"
 import { Mail } from "lucide-react"
+import { useAuthentication } from "#client/hooks"
 
 type ContactFormProps = {
   onSubmit: (formData: ContactFormData) => undefined | Promise<undefined>
 }
 
 export function ContactForm({ onSubmit }: ContactFormProps): JSX.Element {
+  const { user } = useAuthentication()
+
   const form = useForm({
-    initialValues: { email: "", message: "", name: "", website: "" },
-    validate: valibotResolver(schema),
+    initialValues: {
+      email: user?.email ?? "",
+      message: "",
+      name: "",
+      website: "",
+    },
+    validate: standardResolver(schema),
   })
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>({
     status: "pending",
   })
-
   const handleSubmit = async (formData: ContactFormData): Promise<void> => {
     try {
       if (formData.website === "") await onSubmit(formData)
@@ -54,6 +61,7 @@ export function ContactForm({ onSubmit }: ContactFormProps): JSX.Element {
 
           <TextInput
             {...form.getInputProps("email")}
+            className={user ? "hidden" : undefined}
             description="e.g. jane.doe@gmail.com"
             label="Your email address :"
             type="email"
@@ -62,6 +70,7 @@ export function ContactForm({ onSubmit }: ContactFormProps): JSX.Element {
 
           <Textarea
             {...form.getInputProps("message")}
+            autosize
             label="Message :"
             minRows={10}
             withAsterisk

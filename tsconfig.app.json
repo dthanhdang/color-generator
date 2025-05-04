@@ -8,7 +8,7 @@
     "skipLibCheck": true,
     "types": [
       "@cloudflare/vitest-pool-workers",
-      "./src/server/_generated/worker-configuration.d.ts"
+      "./src/server/_generated/wrangler/worker-configuration.d.ts"
     ],
     /* Bundler mode */
     "moduleResolution": "bundler",

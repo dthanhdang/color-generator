@@ -4,6 +4,10 @@
 
 @layer theme, base, mantine, components, utilities;
 
+@theme {
+  --primary-color: oklch(0.511 0.262 276.966);
+}
+
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
@@ -12,11 +16,8 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 @import "@mantine/core/styles.layer.css";
+@import "@mantine/notifications/styles.layer.css";
 @import "tailwindcss";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 :root {
   --radius: 0.625rem;

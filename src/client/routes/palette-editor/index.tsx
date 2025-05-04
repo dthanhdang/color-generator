@@ -1,32 +1,81 @@
 import { createFileRoute } from "@tanstack/react-router"
 import * as v from "valibot"
 import { EditPalettePage } from "#pages/edit_palette"
-import chroma from "chroma-js"
+import { useSuspenseQuery } from "@tanstack/react-query"
+import { listCurrentUserFavoritePalettes } from "#client/rpc/current_user"
+import { useAuthentication } from "#client/hooks"
+import { parseChromaPalette } from "#utils/parseChromaPalette.ts"
+import { getUserFromLocalStorage } from "#client/auth"
 
-function isValidHexColor(value: string): boolean {
-  return /[a-f0-9]{6}/i.test(value)
-}
-
-function validateHexPalette(value: string | undefined): string[] | undefined {
-  if (value === undefined) return undefined
-
-  const tokens = value.split("-")
-  if (tokens.every((token) => isValidHexColor(token))) {
-    return tokens
-  } else {
-    return undefined
-  }
-}
+const searchSchema = v.strictObject({ colors: v.optional(v.string()) })
 
 export const Route = createFileRoute("/palette-editor/")({
   component: PageWrapper,
-  validateSearch: v.strictObject({ palette: v.optional(v.string()) }),
+  loaderDeps: ({ search }) => {
+    const isAuthenticated =
+      getUserFromLocalStorage("registered_user") !== undefined
+
+    return { isAuthenticated, search }
+  },
+  loader: async ({
+    context: { queryClient },
+    deps: { isAuthenticated, search },
+  }) => {
+    const query = getQuery(search, isAuthenticated)
+
+    await queryClient.ensureQueryData(query)
+
+    return { query, seoTitle: "Your Palette Editor" }
+  },
+  validateSearch: searchSchema,
 })
 
-function PageWrapper() {
-  const { palette: searchPalette } = Route.useSearch()
-  const palette = validateHexPalette(searchPalette) ?? [chroma.random().hex()]
-  console.log(palette)
+function getQuery(
+  search: v.InferOutput<typeof searchSchema>,
+  isAuthenticated: boolean
+) {
+  const { colors } = search
+  return colors !== undefined && isAuthenticated === true
+    ? {
+        queryFn: () => listCurrentUserFavoritePalettes({ colors }),
+        queryKey: ["CURRENT_USER", "PALETTE", "FAVORITE", "COLORS", colors],
+      }
+    : {
+        queryFn: async () => [],
+        queryKey: ["CURRENT_USER", "PALETTE", "FAVORITE", "EMPTY"],
+      }
+}
+
+function AuthenticatedPageWrapper() {
+  const { query } = Route.useLoaderData()
+  const { colors } = Route.useSearch()
+
+  const { data: palettes } = useSuspenseQuery(query)
+
+  const palette = palettes.length === 1 ? palettes[0] : undefined
+
+  return (
+    <EditPalettePage
+      favoritePalette={palette}
+      palette={
+        // TODO simplify this crap
+        (colors ? parseChromaPalette(colors) : undefined) ?? palette?.colors
+      }
+    />
+  )
+}
+
+function UnauthenticatedPageWrapper() {
+  const { colors } = Route.useSearch()
+
+  const palette = colors ? parseChromaPalette(colors) : undefined
 
   return <EditPalettePage palette={palette} />
+}
+
+function PageWrapper() {
+  const { user } = useAuthentication()
+  if (user && user.role === "registered_user")
+    return <AuthenticatedPageWrapper />
+  else return <UnauthenticatedPageWrapper />
 }

@@ -5,12 +5,16 @@ import tailwindcss from "@tailwindcss/vite"
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
 
 export default defineConfig({
+  build: {
+    outDir: "dist",
+  },
   plugins: [
     tailwindcss(),
     TanStackRouterVite({
       target: "react",
       routesDirectory: "./src/client/routes",
-      generatedRouteTree: "./src/client/routeTree.gen.ts",
+      generatedRouteTree:
+        "./src/client/_generated/tanstack-router/routeTree.gen.ts",
       autoCodeSplitting: true,
     }),
     react(),
@@ -35,6 +39,6 @@ export default defineConfig({
     globals: true,
     include: ["./src/client/**/*.test.{ts,tsx}"],
     restoreMocks: true,
-    setupFiles: ["./src/client/test/setup.ts"],
+    setupFiles: ["./src/client/test/setup/index.ts"],
   },
 })
