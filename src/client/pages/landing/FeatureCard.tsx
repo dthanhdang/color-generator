@@ -100,7 +100,7 @@ export const FeatureCard = ({
             to={to}
             className="text-sm font-medium text-blue-600 hover:underline"
           >
-            Get Your Palette →
+            Explore →
           </Link>
         )}
       </div>
