@@ -4,19 +4,13 @@ import { Select, Group } from "@mantine/core"
 
 import { nanoid } from "nanoid"
 
-import { Form } from "../../components/Form"
-import { FormHsl } from "../../components/FormHsl"
-import { FormOklch } from "../../components/FormOklch"
 import { getColorName } from "#utils/getColorName.ts"
 import { PageStyle } from "#components/PageStyle.tsx"
 import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
 import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
-import {
-  GenerateRandomPaletteButton,
-  OpenPaletteEditorButton,
-} from "#components/PaletteGeneratorButtons.tsx"
-
-type ColorMode = "hex" | "hsl" | "oklch"
+import { PaletteGeneratorButtons } from "#components/palette_generator_buttons/index.js"
+import { ColorForm } from "#components/color_form/index.ts"
+import type { ColorMode } from "#client/types"
 
 type GetColorScaleProps = {
   baseColor: Color
@@ -37,17 +31,15 @@ function getColorScale({
       .colors(count, undefined)
       .map((color, index) => {
         const weight = index === 0 ? 50 : index === 10 ? 950 : index * 100
-        //const colorObject = chroma(color)
         const colorNameResult = getColorName(color)
 
-        console.log("getColorName result:", colorNameResult)
         return {
           id: nanoid(),
           color,
           weight,
           name: colorNameResult ? colorNameResult.name : "",
         }
-      }) as ColorPaletteItem[]
+      })
   )
 }
 
@@ -110,30 +102,19 @@ export function ScalePaletteGenerator() {
           onChange={handleModeChange}
         />
 
-        <GenerateRandomPaletteButton
-          className="ml-auto"
-          onClick={handleGenerateRandomScalePalette}
-        >
-          Generate Random Scale Palette
-        </GenerateRandomPaletteButton>
-
-        <OpenPaletteEditorButton palette={palette}>
-          Open Scale Palette in Editor
-        </OpenPaletteEditorButton>
+        <PaletteGeneratorButtons
+          onGeneratePalette={handleGenerateRandomScalePalette}
+          colors={palette.map(({ color }) => color)}
+        />
       </Group>
 
-      <div className="mt-4">
-        {" "}
-        {colorMode === "hex" && (
-          <Form color={color} onChange={handleColorSubmit} />
-        )}
-        {colorMode === "hsl" && (
-          <FormHsl color={color} onChange={handleColorSubmit} />
-        )}
-        {colorMode === "oklch" && (
-          <FormOklch color={color} onChange={handleColorSubmit} />
-        )}
-      </div>
+      <ColorForm
+        className="mt-4"
+        color={color}
+        colorMode={colorMode}
+        onChange={handleColorSubmit}
+      />
+
       <div className="mt-8">
         <ColorPalette palette={palette} />
       </div>

@@ -23,6 +23,7 @@ export default defineConfig(({ mode }): UserConfig => {
     plugins: [
       build({
         entry,
+        outputDir: "./dist",
       }),
       devServerPlugin,
       generateDotenv({

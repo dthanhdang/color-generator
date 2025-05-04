@@ -37,13 +37,19 @@ import {
   restrictToHorizontalAxis,
   restrictToVerticalAxis,
 } from "@dnd-kit/modifiers"
+import { ToggleFavoriteButton } from "#components/palette_generator_buttons/index.ts"
+import { PublicPalette } from "#client/types"
 
 export type PaletteElement = {
   color: Color
   id: UniqueIdentifier
 }
 
-type PaletteEditorProps = { className?: string; palette: Color[] }
+type PaletteEditorProps = {
+  className?: string
+  favoritePalette: PublicPalette | undefined
+  palette: Color[]
+}
 
 export function PaletteEditor({
   className,
@@ -203,6 +209,11 @@ export function PaletteEditor({
             </Button>
           </Button.Group>
 
+          <ToggleFavoriteButton
+            colors={palette.map(({ color }) => color)}
+            variant="outline"
+          />
+
           <Button.Group className="lg:ml-auto">
             <Button
               className="ml-auto"
@@ -247,7 +258,7 @@ export function PaletteEditor({
                 id={color.id}
                 key={color.id}
                 onDelete={
-                  palette.length <= 1 ? undefined : () => handleDelete(index)
+                  palette.length <= 3 ? undefined : () => handleDelete(index)
                 }
                 onDuplicate={
                   palette.length <= 6 ? () => handleDuplicate(index) : undefined

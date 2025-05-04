@@ -8,20 +8,14 @@ import { nanoid } from "nanoid"
 import { getHarmonyColor, HarmonyType } from "#utils/colorHarmony.ts"
 import { HarmonySelector } from "../../components/HarmonySelector"
 import { getColorName } from "#utils/getColorName.ts"
-import { Form } from "../../components/Form"
-import { FormOklch } from "../../components/FormOklch"
-import { FormHsl } from "../../components/FormHsl"
 import { type Color } from "chroma-js"
 import { PageStyle } from "#components/PageStyle.tsx"
 import { ColorPaletteItem, ColorPalette } from "#components/ColorPalette.tsx"
 
 import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
-import {
-  GenerateRandomPaletteButton,
-  OpenPaletteEditorButton,
-} from "#components/PaletteGeneratorButtons.tsx"
-
-type ColorMode = "hex" | "hsl" | "oklch"
+import type { ColorMode } from "#client/types"
+import { ColorForm } from "#components/color_form/ColorForm.tsx"
+import { PaletteGeneratorButtons } from "#components/palette_generator_buttons/PaletteGeneratorButtons.tsx"
 
 function getHarmonyPalette(
   baseColor: Color,
@@ -113,30 +107,20 @@ export function HarmonyPalette() {
           value={colorMode}
           onChange={handleModeChange}
         />
-        <GenerateRandomPaletteButton
-          className="ml-auto"
-          onClick={handleRandomHarmonyPalette}
-        >
-          Generate Random Harmony Palette
-        </GenerateRandomPaletteButton>
 
-        <OpenPaletteEditorButton palette={palette}>
-          Open Harmony Palette in Editor
-        </OpenPaletteEditorButton>
+        <PaletteGeneratorButtons
+          onGeneratePalette={handleRandomHarmonyPalette}
+          colors={palette.map(({ color }) => color)}
+        />
       </Group>
 
-      <div className="mt-4">
-        {" "}
-        {colorMode === "hex" && (
-          <Form color={color} onChange={handleColorSubmit} />
-        )}
-        {colorMode === "hsl" && (
-          <FormHsl color={color} onChange={handleColorSubmit} />
-        )}
-        {colorMode === "oklch" && (
-          <FormOklch color={color} onChange={handleColorSubmit} />
-        )}
-      </div>
+      <ColorForm
+        className="mt-4"
+        color={color}
+        colorMode={colorMode}
+        onChange={handleColorSubmit}
+      />
+
       <div className="mt-4">
         <HarmonySelector value={harmonyType} onChange={handleHarmonyChange} />
       </div>

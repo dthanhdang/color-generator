@@ -7,11 +7,8 @@ import { Group } from "@mantine/core"
 
 import { type Color } from "chroma-js"
 import chroma from "chroma-js"
-import {
-  GenerateRandomPaletteButton,
-  OpenPaletteEditorButton,
-} from "./PaletteGeneratorButtons.tsx"
 import type { ColorPaletteItem } from "./ColorPalette.tsx"
+import { PaletteGeneratorButtons } from "./palette_generator_buttons/PaletteGeneratorButtons.tsx"
 
 type RandomColorProps = {
   onGeneratePalette: (
@@ -39,13 +36,10 @@ export function RandomColor({
 
   return (
     <Group className="justify-end">
-      <GenerateRandomPaletteButton onClick={handleClick}>
-        Generate Random Palette
-      </GenerateRandomPaletteButton>
-
-      <OpenPaletteEditorButton palette={palette}>
-        Open Palette in Editor
-      </OpenPaletteEditorButton>
+      <PaletteGeneratorButtons
+        onGeneratePalette={handleClick}
+        colors={palette.map(({ color }) => color)}
+      />
     </Group>
   )
 }

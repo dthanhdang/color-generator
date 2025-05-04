@@ -10,13 +10,9 @@ import { PageStyle } from "#components/PageStyle.tsx"
 import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
 import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
 import { Group } from "@mantine/core"
-import { OpenPaletteEditorButton } from "#components/PaletteGeneratorButtons.tsx"
-//type ColorMode = "hex" | "hsl" | "oklch"
+import { PaletteGeneratorButtons } from "#components/palette_generator_buttons/index.js"
 
 export function ImagePicker() {
-  //const [color, setColor] = useState(chroma("#b4f2ce"))
-  //const [colorMode, setColorMode] = useState<ColorMode>("hex")
-
   const [palette, setPalette] = useState<ColorPaletteItem[]>([])
 
   const primaryColorId = palette[0]?.id
@@ -33,7 +29,7 @@ export function ImagePicker() {
   }
 
   return (
-    <PageStyle title="Your *Color From Image* Generator">
+    <PageStyle title="Your *Color From Image* Extractor">
       <div className="mt-4">
         <ImageColorPicker onColorsExtracted={handleImageColorsExtracted} />
       </div>
@@ -41,9 +37,9 @@ export function ImagePicker() {
       {palette.length > 0 && (
         <>
           <Group className="mt-8 justify-end">
-            <OpenPaletteEditorButton palette={palette}>
-              Open Palette in Editor
-            </OpenPaletteEditorButton>
+            <PaletteGeneratorButtons
+              colors={palette.map(({ color }) => color)}
+            />
           </Group>
 
           <div className="mt-8">
@@ -52,8 +48,6 @@ export function ImagePicker() {
           </div>
         </>
       )}
-
-      {/*<ColorPalette palette={palette} />*/}
 
       <div className="mt-12">
         <PaletteVisualizer palette={palette} primaryColorId={primaryColorId} />

@@ -3,6 +3,7 @@ import { Hono } from "hono"
 export type EnvironmentVariableKey =
   | "CF_PAGES_URL"
   | "CONTACT_EMAIL"
+  | "JWT_SECRET"
   | "RESEND_API_KEY"
 
 export type HonoEnv = {

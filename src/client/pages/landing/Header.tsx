@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react"
 import { cn } from "../../lib/utils"
 import { Link } from "@tanstack/react-router"
+import { Unauthenticated } from "#components/unauthenticated/Unauthenticated.tsx"
+import { Authenticated } from "#components/authenticated/Authenticated.tsx"
+import { SignOutButton } from "#components/sign_out_button/SignOutButton.tsx"
 
 export const Header = () => {
   const [scrolled, setScrolled] = useState(false)
@@ -63,19 +66,26 @@ export const Header = () => {
         </nav>
 
         <div className="flex items-center space-x-4">
-          <a
-            href="#"
-            className="text-sm font-medium hover:text-black/70 transition-colors hidden md:block"
-          >
-            Log in
-          </a>
-          <a
-            href="#"
-            className="text-sm font-medium text-white px-4 py-2 rounded-full transition-all hover:bg-opacity-90"
-            style={{ backgroundColor: "oklch(0.511 0.262 276.966)" }}
-          >
-            Start It Free
-          </a>
+          <Authenticated>
+            <SignOutButton />
+          </Authenticated>
+          <Unauthenticated>
+            <Link
+              to="/auth/sign-in"
+              className="text-sm font-medium hover:text-black/70 transition-colors hidden md:block"
+            >
+              Log in
+            </Link>
+          </Unauthenticated>
+          <Unauthenticated>
+            <a
+              href="#"
+              className="text-sm font-medium text-white px-4 py-2 rounded-full transition-all hover:bg-opacity-90"
+              style={{ backgroundColor: "oklch(0.511 0.262 276.966)" }}
+            >
+              Start It Free
+            </a>
+          </Unauthenticated>
         </div>
       </div>
     </header>

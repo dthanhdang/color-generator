@@ -1,6 +1,13 @@
-import { defineWorkersProject } from "@cloudflare/vitest-pool-workers/config"
+import {
+  defineWorkersProject,
+  readD1Migrations,
+} from "@cloudflare/vitest-pool-workers/config"
+import path from "node:path"
 
 export default defineWorkersProject(async () => {
+  const migrationsPath = path.join(import.meta.dirname, "migrations")
+  const migrations = await readD1Migrations(migrationsPath)
+
   return {
     test: {
       coverage: {
@@ -17,6 +24,8 @@ export default defineWorkersProject(async () => {
           miniflare: {
             bindings: {
               CF_PAGES_URL: "http://localhost:5173",
+              JWT_SECRET: "unit tests secret",
+              TEST_MIGRATIONS: migrations,
             },
           },
           singleWorker: true,
