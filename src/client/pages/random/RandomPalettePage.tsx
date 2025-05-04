@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react"
-import chroma, { type Color } from "chroma-js"
+import { type Color } from "chroma-js"
 
 import { nanoid } from "nanoid"
 
@@ -23,8 +23,7 @@ export function RandomPalette() {
     ): void => {
       const palette = getHarmonyColor(baseColor, harmonyType, count).map(
         (color, index) => {
-          const colorObject = chroma(color)
-          const colorNameResult = getColorName(colorObject)
+          const colorNameResult = getColorName(color)
 
           return {
             id: nanoid(),

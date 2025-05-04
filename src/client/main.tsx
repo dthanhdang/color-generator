@@ -1,14 +1,13 @@
-import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-import "./index.css"
-//import { App } from "./App.tsx"
-import { MantineProvider } from "@mantine/core"
-//import { LandingPage } from "#pages/landing"
 import { createRouter, RouterProvider } from "@tanstack/react-router"
-import { routeTree } from "./routeTree.gen"
+import { routeTree } from "./_generated/tanstack-router/routeTree.gen.ts"
+import { AppWrapper } from "#components/app_wrapper/AppWrapper.tsx"
+import { queryClient } from "#client/tanstack/query/client"
+
+import "./index.css"
 
 // Create a new router instance
-const router = createRouter({ routeTree })
+const router = createRouter({ context: { queryClient }, routeTree })
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
@@ -17,39 +16,8 @@ declare module "@tanstack/react-router" {
   }
 }
 
-const inputClassNames = {
-  description: "text-base",
-  error: "text-lg",
-  label: "text-lg font-[Inter] text-[#707070]",
-  root: "flex flex-col gap-1",
-}
-
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <MantineProvider
-      theme={{
-        components: {
-          InputWrapper: {
-            classNames: inputClassNames,
-          },
-          Textarea: {
-            classNames: {
-              ...inputClassNames,
-              input: "text-lg font-[Inter] text-[#202020]",
-            },
-          },
-          TextInput: {
-            classNames: {
-              ...inputClassNames,
-              input: "text-lg rounded-sm font-[Inter] text-[#202020]",
-            },
-          },
-        },
-      }}
-    >
-      {/*<App />*/}
-      {/*<LandingPage />*/}
-      <RouterProvider router={router} />
-    </MantineProvider>
-  </StrictMode>
+  <AppWrapper queryClient={queryClient}>
+    <RouterProvider router={router} />
+  </AppWrapper>
 )

@@ -10,13 +10,15 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+dist_client
+dist_server
 *.local
 
 .dev.vars
 .vite
 .wrangler
-src/client/routeTree.gen.ts
-src/server/_generated/worker-configuration.d.ts
+src/client/_generated
+src/server/_generated
 
 # Editor directories and files
 .vscode/*

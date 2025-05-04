@@ -1,7 +1,5 @@
 import type { JSX } from "react"
-import { FormOklch } from "#components/FormOklch.tsx"
-import { FormHsl } from "#components/FormHsl.jsx"
-import { Form } from "#components/Form.tsx"
+import { FormHex, FormHsl, FormOklch } from "#components/color_form/index.ts"
 import { Tabs } from "@mantine/core"
 import type { Color } from "chroma-js"
 import { twMerge } from "tailwind-merge"
@@ -35,7 +33,7 @@ export function ColorEditor({
         </Tabs.List>
 
         <Tabs.Panel value="hex">
-          <Form {...formProps} />
+          <FormHex {...formProps} />
         </Tabs.Panel>
 
         <Tabs.Panel value="hsl">

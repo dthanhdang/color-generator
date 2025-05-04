@@ -40,29 +40,17 @@ function buildSwatchIdByRole({
 }: PaletteVisualizerProps): SwatchIdByRole | undefined {
   if (palette.length === 0) return undefined
 
-  const primaryItem = primaryColorId
-    ? palette.find((item) => item.id === primaryColorId) || palette[0]
-    : palette[0]
+  const primaryItem =
+    palette.find((item) => item.id === primaryColorId) ?? palette[0]
 
-  const secondaryItem = secondaryColorId
-    ? palette.find((item) => item.id === secondaryColorId) ||
-      (palette.length > 2 ? palette[2] : primaryItem)
-    : palette.length > 2
-      ? palette[2]
-      : primaryItem
+  const secondaryItem =
+    palette.find((item) => item.id === secondaryColorId) ??
+    (palette.length >= 2 ? palette[1] : primaryItem)
 
-  const tertiaryItem = tertiaryColorId
-    ? palette.find((item) => item.id === tertiaryColorId) ||
-      (palette.length > 3 ? palette[3] : secondaryItem)
-    : palette.length > 3
-      ? palette[3]
-      : secondaryItem
+  const tertiaryItem =
+    palette.find((item) => item.id === tertiaryColorId) ??
+    (palette.length >= 3 ? palette[2] : secondaryItem)
 
-  console.log({
-    primary: primaryItem,
-    secondary: secondaryItem,
-    tertiary: tertiaryItem,
-  })
   return {
     primary: primaryItem,
     secondary: secondaryItem,

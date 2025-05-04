@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"vite --config vite.config.server.ts\" \"vite --config vite.config.client.ts\"",
+    "generate_code": "pnpm wrangler:apply_migrations && pnpm kysely:generate_types --camel-case && pnpm wrangler:generate_types && pnpm tsr:generate_routes",
+    "kysely:generate_types": "pnpm kysely-codegen --camel-case --out-file ./src/server/_generated/kysely/index.ts --url .wrangler/state/v3/d1/miniflare-D1DatabaseObject/c4727c5fa707f340d2e04fa32c33e154a00b6d5548b92dae93b7623dacc25cdb.sqlite",
     "lint": "eslint .",
     "lint:check": "eslint .",
     "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "preview": "vite preview",
     "qa": "pnpm tsc:check && pnpm lint:check && pnpm prettier:check && pnpm unit_tests",
     "tsc:check": "tsc -noEmit --project tsconfig.app.json",
@@ -20,8 +23,12 @@
     "vite:preview": "vite preview",
     "vitest:server:run": "vitest run --config=vitest.config.server.ts --mode development",
     "vitest:server:watch": "vitest watch --config=vitest.config.server.ts --mode development",
-    "wrangler:generate_types": "pnpm wrangler types && mkdir -p ./src/server/_generated && mv worker-configuration.d.ts ./src/server/_generated",
-    "wrangler:preview": "pnpm wrangler pages dev"
+    "wrangler:apply_migrations": "pnpm wrangler d1 migrations apply ucolorr",
+    "wrangler:create_migration": "pnpm wrangler d1 migrations create ucolorr",
+    "wrangler:execute_sql": "wrangler d1 execute ucolorr --command ",
+    "wrangler:generate_types": "pnpm wrangler types && mkdir -p ./src/server/_generated/wrangler && mv worker-configuration.d.ts ./src/server/_generated/wrangler",
+    "wrangler:preview": "wrangler pages dev",
+    "wrangler:reset_db": "pnpm wrangler:execute_sql \"delete from d1_migrations\" && pnpm wrangler:apply_migrations && pnpm kysely:generate_types"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -35,18 +42,25 @@
     "@mantine/hooks": "^7.17.0",
     "@mantine/modals": "^7.17.0",
     "@mantine/notifications": "^7.17.0",
-    "@meow-meow-dev/server-utilities": "3.14.0",
+    "@meow-meow-dev/server-utilities": "3.15.0",
+    "@noxharmonium/kysely-d1": "^0.4.0",
+    "@sindresorhus/slugify": "^2.2.1",
+    "@tabler/icons-react": "^3.31.0",
     "@tailwindcss/vite": "^4.0.6",
+    "@tanstack/react-query": "^5.71.1",
     "@tanstack/react-router": "^1.114.27",
     "@uidotdev/usehooks": "^2.4.1",
+    "better-sqlite3": "^11.9.1",
     "chroma-js": "^3.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "colorthief": "^2.6.0",
     "dayjs": "^1.11.13",
     "hono": "^4.7.5",
+    "jwt-decode": "^4.0.0",
+    "kysely": "^0.27.6",
     "lucide-react": "^0.477.0",
-    "mantine-form-valibot-resolver": "^3.0.1",
+    "mantine-form-standard-resolver": "^1.0.0",
     "nanoid": "^5.1.0",
     "neverthrow": "^8.2.0",
     "react": "^19.0.0",
@@ -58,6 +72,7 @@
     "tailwind-preset-mantine": "^2.0.1",
     "tailwindcss": "^4.0.6",
     "tailwindcss-animate": "^1.0.7",
+    "type-fest": "^4.38.0",
     "valibot": "^1.0.0"
   },
   "devDependencies": {
@@ -67,9 +82,12 @@
     "@hono/vite-dev-server": "^0.19.0",
     "@meow-meow-dev/generator": "^1.5.1",
     "@meow-meow-dev/vite-plugin-generate-dotenv": "^1.1.1",
+    "@tanstack/react-query-devtools": "^5.71.1",
     "@tanstack/router-cli": "^1.114.34",
     "@tanstack/router-plugin": "^1.114.27",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
     "@types/chroma-js": "^3.1.1",
     "@types/node": "^22.14.1",
     "@types/react": "^19.0.8",
@@ -80,7 +98,8 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.18",
     "globals": "^15.14.0",
-    "jsdom": "^26.1.0",
+    "jsdom": "^26.0.0",
+    "kysely-codegen": "^0.18.3",
     "postcss": "^8.5.3",
     "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
@@ -89,24 +108,35 @@
     "typescript-eslint": "^8.22.0",
     "vite": "^6.1.0",
     "vitest": "^3.0.7",
+    "vitest-matchmedia-mock": "^2.0.1",
     "wrangler": "^4.12.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "better-sqlite3",
       "esbuild",
       "sharp",
       "workerd"
     ]
   },
   "exports": {
-    "./pages/landing": "./src/pages/landing/index.ts"
+    "./pages/landing": "./src/pages/landing/index.ts",
+    "./client/tanstack/query/queries/public/public_palette/tanstack/query/queries": "./src/client/tanstack/query/queries/public/public_palette/tanstack/query/queries/index.ts"
   },
   "imports": {
-    "#pages/*": "./src/client/pages/*/index.ts",
     "#utils/*": "./src/client/utils/*",
     "#components/*": "./src/client/components/*",
     "#client/*": "./src/client/*/index.ts",
+    "#pages/*": "./src/client/pages/*/index.ts",
+    "#server/auth/*": "./src/server/auth/*/index.ts",
+    "#server/conversion": "./src/server/conversion/index.ts",
+    "#server/glue/*": "./src/server/glue/*/index.ts",
     "#server/hono": "./src/server/hono/index.ts",
-    "#server/routes": "./src/server/routes/index.ts"
+    "#server/queries/*": "./src/server/queries/*/index.ts",
+    "#server/routes": "./src/server/routes/index.ts",
+    "#server/schemas": "./src/server/schemas/index.ts",
+    "#server/test/*": "./src/server/test/*/index.ts",
+    "#server/types": "./src/server/types/index.ts",
+    "#server/types/database": "./src/server/_generated/kysely/index.ts"
   }
 }
