@@ -9,17 +9,19 @@ import { getColorName } from "#utils/getColorName.ts"
 import { PageStyle } from "#components/PageStyle.tsx"
 import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
 import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
+import { Group } from "@mantine/core"
+import { OpenPaletteEditorButton } from "#components/PaletteGeneratorButtons.tsx"
+//type ColorMode = "hex" | "hsl" | "oklch"
 
 export function ImagePicker() {
-  const [extractedImageColors, setExtractedImageColors] = useState<string[]>([])
+  //const [color, setColor] = useState(chroma("#b4f2ce"))
+  //const [colorMode, setColorMode] = useState<ColorMode>("hex")
 
   const [palette, setPalette] = useState<ColorPaletteItem[]>([])
 
   const primaryColorId = palette[0]?.id
 
   const handleImageColorsExtracted = (colors: string[]) => {
-    setExtractedImageColors(colors)
-
     setPalette(
       colors.map((color, index) => ({
         id: nanoid(),
@@ -31,18 +33,28 @@ export function ImagePicker() {
   }
 
   return (
-    <PageStyle titleHighlight="Color From Image">
+    <PageStyle title="Your *Color From Image* Generator">
       <div className="mt-4">
         <ImageColorPicker onColorsExtracted={handleImageColorsExtracted} />
       </div>
-      {extractedImageColors.length > 0 && (
-        <div className="mt-8">
-          <h2 className="text-xl font-bold mb-4">Extracted Colors</h2>
-          <ColorPalette palette={palette} />
-        </div>
+
+      {palette.length > 0 && (
+        <>
+          <Group className="mt-8 justify-end">
+            <OpenPaletteEditorButton palette={palette}>
+              Open Palette in Editor
+            </OpenPaletteEditorButton>
+          </Group>
+
+          <div className="mt-8">
+            <h2 className="text-xl font-bold mb-4">Extracted Colors</h2>
+            <ColorPalette palette={palette} />
+          </div>
+        </>
       )}
 
       {/*<ColorPalette palette={palette} />*/}
+
       <div className="mt-12">
         <PaletteVisualizer palette={palette} primaryColorId={primaryColorId} />
       </div>

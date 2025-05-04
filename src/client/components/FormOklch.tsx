@@ -1,8 +1,7 @@
-import React from "react"
+import type { JSX } from "react"
 import { Slider, Group, Stack, Text, Paper } from "@mantine/core"
-import { useState } from "react"
-//import { hexToOklch, oklchToHex } from "../utils/colorConverters"
-import { type Color } from "chroma-js"
+import type { Color } from "chroma-js"
+import type { ColorFormProps } from "./ColorFormProps.ts"
 
 type OKLCHColor = {
   l: number
@@ -10,25 +9,24 @@ type OKLCHColor = {
   h: number
 }
 
-type FormOklchProps = {
-  initialColor: Color
-  onSubmit: (color: Color) => void
-}
-
 export function FormOklch({
-  initialColor,
-  onSubmit,
-}: FormOklchProps): React.JSX.Element {
-  const [oklchValues, setOklchValues] = useState(initialColor)
-
+  color,
+  onChange,
+  onChangeEnd,
+}: ColorFormProps): JSX.Element {
   //const [previewColor, setPreviewColor] = useState(initialColor)
 
-  const handleOklchChange = (key: keyof OKLCHColor, value: number): void => {
-    const divider = key === "l" ? 100 : 1
-    const newColor = oklchValues.set(`oklch.${key}`, value / divider)
-    setOklchValues(newColor)
+  const handleOklchChange = (
+    key: keyof OKLCHColor,
+    value: number,
+    callback: undefined | ((color: Color) => void)
+  ): void => {
+    if (!callback) return
 
-    onSubmit(newColor)
+    const divider = key === "l" ? 100 : 1
+    const newColor = color.set(`oklch.${key}`, value / divider)
+
+    callback(newColor)
   }
 
   return (
@@ -40,7 +38,7 @@ export function FormOklch({
           <div className="flex justify-between">
             <span className="text-sm font-medium text-gray-500">OKLCH</span>
             <span className="font-mono text-sm">
-              {`(${oklchValues.oklch()[0].toFixed(2)} ${oklchValues.oklch()[1].toFixed(3)} ${Math.round(oklchValues.oklch()[2])}°)`}
+              {`(${color.oklch()[0].toFixed(2)} ${color.oklch()[1].toFixed(3)} ${Math.round(color.oklch()[2])}°)`}
             </span>
           </div>
         </Group>
@@ -48,7 +46,7 @@ export function FormOklch({
           <div className="flex justify-between mb-2">
             <Text className="text-sm font-medium text-gray-700">Luminance</Text>
             <span className="text-blue-600 font-semibold">
-              {Math.round(oklchValues.oklch()[0] * 100)}%
+              {Math.round(color.oklch()[0] * 100)}%
             </span>
           </div>
 
@@ -56,8 +54,13 @@ export function FormOklch({
             min={0}
             max={100}
             label={(value: number) => `${Math.round(value)}%`}
-            value={oklchValues.oklch()[0] * 100}
-            onChange={(value: number) => handleOklchChange("l", value)}
+            value={color.oklch()[0] * 100}
+            onChange={(value: number) =>
+              handleOklchChange("l", value, onChange)
+            }
+            onChangeEnd={(value: number) =>
+              handleOklchChange("l", value, onChangeEnd)
+            }
             marks={[
               { value: 0, label: "0%" },
               { value: 50, label: "50%" },
@@ -71,7 +74,7 @@ export function FormOklch({
           <div className="flex justify-between mb-2">
             <Text className="text-sm font-medium text-gray-700">Chroma</Text>
             <span className="text-blue-600 font-semibold">
-              {oklchValues.oklch()[1].toFixed(3)}
+              {color.oklch()[1].toFixed(3)}
             </span>
           </div>
           {/*<Text>Chroma : {oklchValues.oklch()[1].toFixed(3)}</Text>*/}
@@ -80,8 +83,13 @@ export function FormOklch({
             max={0.4}
             step={0.001}
             label={(value: number) => value.toFixed(3)} //il faut afficher la valeur arrondie
-            value={oklchValues.oklch()[1]}
-            onChange={(value: number) => handleOklchChange("c", value)}
+            value={color.oklch()[1]}
+            onChange={(value: number) =>
+              handleOklchChange("c", value, onChange)
+            }
+            onChangeEnd={(value: number) =>
+              handleOklchChange("c", value, onChangeEnd)
+            }
             marks={[
               { value: 0, label: "0" },
               { value: 0.2, label: "0.2" },
@@ -94,15 +102,20 @@ export function FormOklch({
           <div className="flex justify-between mb-2">
             <Text className="text-sm font-medium text-gray-700">Hue</Text>
             <span className="text-blue-600 font-semibold">
-              {Math.round(oklchValues.oklch()[2])}°
+              {Math.round(color.oklch()[2])}°
             </span>
           </div>
           <Slider
             min={0}
             max={360}
             label={(value: number) => `${Math.round(value)}°`}
-            value={oklchValues.oklch()[2]}
-            onChange={(value: number) => handleOklchChange("h", value)}
+            value={color.oklch()[2]}
+            onChange={(value: number) =>
+              handleOklchChange("h", value, onChange)
+            }
+            onChangeEnd={(value: number) =>
+              handleOklchChange("h", value, onChangeEnd)
+            }
             marks={[
               { value: 0, label: "0°" },
               { value: 180, label: "180°" },

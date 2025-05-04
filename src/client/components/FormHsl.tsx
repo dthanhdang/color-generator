@@ -1,7 +1,8 @@
 //import { hexToHsl, hslToHex } from "#utils/colorConverters.ts"
 import { Slider, Group, Stack, Text, Paper } from "@mantine/core"
-import React, { useState } from "react"
+import type { JSX } from "react"
 import { type Color } from "chroma-js"
+import type { ColorFormProps } from "./ColorFormProps.ts"
 
 type HSLColor = {
   h: number
@@ -9,26 +10,24 @@ type HSLColor = {
   l: number
 }
 
-type FormHslProps = {
-  initialColor: Color
-  onSubmit: (color: Color) => void
-}
-
 export function FormHsl({
-  initialColor,
-  onSubmit,
-}: FormHslProps): React.JSX.Element {
-  const [hslValues, setHslValues] = useState(initialColor)
-
+  color,
+  onChange,
+  onChangeEnd,
+}: ColorFormProps): JSX.Element {
   //const [previewColor, setPreviewColor] = useState(initialColor)
 
-  const handleHSLChange = (key: keyof HSLColor, value: number): void => {
-    console.log(value)
-    const divider = key === "h" ? 1 : 100
-    const newColor = hslValues.set(`hsl.${key}`, value / divider)
-    setHslValues(newColor)
+  const handleHSLChange = (
+    key: keyof HSLColor,
+    value: number,
+    callback: undefined | ((color: Color) => void)
+  ): void => {
+    if (!callback) return
 
-    onSubmit(newColor)
+    const divider = key === "h" ? 1 : 100
+    const newColor = color.set(`hsl.${key}`, value / divider)
+
+    callback(newColor)
   }
 
   return (
@@ -40,16 +39,16 @@ export function FormHsl({
           <div className="flex justify-between">
             <span className="text-sm font-medium text-gray-500">HSL</span>
             <span className="font-mono text-sm">
-              {`(${Math.round(hslValues.hsl()[0])}° ${Math.round(hslValues.hsl()[1] * 100)}% ${Math.round(hslValues.hsl()[2] * 100)}%)`}
+              {`(${Math.round(color.hsl()[0])}° ${Math.round(color.hsl()[1] * 100)}% ${Math.round(color.hsl()[2] * 100)}%)`}
             </span>
           </div>
-          <div style={{ backgroundColor: hslValues.hex() }} />
+          <div style={{ backgroundColor: color.hex() }} />
         </Group>
         <div>
           <div className="flex justify-between mb-2">
             <Text className="text-sm font-medium text-gray-700">Hue</Text>
             <span className="text-blue-600 font-semibold">
-              {Math.round(hslValues.hsl()[0])}°
+              {Math.round(color.hsl()[0])}°
             </span>
           </div>
 
@@ -57,8 +56,11 @@ export function FormHsl({
             min={0}
             max={360}
             label={(value: number) => `${Math.round(value)}°`}
-            value={hslValues.hsl()[0]}
-            onChange={(value: number) => handleHSLChange("h", value)}
+            value={color.hsl()[0]}
+            onChange={(value: number) => handleHSLChange("h", value, onChange)}
+            onChangeEnd={(value: number) =>
+              handleHSLChange("h", value, onChangeEnd)
+            }
             marks={[
               { value: 0, label: "0°" },
               { value: 180, label: "180°" },
@@ -72,7 +74,7 @@ export function FormHsl({
               Saturation
             </Text>
             <span className="text-blue-600 font-semibold">
-              {Math.round(hslValues.hsl()[1] * 100)}%
+              {Math.round(color.hsl()[1] * 100)}%
             </span>
           </div>
 
@@ -81,8 +83,11 @@ export function FormHsl({
             min={0}
             max={100}
             label={(value: number) => `${Math.round(value)}%`}
-            value={hslValues.hsl()[1] * 100}
-            onChange={(value: number) => handleHSLChange("s", value)}
+            value={color.hsl()[1] * 100}
+            onChange={(value: number) => handleHSLChange("s", value, onChange)}
+            onChangeEnd={(value: number) =>
+              handleHSLChange("s", value, onChangeEnd)
+            }
             marks={[
               { value: 0, label: "0%" },
               { value: 50, label: "50%" },
@@ -95,7 +100,7 @@ export function FormHsl({
           <div className="flex justify-between mb-2">
             <Text className="text-sm font-medium text-gray-700">Lightness</Text>
             <span className="text-blue-600 font-semibold">
-              {Math.round(hslValues.hsl()[2] * 100)}%
+              {Math.round(color.hsl()[2] * 100)}%
             </span>
           </div>
 
@@ -103,8 +108,11 @@ export function FormHsl({
             min={0}
             max={100}
             label={(value: number) => `${Math.round(value)}%`}
-            value={hslValues.hsl()[2] * 100}
-            onChange={(value: number) => handleHSLChange("l", value)}
+            value={color.hsl()[2] * 100}
+            onChange={(value: number) => handleHSLChange("l", value, onChange)}
+            onChangeEnd={(value: number) =>
+              handleHSLChange("l", value, onChangeEnd)
+            }
             marks={[
               { value: 0, label: "0%" },
               { value: 50, label: "50%" },

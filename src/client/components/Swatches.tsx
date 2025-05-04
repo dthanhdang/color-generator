@@ -45,7 +45,7 @@ export function Swatches({
         const itemRole = getRole(item.id)
 
         return (
-          <Menu>
+          <Menu key={item.id}>
             <Menu.Target>
               <button
                 className={clsx("cursor-pointer", {

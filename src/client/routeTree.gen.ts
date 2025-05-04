@@ -14,8 +14,10 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as ScalePaletteIndexImport } from './routes/scale-palette/index'
 import { Route as RandomPaletteIndexImport } from './routes/random-palette/index'
+import { Route as PaletteEditorIndexImport } from './routes/palette-editor/index'
 import { Route as ImagePickerIndexImport } from './routes/image-picker/index'
 import { Route as HarmonyPaletteIndexImport } from './routes/harmony-palette/index'
+import { Route as ContactIndexImport } from './routes/contact/index'
 
 // Create/Update Routes
 
@@ -37,6 +39,12 @@ const RandomPaletteIndexRoute = RandomPaletteIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const PaletteEditorIndexRoute = PaletteEditorIndexImport.update({
+  id: '/palette-editor/',
+  path: '/palette-editor/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ImagePickerIndexRoute = ImagePickerIndexImport.update({
   id: '/image-picker/',
   path: '/image-picker/',
@@ -46,6 +54,12 @@ const ImagePickerIndexRoute = ImagePickerIndexImport.update({
 const HarmonyPaletteIndexRoute = HarmonyPaletteIndexImport.update({
   id: '/harmony-palette/',
   path: '/harmony-palette/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ContactIndexRoute = ContactIndexImport.update({
+  id: '/contact/',
+  path: '/contact/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +74,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/contact/': {
+      id: '/contact/'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/harmony-palette/': {
       id: '/harmony-palette/'
       path: '/harmony-palette'
@@ -72,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/image-picker'
       fullPath: '/image-picker'
       preLoaderRoute: typeof ImagePickerIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/palette-editor/': {
+      id: '/palette-editor/'
+      path: '/palette-editor'
+      fullPath: '/palette-editor'
+      preLoaderRoute: typeof PaletteEditorIndexImport
       parentRoute: typeof rootRoute
     }
     '/random-palette/': {
@@ -95,16 +123,20 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactIndexRoute
   '/harmony-palette': typeof HarmonyPaletteIndexRoute
   '/image-picker': typeof ImagePickerIndexRoute
+  '/palette-editor': typeof PaletteEditorIndexRoute
   '/random-palette': typeof RandomPaletteIndexRoute
   '/scale-palette': typeof ScalePaletteIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactIndexRoute
   '/harmony-palette': typeof HarmonyPaletteIndexRoute
   '/image-picker': typeof ImagePickerIndexRoute
+  '/palette-editor': typeof PaletteEditorIndexRoute
   '/random-palette': typeof RandomPaletteIndexRoute
   '/scale-palette': typeof ScalePaletteIndexRoute
 }
@@ -112,8 +144,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/contact/': typeof ContactIndexRoute
   '/harmony-palette/': typeof HarmonyPaletteIndexRoute
   '/image-picker/': typeof ImagePickerIndexRoute
+  '/palette-editor/': typeof PaletteEditorIndexRoute
   '/random-palette/': typeof RandomPaletteIndexRoute
   '/scale-palette/': typeof ScalePaletteIndexRoute
 }
@@ -122,22 +156,28 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/contact'
     | '/harmony-palette'
     | '/image-picker'
+    | '/palette-editor'
     | '/random-palette'
     | '/scale-palette'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/contact'
     | '/harmony-palette'
     | '/image-picker'
+    | '/palette-editor'
     | '/random-palette'
     | '/scale-palette'
   id:
     | '__root__'
     | '/'
+    | '/contact/'
     | '/harmony-palette/'
     | '/image-picker/'
+    | '/palette-editor/'
     | '/random-palette/'
     | '/scale-palette/'
   fileRoutesById: FileRoutesById
@@ -145,16 +185,20 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactIndexRoute: typeof ContactIndexRoute
   HarmonyPaletteIndexRoute: typeof HarmonyPaletteIndexRoute
   ImagePickerIndexRoute: typeof ImagePickerIndexRoute
+  PaletteEditorIndexRoute: typeof PaletteEditorIndexRoute
   RandomPaletteIndexRoute: typeof RandomPaletteIndexRoute
   ScalePaletteIndexRoute: typeof ScalePaletteIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactIndexRoute: ContactIndexRoute,
   HarmonyPaletteIndexRoute: HarmonyPaletteIndexRoute,
   ImagePickerIndexRoute: ImagePickerIndexRoute,
+  PaletteEditorIndexRoute: PaletteEditorIndexRoute,
   RandomPaletteIndexRoute: RandomPaletteIndexRoute,
   ScalePaletteIndexRoute: ScalePaletteIndexRoute,
 }
@@ -170,8 +214,10 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/contact/",
         "/harmony-palette/",
         "/image-picker/",
+        "/palette-editor/",
         "/random-palette/",
         "/scale-palette/"
       ]
@@ -179,11 +225,17 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.ts"
     },
+    "/contact/": {
+      "filePath": "contact/index.ts"
+    },
     "/harmony-palette/": {
       "filePath": "harmony-palette/index.ts"
     },
     "/image-picker/": {
       "filePath": "image-picker/index.ts"
+    },
+    "/palette-editor/": {
+      "filePath": "palette-editor/index.tsx"
     },
     "/random-palette/": {
       "filePath": "random-palette/index.ts"

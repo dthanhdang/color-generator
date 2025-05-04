@@ -1,7 +1,6 @@
 import { useState } from "react"
 import chroma, { type Color } from "chroma-js"
-import { Select, Button, Group } from "@mantine/core"
-import { Shuffle } from "lucide-react"
+import { Select, Group } from "@mantine/core"
 
 import { nanoid } from "nanoid"
 
@@ -12,6 +11,10 @@ import { getColorName } from "#utils/getColorName.ts"
 import { PageStyle } from "#components/PageStyle.tsx"
 import { ColorPalette, ColorPaletteItem } from "#components/ColorPalette.tsx"
 import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
+import {
+  GenerateRandomPaletteButton,
+  OpenPaletteEditorButton,
+} from "#components/PaletteGeneratorButtons.tsx"
 
 type ColorMode = "hex" | "hsl" | "oklch"
 
@@ -95,7 +98,7 @@ export function ScalePaletteGenerator() {
   }
 
   return (
-    <PageStyle titleHighlight="Scale Palette">
+    <PageStyle title="Your *Scale Palette* Generator">
       <Group justify="space-between" mb="md">
         <Select
           data={[
@@ -106,28 +109,29 @@ export function ScalePaletteGenerator() {
           value={colorMode}
           onChange={handleModeChange}
         />
-        <Button
+
+        <GenerateRandomPaletteButton
+          className="ml-auto"
           onClick={handleGenerateRandomScalePalette}
-          style={{
-            backgroundColor: "oklch(0.511 0.262 276.966)",
-            color: "white",
-          }}
-          leftSection={<Shuffle size={16} />}
         >
           Generate Random Scale Palette
-        </Button>
+        </GenerateRandomPaletteButton>
+
+        <OpenPaletteEditorButton palette={palette}>
+          Open Scale Palette in Editor
+        </OpenPaletteEditorButton>
       </Group>
 
       <div className="mt-4">
         {" "}
         {colorMode === "hex" && (
-          <Form onSubmit={handleColorSubmit} initialColor={color} />
+          <Form color={color} onChange={handleColorSubmit} />
         )}
         {colorMode === "hsl" && (
-          <FormHsl initialColor={color} onSubmit={handleColorSubmit} />
+          <FormHsl color={color} onChange={handleColorSubmit} />
         )}
         {colorMode === "oklch" && (
-          <FormOklch initialColor={color} onSubmit={handleColorSubmit} />
+          <FormOklch color={color} onChange={handleColorSubmit} />
         )}
       </div>
       <div className="mt-8">

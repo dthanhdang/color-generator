@@ -56,7 +56,7 @@ export const FeatureSection = () => {
             icon={<Sparkles size={48} color="#503AF7" />}
             color="blue"
             delay={400}
-            to="/harmony-palette"
+            to="/palette-editor"
           />
 
           <FeatureCard

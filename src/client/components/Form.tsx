@@ -1,35 +1,32 @@
-import React, { useEffect, useState } from "react"
+import type { JSX } from "react"
+import { useEffect, useState } from "react"
 import { ColorInput, Stack, Group } from "@mantine/core"
 import chroma, { type Color } from "chroma-js"
-//import { hexToHsl } from "#utils/colorConverters.ts"
-
-//type ColorMode = "hex" | "hsl" | "oklch"
-
-type FormProps = {
-  initialColor: Color
-  onSubmit: (color: Color) => void
-}
+import type { ColorFormProps } from "./ColorFormProps.ts"
 
 export function Form({
-  initialColor,
-  onSubmit,
-  //colorMode,
-  //onModeChange,
-}: FormProps): React.JSX.Element {
-  const [inputValue, setInputValue] = useState(initialColor.hex())
+  color,
+  onChange,
+  onChangeEnd,
+}: ColorFormProps): JSX.Element {
+  const [inputValue, setInputValue] = useState(color.hex())
   const [error, setError] = useState<string | null>(null)
-  //const [currentColor, setCurrentColor] = useState<Color>(initialColor)
   useEffect(() => {
-    setInputValue(initialColor.hex())
-  }, [initialColor])
+    setInputValue(color.hex())
+  }, [color])
 
-  const handleColorChange = (value: string) => {
+  const handleColorChange = (
+    value: string,
+    callback: undefined | ((color: Color) => void)
+  ) => {
+    if (!callback) return
+
     setInputValue(value)
 
     if (chroma.valid(value)) {
       const newColor = chroma(value)
       setError(null)
-      onSubmit(newColor)
+      callback(newColor)
     } else if (value.length >= 7) {
       setError(`${value} is not a valid color`)
     }
@@ -39,7 +36,8 @@ export function Form({
       <Group>
         <ColorInput
           value={inputValue}
-          onChange={handleColorChange}
+          onChange={(value) => handleColorChange(value, onChange)}
+          onChangeEnd={(value) => handleColorChange(value, onChangeEnd)}
           format="hex"
           swatches={[
             "#25262b",
