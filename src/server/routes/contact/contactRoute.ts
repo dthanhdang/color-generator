@@ -11,7 +11,7 @@ export const contactRoute = buildHono().post(
     return defaultResponse(
       c,
       Result.combine([
-        getEnvironmentVariable(c, "CONTACT_EMAIL"),
+        getEnvironmentVariable(c, "CONTACT_SENDER_EMAIL"),
         getEnvironmentVariable(c, "RESEND_API_KEY"),
       ]).asyncAndThen(([contactEmail, resendApiKey]) =>
         sendEmailHandler({

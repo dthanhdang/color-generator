@@ -16,12 +16,14 @@
           "service": "ucolorr"
         }], 
         "vars": {
-          "CONTACT_EMAIL": "contact@ucolorr.app"
+          "CONTACT_SENDER_EMAIL": "Ucolorr <contact@ucolorr.app>",
+          "OTP_SENDER_EMAIL": "Ucolorr <donotreply@ucolorr.app>"
         }
       },
       "production": {
         "vars": {
-          "CONTACT_EMAIL": "contact@ucolorr.app"
+          "CONTACT_SENDER_EMAIL": "Ucolorr <contact@ucolorr.app>",
+          "OTP_SENDER_EMAIL": "Ucolorr <donotreply@ucolorr.app>"
         }
       }
     },
@@ -35,7 +37,9 @@
       "service": "ucolorr"
     }],
     "vars": {
-      "CONTACT_EMAIL": "contact@ucolorr.app"
+      "CF_PAGES_URL": "http://localhost:5173",
+      "CONTACT_SENDER_EMAIL": "Ucolorr <contact@ucolorr.app>",
+      "OTP_SENDER_EMAIL": "Ucolorr <donotreply@ucolorr.app>"
     }
   }
   

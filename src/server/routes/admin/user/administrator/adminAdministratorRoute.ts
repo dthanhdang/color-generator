@@ -13,7 +13,7 @@ export const adminAdministratorRoute = buildHono().post(
   checkPermissions("users:write"),
   vValidator("json", createAdministratorJSONSchema),
   (c) =>
-    getEnvironmentVariables(c, ["CONTACT_EMAIL", "RESEND_API_KEY"])
+    getEnvironmentVariables(c, ["CONTACT_SENDER_EMAIL", "RESEND_API_KEY"])
       .asyncAndThen(([contactEmail, resendApiKey]) =>
         createAdministratorHandler({
           ...authProps(c),
