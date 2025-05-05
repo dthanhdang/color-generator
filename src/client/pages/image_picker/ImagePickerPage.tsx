@@ -29,7 +29,7 @@ export function ImagePicker() {
   }
 
   return (
-    <PageStyle title="Your *Color From Image* Extractor">
+    <PageStyle>
       <div className="mt-4">
         <ImageColorPicker onColorsExtracted={handleImageColorsExtracted} />
       </div>

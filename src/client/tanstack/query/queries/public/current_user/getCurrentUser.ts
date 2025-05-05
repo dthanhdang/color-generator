@@ -1,8 +1,8 @@
 import type { UseSuspenseQueryOptions } from "@tanstack/react-query"
 import { getCurrentUser } from "#client/rpc/current_user"
 import { RegisteredUser } from "#client/types"
-import { parseChromaPalette } from "#utils/parseChromaPalette.ts"
 import { redirectToSignInPage } from "#client/auth"
+import { fromPublicPaletteDto } from "#client/rpc/conversion"
 
 export function getCurrentUserQuery(): UseSuspenseQueryOptions<RegisteredUser> {
   return {
@@ -13,11 +13,8 @@ export function getCurrentUserQuery(): UseSuspenseQueryOptions<RegisteredUser> {
 
       return {
         ...user,
-        favoritePalettes: user.favoritePalettes.map(
-          ({ colors, ...palette }) => ({
-            ...palette,
-            colors: parseChromaPalette(colors),
-          })
+        favoritePalettes: user.favoritePalettes.map((palette) =>
+          fromPublicPaletteDto(palette)
         ),
       }
     },

@@ -5,6 +5,7 @@ export const allScopes = [
   "current_user:write",
   "public_palette:read",
   "public_palette:write",
+  "public_palette:delete",
   "users:read",
   "users:write",
 ] as const
@@ -17,8 +18,14 @@ export const scopesByRole: Record<UserRole, readonly Scope[]> = {
     "current_user:write",
     "users:read",
     "users:write",
+    "public_palette:delete",
     "public_palette:read",
     "public_palette:write",
   ],
-  registered_user: ["current_user:read", "current_user:write"],
+  registered_user: [
+    "current_user:read",
+    "current_user:write",
+    "public_palette:read",
+    "public_palette:write",
+  ],
 }

@@ -1,7 +1,7 @@
 import { apiClient } from "./apiClient.js"
 import { PublicPalette } from "#client/types"
-import { parseChromaPalette } from "#utils/parseChromaPalette.js"
 import { handleError } from "#client/rpc/custom_fetch"
+import { fromPublicPaletteDto } from "../conversion/fromPublicPaletteDto.js"
 
 const route = apiClient["index"].$get
 
@@ -11,10 +11,7 @@ export async function listPublicPalettes(): Promise<PublicPalette[]> {
 
     const { palettes } = await response.json()
 
-    return palettes.map(({ colors, ...palette }) => ({
-      ...palette,
-      colors: parseChromaPalette(colors),
-    }))
+    return palettes.map((palette) => fromPublicPaletteDto(palette))
   } catch (error) {
     handleError(error, "An unexpected error occured while listing the palettes")
   }

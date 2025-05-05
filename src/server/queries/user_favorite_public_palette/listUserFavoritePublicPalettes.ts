@@ -22,6 +22,7 @@ export const listUserFavoritePublicPalettes = listQuery<
     )
     .select([
       "colors",
+      "createdAt",
       "likes",
       "publicPalette.id as id",
       "userId",

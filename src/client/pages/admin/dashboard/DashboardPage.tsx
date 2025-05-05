@@ -1,4 +1,4 @@
-import { PageStyle } from "#components/PageStyle.tsx"
+import { AdminPage } from "#components/page/AdminPage.tsx"
 import { Card, Group } from "@mantine/core"
 import { Link } from "@tanstack/react-router"
 import { Palette, User } from "lucide-react"
@@ -6,7 +6,7 @@ import type { JSX } from "react"
 
 export function DashboardPage(): JSX.Element {
   return (
-    <PageStyle title="Administration">
+    <AdminPage>
       <Group className="gap-5 justify-center">
         <Card
           withBorder
@@ -28,6 +28,6 @@ export function DashboardPage(): JSX.Element {
           Manage palettes
         </Card>
       </Group>
-    </PageStyle>
+    </AdminPage>
   )
 }

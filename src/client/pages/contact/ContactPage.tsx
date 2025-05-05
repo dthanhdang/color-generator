@@ -13,7 +13,7 @@ export function ContactPage(): JSX.Element {
     sendEmail({ from: { email, name }, message })
 
   return (
-    <PageStyle title="Contact">
+    <PageStyle>
       <ContactForm onSubmit={handleSubmit} />
     </PageStyle>
   )

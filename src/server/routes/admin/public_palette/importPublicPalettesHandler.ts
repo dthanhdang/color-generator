@@ -1,5 +1,6 @@
 import { createPublicPalette } from "#server/queries/public_palette"
 import { paletteColorsSchema } from "#server/schemas"
+import { toIsoDate } from "#server/utils/date"
 import type { HandlerDBProps } from "@meow-meow-dev/server-utilities/hono"
 import { okAsync, ResultAsync } from "neverthrow"
 import * as v from "valibot"
@@ -20,7 +21,10 @@ export function importPublicPalettesHandler({
 > {
   return ResultAsync.combine(
     palettes.map((colors) =>
-      createPublicPalette({ db, palette: { colors, likes: 0 } })
+      createPublicPalette({
+        db,
+        palette: { colors, createdAt: toIsoDate(new Date()), likes: 0 },
+      })
     )
   ).andThen(() => okAsync(undefined))
 }

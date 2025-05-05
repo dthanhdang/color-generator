@@ -1,5 +1,3 @@
-import { PublicPalette } from "#client/types"
-import { PageStyle } from "#components/PageStyle.tsx"
 import { getHarmonyColor, HarmonyType } from "#utils/colorHarmony.ts"
 import {
   SegmentedControl,
@@ -11,11 +9,19 @@ import {
 } from "@mantine/core"
 import type { JSX } from "react"
 import { useState } from "react"
-import chroma from "chroma-js"
+import chroma, { Color } from "chroma-js"
 import { getCountForHarmonyType } from "#utils/getCountForHarmonyType.ts"
 import { CloudUpload, Shuffle, Trash } from "lucide-react"
 import { useImportPublicPalettesMutation } from "./useImportPublicPalettesMutation.ts"
 import { stringifyChromaPalette } from "#utils/stringifyChromaPalette.ts"
+import { shuffleArray } from "#utils/shuffleArray.ts"
+import { AdminPage } from "#components/page/AdminPage.tsx"
+import { nanoid } from "nanoid"
+
+type GeneratedPalette = {
+  id: string
+  colors: Color[]
+}
 
 const countData = [10, 20, 50].map((count) => ({
   label: `${count} palettes`,
@@ -37,27 +43,15 @@ const harmonyData: { label: string; value: HarmonyType }[] = [
   },
 ]
 
-function shuffleArray<T>(array: T[]): T[] {
-  const copy = [...array]
-  for (let i = copy.length - 1; i > 0; i--) {
-    // Generate a random index between 0 and i
-    const j = Math.floor(Math.random() * (i + 1))
-
-    // Swap elements at indices i and j
-    ;[copy[i], copy[j]] = [copy[j], copy[i]]
-  }
-  return copy
-}
-
 export function GeneratePublicPalettesPage(): JSX.Element {
   const [count, setCount] = useState(50)
   const [harmonyTypes, setHarmonyTypes] = useState<HarmonyType[]>(() =>
     harmonyData.map(({ value }) => value)
   )
-  const [palettes, setPalettes] = useState<PublicPalette[]>([])
+  const [palettes, setPalettes] = useState<GeneratedPalette[]>([])
   const importPalettes = useImportPublicPalettesMutation()
 
-  const handleDelete = (id: number): void => {
+  const handleDelete = (id: string): void => {
     setPalettes((palettes) => palettes.filter((palette) => palette.id !== id))
   }
 
@@ -65,21 +59,20 @@ export function GeneratePublicPalettesPage(): JSX.Element {
     if (harmonyTypes.length === 0) return
 
     const countByHarmonyType = Math.floor(count / harmonyTypes.length)
-    const palettes: PublicPalette[] = []
+    const palettes: GeneratedPalette[] = []
     for (const harmonyType of harmonyTypes) {
       const generationCount =
         harmonyType === harmonyTypes[harmonyTypes.length - 1]
           ? count - palettes.length
           : countByHarmonyType
       palettes.push(
-        ...new Array(generationCount).fill(null).map((_, index) => ({
+        ...new Array(generationCount).fill(null).map(() => ({
           colors: getHarmonyColor(
             chroma.random(),
             harmonyType,
             getCountForHarmonyType(harmonyType)
           ),
-          id: index,
-          likes: 0,
+          id: nanoid(),
         }))
       )
     }
@@ -110,7 +103,7 @@ export function GeneratePublicPalettesPage(): JSX.Element {
   }
 
   return (
-    <PageStyle title="Generate random palettes">
+    <AdminPage>
       <Stack className="gap-5">
         <fieldset className="p-5 border radius-sm">
           <legend>Parameters</legend>
@@ -175,7 +168,7 @@ export function GeneratePublicPalettesPage(): JSX.Element {
                 variant="transparent"
               >
                 <Trash />
-              </ActionIcon>{" "}
+              </ActionIcon>
             </div>
           ))}
         </div>
@@ -192,6 +185,6 @@ export function GeneratePublicPalettesPage(): JSX.Element {
           </Button.Group>
         )}
       </Stack>
-    </PageStyle>
+    </AdminPage>
   )
 }

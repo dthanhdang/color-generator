@@ -11,8 +11,14 @@ export function useImportPublicPalettesMutation(): UseMutationResult<
   const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: importPublicPalettes,
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["PUBLIC_PALETTE"] }),
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["PUBLIC_PALETTE"] }),
+        queryClient.invalidateQueries({
+          queryKey: ["ADMIN", "PUBLIC_PALETTE"],
+        }),
+      ])
+    },
   })
 
   return mutation

@@ -54,11 +54,13 @@ function createPalette(
 }
 
 describe("createUserFavoritePublicPalette", () => {
+  const date = toIsoDate(new Date())
+
   it("Successfully prevents duplicate favorite palette creation", async ({
     expect,
   }) => {
     const { favoritePalette, palette, user } = await unsafeUnwrap(
-      createPalette({ colors: "#abcdef", likes: 0 })
+      createPalette({ colors: "#abcdef", createdAt: date, likes: 0 })
     )
 
     expect(favoritePalette.paletteId).toEqual(palette.id)
@@ -77,7 +79,7 @@ describe("createUserFavoritePublicPalette", () => {
   describe("createUserFavoritePublicPalette", () => {
     it("Correctly lists favorite palettes", async ({ expect }) => {
       const { palette, user } = await unsafeUnwrap(
-        createPalette({ colors: "#abcdef", likes: 0 })
+        createPalette({ colors: "#abcdef", createdAt: date, likes: 0 })
       )
 
       const favoritePalettes = await unsafeUnwrap(

@@ -90,11 +90,7 @@ export function SignUpPage({
     : undefined
 
   return (
-    <AuthPage
-      pageTitle={
-        role === "administrator" ? "Sign-up as administrator" : "Sign-up"
-      }
-    >
+    <AuthPage>
       {validateCode && formData ? (
         <OTPVerificationForm
           email={formData.email}

@@ -6,6 +6,7 @@ import { listCurrentUserFavoritePalettes } from "#client/rpc/current_user"
 import { useAuthentication } from "#client/hooks"
 import { parseChromaPalette } from "#utils/parseChromaPalette.ts"
 import { getUserFromLocalStorage } from "#client/auth"
+import { buildPublicPageProps } from "#utils/buildPageProps.ts"
 
 const searchSchema = v.strictObject({ colors: v.optional(v.string()) })
 
@@ -25,7 +26,7 @@ export const Route = createFileRoute("/palette-editor/")({
 
     await queryClient.ensureQueryData(query)
 
-    return { query, seoTitle: "Your Palette Editor" }
+    return { ...buildPublicPageProps("Your *Palette* Editor"), query }
   },
   validateSearch: searchSchema,
 })

@@ -1,4 +1,3 @@
-import { PageStyle } from "#components/PageStyle.tsx"
 import type { UserSummary } from "#client/types"
 import { JSX } from "react"
 import { Button, Stack, Text, Title } from "@mantine/core"
@@ -8,6 +7,7 @@ import { modals } from "@mantine/modals"
 import { SignUpForm } from "#components/sign_up_form/SignUpForm.tsx"
 import type { SignUpFormData } from "#components/sign_up_form/SignUpForm.tsx"
 import { useCreateAdministratorMutation } from "./useCreateAdministratorMutation.ts"
+import { AdminPage } from "#components/page/AdminPage.tsx"
 
 type ListUsersPageProps = {
   users: UserSummary[]
@@ -37,34 +37,32 @@ export function ListUsersPage({ users }: ListUsersPageProps): JSX.Element {
   }
 
   return (
-    <PageStyle title="Users">
-      <Stack className="gap-10">
-        <Stack className="gap-5">
-          <Title order={2}>Administrators</Title>
+    <AdminPage>
+      <Stack className="gap-5">
+        <Title order={2}>Administrators</Title>
 
-          <UsersList displayTimeStamps={false} users={administrators} />
+        <UsersList displayTimeStamps={false} users={administrators} />
 
-          <Button.Group className="ml-auto">
-            <Button
-              leftSection={<PlusCircle />}
-              onClick={handleOpenAddAdministratorForm}
-              variant="light"
-            >
-              Add an administrator
-            </Button>
-          </Button.Group>
-        </Stack>
-
-        <Stack className="gap-5">
-          <Title order={2}>Registered users</Title>
-
-          {registeredUsers.length === 0 ? (
-            <Text c="dimmed">No user</Text>
-          ) : (
-            <UsersList users={registeredUsers} />
-          )}
-        </Stack>
+        <Button.Group className="ml-auto">
+          <Button
+            leftSection={<PlusCircle />}
+            onClick={handleOpenAddAdministratorForm}
+            variant="light"
+          >
+            Add an administrator
+          </Button>
+        </Button.Group>
       </Stack>
-    </PageStyle>
+
+      <Stack className="gap-5">
+        <Title order={2}>Registered users</Title>
+
+        {registeredUsers.length === 0 ? (
+          <Text c="dimmed">No user</Text>
+        ) : (
+          <UsersList users={registeredUsers} />
+        )}
+      </Stack>
+    </AdminPage>
   )
 }

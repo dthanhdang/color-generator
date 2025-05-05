@@ -12,7 +12,7 @@ export function ExplorePalettesPage({
   palettes,
 }: ExplorePalettesPageProps): JSX.Element {
   return (
-    <PageStyle title="Explore our Palettes">
+    <PageStyle>
       {palettes.length === 0 ? (
         <EmptyPalettesList />
       ) : (

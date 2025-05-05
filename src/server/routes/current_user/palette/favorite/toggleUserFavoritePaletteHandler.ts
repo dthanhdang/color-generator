@@ -15,6 +15,7 @@ import type {
 import { errAsync, okAsync, ResultAsync } from "neverthrow"
 import * as v from "valibot"
 import { nonEmptyStringSchema } from "@meow-meow-dev/server-utilities/validation"
+import { toIsoDate } from "#server/utils/date"
 
 export const toggleUserFavoritePaletteJsonSchema = v.strictObject({
   colors: nonEmptyStringSchema,
@@ -66,7 +67,7 @@ export function toggleUserFavoritePaletteHandler({
       if (error === "not_found") {
         return createPublicPalette({
           db,
-          palette: { colors, likes: 1 },
+          palette: { colors, createdAt: toIsoDate(new Date()), likes: 1 },
         }).andThen((palette) =>
           createUserFavoritePublicPalette({
             db,

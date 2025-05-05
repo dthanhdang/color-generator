@@ -1,5 +1,6 @@
 import { getUserFromLocalStorage } from "#client/auth"
 import { SignUpPage } from "#client/pages/auth/sign_up"
+import { buildAuthPageProps } from "#utils/buildPageProps.ts"
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import * as v from "valibot"
 
@@ -14,6 +15,11 @@ export const Route = createFileRoute("/auth/sign-up/")({
     if (getUserFromLocalStorage("registered_user")) return redirect({ to: "/" })
   },
   component: PageWrapper,
+  loaderDeps: ({ search: { role } }) => ({ role }),
+  loader: ({ deps: { role } }) =>
+    buildAuthPageProps(
+      role === "administrator" ? "Sign-up as Administrator" : "Sign-up"
+    ),
   validateSearch: searchParametersSchema,
 })
 

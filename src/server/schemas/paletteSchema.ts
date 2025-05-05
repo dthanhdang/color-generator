@@ -1,5 +1,6 @@
 import { integerSchema } from "@meow-meow-dev/server-utilities/validation"
 import * as v from "valibot"
+import { isoDateSchema } from "./isoDateSchema.ts"
 
 export const paletteColorsSchema = v.pipe(
   v.string(),
@@ -8,6 +9,7 @@ export const paletteColorsSchema = v.pipe(
 
 export const publicPaletteSchema = v.strictObject({
   colors: paletteColorsSchema,
+  createdAt: isoDateSchema,
   favoritePaletteId: v.optional(integerSchema), // Filled is the user is logged-in and the color is a favorite
   id: integerSchema,
   likes: integerSchema,

@@ -5,6 +5,7 @@ import type { JSX } from "react"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { getUserFromLocalStorage } from "#client/auth"
 import { listPublicPalettesWithUserFavoritePalettesQuery } from "#client/tanstack/query/queries/public/current_user"
+import { buildPublicPageProps } from "#utils/buildPageProps.ts"
 
 export const Route = createFileRoute("/palettes-explorer/")({
   component: PageWrapper,
@@ -15,9 +16,8 @@ export const Route = createFileRoute("/palettes-explorer/")({
     await queryClient.ensureQueryData(query)
 
     return {
+      ...buildPublicPageProps("Your *Palettes* Explorer"),
       query,
-      seoDescription: "Your Palette explorer",
-      seoTitle: "Your Palette explorer",
     }
   },
 })

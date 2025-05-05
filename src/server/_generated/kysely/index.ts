@@ -34,6 +34,7 @@ export interface PrivatePalette {
 
 export interface PublicPalette {
   colors: string;
+  createdAt: string;
   id: Generated<number>;
   likes: number;
 }

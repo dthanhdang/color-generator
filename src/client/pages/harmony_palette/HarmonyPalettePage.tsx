@@ -85,7 +85,7 @@ export function HarmonyPalette() {
   }
 
   return (
-    <PageStyle title="Your *Harmony Palette* Generator">
+    <PageStyle>
       <Group justify="space-between" mb="md">
         <Select
           data={[

@@ -1,6 +1,7 @@
 import { checkIsRegisteredUser } from "#client/auth"
 import { MyPalettesPage } from "#client/pages/my-palettes"
 import { getCurrentUserQuery } from "#client/tanstack/query/queries/public/current_user"
+import { buildPublicPageProps } from "#utils/buildPageProps.ts"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { JSX } from "react"
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/my-palettes/")({
 
     await queryClient.ensureQueryData(query)
 
-    return { query, seoTitle: "My palettes" }
+    return { query, ...buildPublicPageProps("My palettes") }
   },
 })
 

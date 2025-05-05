@@ -1,5 +1,6 @@
 import { ListUsersPage } from "#client/pages/admin/list_users"
 import { listUsersQuery } from "#client/tanstack/query/queries/admin"
+import { buildAdminPageProps } from "#utils/buildPageProps.ts"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 
@@ -10,7 +11,7 @@ export const Route = createFileRoute("/admin/users/")({
 
     await queryClient.ensureQueryData(query)
 
-    return { query, seoTitle: "Users" }
+    return { ...buildAdminPageProps("Users"), query }
   },
 })
 

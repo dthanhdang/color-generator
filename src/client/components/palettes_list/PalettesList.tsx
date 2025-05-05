@@ -1,10 +1,11 @@
-import { ActionIcon, Group, Stack } from "@mantine/core"
+import { Stack } from "@mantine/core"
 import type { JSX } from "react"
 import { Link } from "@tanstack/react-router"
-import { Heart } from "lucide-react"
 import type { PublicPalette } from "#client/types"
 import { stringifyChromaPalette } from "#utils/stringifyChromaPalette.ts"
 import { useToggleFavoritePalette } from "#client/hooks"
+import { PaletteColors } from "#components/palette_colors/index.js"
+import { LikesCounter } from "#components/likes_counter/index.js"
 
 type PalettesListProps = {
   palettes: PublicPalette[]
@@ -22,30 +23,14 @@ export function PalettesList({ palettes }: PalettesListProps): JSX.Element {
             search={{ colors: stringifyChromaPalette(palette.colors) }}
             to="/palette-editor"
           >
-            {palette.colors.map((color, index) => (
-              <div
-                className="grow"
-                key={index}
-                style={{ backgroundColor: color.hex() }}
-              />
-            ))}
+            <PaletteColors colors={palette.colors} />
           </Link>
-          <Group className="items-center gap-2 bold justify-between">
-            <Group>
-              <ActionIcon
-                className="disabled:bg-transparent"
-                onClick={() => {
-                  handleToggleFavorite(palette.colors)
-                }}
-                variant="transparent"
-              >
-                <Heart
-                  fill={palette.favoritePaletteId ? "currentColor" : "white"}
-                />
-              </ActionIcon>
-              <p className="font-bold">{(palette.likes ?? 0).toString()}</p>
-            </Group>
-          </Group>
+
+          <LikesCounter
+            isFavorite={palette.favoritePaletteId !== undefined}
+            likes={palette.likes}
+            onToggleFavorite={() => handleToggleFavorite(palette.colors)}
+          />
         </Stack>
       ))}
     </div>

@@ -11,7 +11,7 @@ type MyPalettesPageProps = {
 }
 export function MyPalettesPage({ palettes }: MyPalettesPageProps): JSX.Element {
   return (
-    <PageStyle title="My palettes">
+    <PageStyle>
       {palettes.length === 0 ? (
         <EmptyPalettesList />
       ) : (

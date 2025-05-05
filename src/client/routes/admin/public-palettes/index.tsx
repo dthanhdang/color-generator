@@ -10,7 +10,9 @@ export const Route = createFileRoute("/admin/public-palettes/")({
 
     await queryClient.ensureQueryData(query)
 
-    return { query, seoTitle: "Public palettes" }
+    return {
+      query,
+    }
   },
 })
 

@@ -19,10 +19,7 @@ export function ContrastCheckerPage() {
   } = useColorContrast("#2F61A6", "#FFFFFF")
 
   return (
-    <PageStyle
-      className="flex flex-col min-h-lvh"
-      title="Your *Color Contrast* Checker"
-    >
+    <PageStyle className="flex flex-col min-h-lvh">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="flex flex-col">
           <PreviewCard

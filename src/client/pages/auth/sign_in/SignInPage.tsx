@@ -81,11 +81,7 @@ export function SignInPage({
     : undefined
 
   return (
-    <AuthPage
-      pageTitle={
-        role === "administrator" ? "Sign-in as Administrator" : "Sign-in"
-      }
-    >
+    <AuthPage>
       {formData && onSubmitOTP ? (
         <OTPVerificationForm
           email={formData.email}

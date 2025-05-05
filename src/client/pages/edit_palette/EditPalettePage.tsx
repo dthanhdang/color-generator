@@ -16,7 +16,7 @@ export function EditPalettePage({
   palette = getHarmonyColor(chroma.random(), "split-complementary", 5),
 }: EditPalettePageProps): JSX.Element {
   return (
-    <PageStyle className="flex flex-col h-lvh" title="Your *Palette* Editor">
+    <PageStyle className="flex flex-col h-lvh">
       <PaletteEditor
         className="grow"
         palette={palette}

@@ -5,19 +5,22 @@ import {
   listPublicPalettes,
 } from "#server/queries/public_palette"
 import { unsafeUnwrap } from "@meow-meow-dev/server-utilities/neverthrow"
+import { toIsoDate } from "#server/utils/date"
 
 describe("listPublicPalettes", () => {
+  const date = toIsoDate(new Date())
+
   it("Successfully lists public palettes", async ({ expect }) => {
     const palette1 = await unsafeUnwrap(
       createPublicPalette({
         db: env.DB,
-        palette: { colors: "#abcdef", likes: 0 },
+        palette: { colors: "#abcdef", createdAt: date, likes: 0 },
       })
     )
     const palette2 = await unsafeUnwrap(
       createPublicPalette({
         db: env.DB,
-        palette: { colors: "#012345", likes: 0 },
+        palette: { colors: "#012345", createdAt: date, likes: 0 },
       })
     )
 

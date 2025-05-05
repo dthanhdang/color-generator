@@ -5,14 +5,16 @@ import {
   dbProps,
   defaultResponse,
 } from "@meow-meow-dev/server-utilities/hono"
-import { listPublicPalettesHandler } from "./listPublicPalettesHandler.ts"
+import { listPublicPalettesHandler } from "./listPublicPalettesHandler.js"
 import { vValidator } from "@meow-meow-dev/server-utilities/validation"
 import {
   importPublicPalettesHandler,
   importPublicPalettesJsonSchema,
-} from "./importPublicPalettesHandler.ts"
+} from "./importPublicPalettesHandler.js"
+import { adminPublicPaletteIdRoute } from "./palette_id/adminPublicPaletteIdRoute.js"
 
 export const adminPublicPaletteRoute = buildHono()
+  .route(":palette-id", adminPublicPaletteIdRoute)
   .get("/", checkPermissions("public_palette:read"), (c) =>
     customResponse(
       c,
