@@ -1,5 +1,6 @@
 import type { InferResponseType } from "hono"
 import { apiClient } from "./apiClient.js"
+import { handleError } from "#client/rpc/custom_fetch"
 
 const route = apiClient[":palette-id"].$get
 
@@ -13,8 +14,6 @@ export async function getPublicPalette(
 
     return response.json()
   } catch (error) {
-    throw new Error("An unexpected error occured while fetching the palette", {
-      cause: error,
-    })
+    handleError(error, "An unexpected error occured while fetching the palette")
   }
 }

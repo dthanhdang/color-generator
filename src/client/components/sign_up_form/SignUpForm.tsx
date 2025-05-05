@@ -14,11 +14,13 @@ import * as v from "valibot"
 export type SignUpFormData = v.InferOutput<ReturnType<typeof useFormDataSchema>>
 
 type SignUpFormProps = {
+  buttonLabel: string
   defaultEmail?: string
   onSubmit: (data: SignUpFormData) => Promise<unknown> | undefined
 }
 
 export function SignUpForm({
+  buttonLabel,
   defaultEmail,
   onSubmit,
 }: SignUpFormProps): React.JSX.Element {
@@ -42,6 +44,7 @@ export function SignUpForm({
           {...form.getInputProps("firstName")}
           autoCorrect="given-name"
           autoFocus
+          data-autofocus
           label="First name :"
           name="firstName"
           placeholder={"e.g. Jane"}
@@ -67,7 +70,9 @@ export function SignUpForm({
         />
 
         <Group justify="flex-end" mt="md">
-          <Button type="submit">Request a verification code</Button>
+          <Button loading={form.submitting} type="submit">
+            {buttonLabel}
+          </Button>
         </Group>
       </Stack>
     </form>

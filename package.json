@@ -109,7 +109,7 @@
     "vite": "^6.1.0",
     "vitest": "^3.0.7",
     "vitest-matchmedia-mock": "^2.0.1",
-    "wrangler": "^4.12.0"
+    "wrangler": "^4.14.1"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -137,6 +137,7 @@
     "#server/schemas": "./src/server/schemas/index.ts",
     "#server/test/*": "./src/server/test/*/index.ts",
     "#server/types": "./src/server/types/index.ts",
+    "#server/utils/*": "./src/server/utils/*/index.ts",
     "#server/types/database": "./src/server/_generated/kysely/index.ts"
   }
 }

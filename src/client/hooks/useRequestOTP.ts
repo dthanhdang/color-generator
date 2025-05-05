@@ -9,6 +9,8 @@ type UseRequestOTPOutput<FORM_DATA extends EmailFormData> = {
   formData: FORM_DATA | undefined
   handleResendOTP: () => undefined
   handleSubmit: (formData: FORM_DATA) => undefined
+  isResendingOtp: boolean
+  isSubmitting: boolean
 }
 
 type UseRequestOTPProps = {
@@ -37,6 +39,12 @@ export function useRequestOTP<FORM_DATA extends EmailFormData>({
       })
     }
 
-    return { formData, handleResendOTP, handleSubmit }
+    return {
+      formData,
+      handleResendOTP,
+      handleSubmit,
+      isResendingOtp: requestOTPMutation.isPending,
+      isSubmitting: requestOTPMutation.isPending,
+    }
   }, [formData, requestOTPMutation])
 }

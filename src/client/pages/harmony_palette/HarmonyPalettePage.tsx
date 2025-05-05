@@ -16,6 +16,7 @@ import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
 import type { ColorMode } from "#client/types"
 import { ColorForm } from "#components/color_form/ColorForm.tsx"
 import { PaletteGeneratorButtons } from "#components/palette_generator_buttons/PaletteGeneratorButtons.tsx"
+import { getCountForHarmonyType } from "#utils/getCountForHarmonyType.ts"
 
 function getHarmonyPalette(
   baseColor: Color,
@@ -33,18 +34,6 @@ function getHarmonyPalette(
       name: colorNameResult ? colorNameResult.name : "",
     }
   })
-}
-
-function getCountForHarmonyType(harmonyType: HarmonyType): number {
-  const harmonyCounts: Record<HarmonyType, number> = {
-    monochromatic: 5,
-    analogous: 5,
-    complementary: 5,
-    triadic: 3,
-    tetradic: 4,
-    "split-complementary": 5,
-  }
-  return harmonyCounts[harmonyType] || 5
 }
 
 function generateRandomColor(): Color {

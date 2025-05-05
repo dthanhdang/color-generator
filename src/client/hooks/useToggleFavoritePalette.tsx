@@ -9,7 +9,7 @@ type UseToggleFavoritePaletteProps = {
   defaultIsFavorite?: boolean
 }
 
-type UseToggleFavoritePaletteReturn = {
+export type UseToggleFavoritePaletteReturn = {
   isFavorite: boolean
   isUpdatePending: boolean
   toggleFavorite: (colors: readonly Color[]) => void

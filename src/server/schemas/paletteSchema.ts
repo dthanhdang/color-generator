@@ -1,7 +1,7 @@
 import { integerSchema } from "@meow-meow-dev/server-utilities/validation"
 import * as v from "valibot"
 
-const paletteColorsSchema = v.pipe(
+export const paletteColorsSchema = v.pipe(
   v.string(),
   v.regex(/[0-9a-f]{6}(-:?[0-9a-f]{6})*/)
 )

@@ -1,4 +1,4 @@
-import type { IdToken, User } from "#server/types"
+import type { IdToken, UserSummary } from "#server/types"
 import type { GenerateTokensReturn } from "@meow-meow-dev/server-utilities/auth"
 import type {
   AccessTokenPayload,
@@ -20,7 +20,7 @@ const aud = [apiAudience]
 
 type GenerateTokensProps = {
   secret: string
-  user: User
+  user: UserSummary
 }
 
 export function generateTokens({
@@ -53,7 +53,7 @@ export function generateTokens({
 }
 
 function userToIdTokenPayload(
-  user: User,
+  user: UserSummary,
   sub: string
 ): Simplify<WithoutJWTTimeStamps<IdToken>> {
   const {

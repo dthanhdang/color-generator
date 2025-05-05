@@ -25,6 +25,7 @@ export const listPublicPalettesWithUserFavoritePalettes = listQuery<
       "userFavoritePalette.id as favoritePaletteId",
       "publicPalette.id as id",
     ])
+    .orderBy("likes desc")
     .execute()
     .then((palettes) =>
       palettes.map(({ favoritePaletteId, ...palette }) => ({

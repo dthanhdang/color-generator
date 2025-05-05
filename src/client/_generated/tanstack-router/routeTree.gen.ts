@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './../../routes/__root'
+import { Route as AdminImport } from './../../routes/admin'
 import { Route as IndexImport } from './../../routes/index'
 import { Route as ScalePaletteIndexImport } from './../../routes/scale-palette/index'
 import { Route as RandomPaletteIndexImport } from './../../routes/random-palette/index'
@@ -21,12 +22,22 @@ import { Route as ImagePickerIndexImport } from './../../routes/image-picker/ind
 import { Route as HarmonyPaletteIndexImport } from './../../routes/harmony-palette/index'
 import { Route as ContrastCheckerIndexImport } from './../../routes/contrast-checker/index'
 import { Route as ContactIndexImport } from './../../routes/contact/index'
+import { Route as AdminIndexImport } from './../../routes/admin/index'
 import { Route as AuthSignUpImport } from './../../routes/auth/sign-up'
 import { Route as AuthSignInImport } from './../../routes/auth/sign-in'
 import { Route as AuthSignUpIndexImport } from './../../routes/auth/sign-up/index'
 import { Route as AuthSignInIndexImport } from './../../routes/auth/sign-in/index'
+import { Route as AdminUsersIndexImport } from './../../routes/admin/users/index'
+import { Route as AdminPublicPalettesIndexImport } from './../../routes/admin/public-palettes/index'
+import { Route as AdminPublicPalettesGenerateIndexImport } from './../../routes/admin/public-palettes/generate/index'
 
 // Create/Update Routes
+
+const AdminRoute = AdminImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -88,6 +99,12 @@ const ContactIndexRoute = ContactIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminIndexRoute = AdminIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
 const AuthSignUpRoute = AuthSignUpImport.update({
   id: '/auth/sign-up',
   path: '/auth/sign-up',
@@ -112,6 +129,25 @@ const AuthSignInIndexRoute = AuthSignInIndexImport.update({
   getParentRoute: () => AuthSignInRoute,
 } as any)
 
+const AdminUsersIndexRoute = AdminUsersIndexImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const AdminPublicPalettesIndexRoute = AdminPublicPalettesIndexImport.update({
+  id: '/public-palettes/',
+  path: '/public-palettes/',
+  getParentRoute: () => AdminRoute,
+} as any)
+
+const AdminPublicPalettesGenerateIndexRoute =
+  AdminPublicPalettesGenerateIndexImport.update({
+    id: '/public-palettes/generate/',
+    path: '/public-palettes/generate/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -121,6 +157,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminImport
       parentRoute: typeof rootRoute
     }
     '/auth/sign-in': {
@@ -136,6 +179,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/sign-up'
       preLoaderRoute: typeof AuthSignUpImport
       parentRoute: typeof rootRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexImport
+      parentRoute: typeof AdminImport
     }
     '/contact/': {
       id: '/contact/'
@@ -200,6 +250,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScalePaletteIndexImport
       parentRoute: typeof rootRoute
     }
+    '/admin/public-palettes/': {
+      id: '/admin/public-palettes/'
+      path: '/public-palettes'
+      fullPath: '/admin/public-palettes'
+      preLoaderRoute: typeof AdminPublicPalettesIndexImport
+      parentRoute: typeof AdminImport
+    }
+    '/admin/users/': {
+      id: '/admin/users/'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersIndexImport
+      parentRoute: typeof AdminImport
+    }
     '/auth/sign-in/': {
       id: '/auth/sign-in/'
       path: '/'
@@ -214,10 +278,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignUpIndexImport
       parentRoute: typeof AuthSignUpImport
     }
+    '/admin/public-palettes/generate/': {
+      id: '/admin/public-palettes/generate/'
+      path: '/public-palettes/generate'
+      fullPath: '/admin/public-palettes/generate'
+      preLoaderRoute: typeof AdminPublicPalettesGenerateIndexImport
+      parentRoute: typeof AdminImport
+    }
   }
 }
 
 // Create and export the route tree
+
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminPublicPalettesIndexRoute: typeof AdminPublicPalettesIndexRoute
+  AdminUsersIndexRoute: typeof AdminUsersIndexRoute
+  AdminPublicPalettesGenerateIndexRoute: typeof AdminPublicPalettesGenerateIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+  AdminPublicPalettesIndexRoute: AdminPublicPalettesIndexRoute,
+  AdminUsersIndexRoute: AdminUsersIndexRoute,
+  AdminPublicPalettesGenerateIndexRoute: AdminPublicPalettesGenerateIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface AuthSignInRouteChildren {
   AuthSignInIndexRoute: typeof AuthSignInIndexRoute
@@ -245,8 +332,10 @@ const AuthSignUpRouteWithChildren = AuthSignUpRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRouteWithChildren
   '/auth/sign-up': typeof AuthSignUpRouteWithChildren
+  '/admin/': typeof AdminIndexRoute
   '/contact': typeof ContactIndexRoute
   '/contrast-checker': typeof ContrastCheckerIndexRoute
   '/harmony-palette': typeof HarmonyPaletteIndexRoute
@@ -256,12 +345,16 @@ export interface FileRoutesByFullPath {
   '/palettes-explorer': typeof PalettesExplorerIndexRoute
   '/random-palette': typeof RandomPaletteIndexRoute
   '/scale-palette': typeof ScalePaletteIndexRoute
+  '/admin/public-palettes': typeof AdminPublicPalettesIndexRoute
+  '/admin/users': typeof AdminUsersIndexRoute
   '/auth/sign-in/': typeof AuthSignInIndexRoute
   '/auth/sign-up/': typeof AuthSignUpIndexRoute
+  '/admin/public-palettes/generate': typeof AdminPublicPalettesGenerateIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminIndexRoute
   '/contact': typeof ContactIndexRoute
   '/contrast-checker': typeof ContrastCheckerIndexRoute
   '/harmony-palette': typeof HarmonyPaletteIndexRoute
@@ -271,15 +364,20 @@ export interface FileRoutesByTo {
   '/palettes-explorer': typeof PalettesExplorerIndexRoute
   '/random-palette': typeof RandomPaletteIndexRoute
   '/scale-palette': typeof ScalePaletteIndexRoute
+  '/admin/public-palettes': typeof AdminPublicPalettesIndexRoute
+  '/admin/users': typeof AdminUsersIndexRoute
   '/auth/sign-in': typeof AuthSignInIndexRoute
   '/auth/sign-up': typeof AuthSignUpIndexRoute
+  '/admin/public-palettes/generate': typeof AdminPublicPalettesGenerateIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRouteWithChildren
   '/auth/sign-up': typeof AuthSignUpRouteWithChildren
+  '/admin/': typeof AdminIndexRoute
   '/contact/': typeof ContactIndexRoute
   '/contrast-checker/': typeof ContrastCheckerIndexRoute
   '/harmony-palette/': typeof HarmonyPaletteIndexRoute
@@ -289,16 +387,21 @@ export interface FileRoutesById {
   '/palettes-explorer/': typeof PalettesExplorerIndexRoute
   '/random-palette/': typeof RandomPaletteIndexRoute
   '/scale-palette/': typeof ScalePaletteIndexRoute
+  '/admin/public-palettes/': typeof AdminPublicPalettesIndexRoute
+  '/admin/users/': typeof AdminUsersIndexRoute
   '/auth/sign-in/': typeof AuthSignInIndexRoute
   '/auth/sign-up/': typeof AuthSignUpIndexRoute
+  '/admin/public-palettes/generate/': typeof AdminPublicPalettesGenerateIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/auth/sign-in'
     | '/auth/sign-up'
+    | '/admin/'
     | '/contact'
     | '/contrast-checker'
     | '/harmony-palette'
@@ -308,11 +411,15 @@ export interface FileRouteTypes {
     | '/palettes-explorer'
     | '/random-palette'
     | '/scale-palette'
+    | '/admin/public-palettes'
+    | '/admin/users'
     | '/auth/sign-in/'
     | '/auth/sign-up/'
+    | '/admin/public-palettes/generate'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/contact'
     | '/contrast-checker'
     | '/harmony-palette'
@@ -322,13 +429,18 @@ export interface FileRouteTypes {
     | '/palettes-explorer'
     | '/random-palette'
     | '/scale-palette'
+    | '/admin/public-palettes'
+    | '/admin/users'
     | '/auth/sign-in'
     | '/auth/sign-up'
+    | '/admin/public-palettes/generate'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/auth/sign-in'
     | '/auth/sign-up'
+    | '/admin/'
     | '/contact/'
     | '/contrast-checker/'
     | '/harmony-palette/'
@@ -338,13 +450,17 @@ export interface FileRouteTypes {
     | '/palettes-explorer/'
     | '/random-palette/'
     | '/scale-palette/'
+    | '/admin/public-palettes/'
+    | '/admin/users/'
     | '/auth/sign-in/'
     | '/auth/sign-up/'
+    | '/admin/public-palettes/generate/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AuthSignInRoute: typeof AuthSignInRouteWithChildren
   AuthSignUpRoute: typeof AuthSignUpRouteWithChildren
   ContactIndexRoute: typeof ContactIndexRoute
@@ -360,6 +476,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   AuthSignInRoute: AuthSignInRouteWithChildren,
   AuthSignUpRoute: AuthSignUpRouteWithChildren,
   ContactIndexRoute: ContactIndexRoute,
@@ -384,6 +501,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/admin",
         "/auth/sign-in",
         "/auth/sign-up",
         "/contact/",
@@ -400,6 +518,15 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.ts"
     },
+    "/admin": {
+      "filePath": "admin.tsx",
+      "children": [
+        "/admin/",
+        "/admin/public-palettes/",
+        "/admin/users/",
+        "/admin/public-palettes/generate/"
+      ]
+    },
     "/auth/sign-in": {
       "filePath": "auth/sign-in.ts",
       "children": [
@@ -411,6 +538,10 @@ export const routeTree = rootRoute
       "children": [
         "/auth/sign-up/"
       ]
+    },
+    "/admin/": {
+      "filePath": "admin/index.ts",
+      "parent": "/admin"
     },
     "/contact/": {
       "filePath": "contact/index.ts"
@@ -439,6 +570,14 @@ export const routeTree = rootRoute
     "/scale-palette/": {
       "filePath": "scale-palette/index.ts"
     },
+    "/admin/public-palettes/": {
+      "filePath": "admin/public-palettes/index.tsx",
+      "parent": "/admin"
+    },
+    "/admin/users/": {
+      "filePath": "admin/users/index.tsx",
+      "parent": "/admin"
+    },
     "/auth/sign-in/": {
       "filePath": "auth/sign-in/index.tsx",
       "parent": "/auth/sign-in"
@@ -446,6 +585,10 @@ export const routeTree = rootRoute
     "/auth/sign-up/": {
       "filePath": "auth/sign-up/index.tsx",
       "parent": "/auth/sign-up"
+    },
+    "/admin/public-palettes/generate/": {
+      "filePath": "admin/public-palettes/generate/index.ts",
+      "parent": "/admin"
     }
   }
 }

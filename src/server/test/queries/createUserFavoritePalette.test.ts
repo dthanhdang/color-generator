@@ -14,6 +14,7 @@ import type {
   UserFavoritePalette,
 } from "#server/types/database"
 import { okAsync, ResultAsync } from "neverthrow"
+import { toIsoDate } from "#server/utils/date"
 
 function createPalette(
   palette: Omit<Insertable<PublicPalette>, "id">
@@ -25,13 +26,17 @@ function createPalette(
   },
   "internal_server_error" | "user_already_exists"
 > {
+  const date = toIsoDate(new Date())
+
   return createUser({
     db: env.DB,
     user: {
       email: "test@test.com",
       firstName: "Test",
       lastName: "Test",
+      lastSignInDate: date,
       role: "registered_user",
+      signUpDate: date,
     },
   }).andThen((user) =>
     createPublicPalette({

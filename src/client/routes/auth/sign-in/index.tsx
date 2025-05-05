@@ -14,7 +14,7 @@ export const Route = createFileRoute("/auth/sign-in/")({
   beforeLoad: () => {
     if (getUserFromLocalStorage("registered_user")) return redirect({ to: "/" })
     else if (getUserFromLocalStorage("administrator"))
-      return redirect({ to: "/" /* TODO "/admin" */ })
+      return redirect({ to: "/admin/users" })
   },
   component: PageWrapper,
   validateSearch: searchParametersSchema,

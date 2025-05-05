@@ -43,7 +43,9 @@ export interface User {
   firstName: string;
   id: Generated<number>;
   lastName: string;
+  lastSignInDate: string;
   role: string;
+  signUpDate: string;
 }
 
 export interface UserFavoritePalette {

@@ -7,6 +7,7 @@ import { EmptyPalettesList } from "#components/palettes_list/EmptyPalettesList.t
 type ExplorePalettesPageProps = {
   palettes: PublicPalette[]
 }
+
 export function ExplorePalettesPage({
   palettes,
 }: ExplorePalettesPageProps): JSX.Element {

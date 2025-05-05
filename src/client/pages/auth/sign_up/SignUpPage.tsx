@@ -52,7 +52,7 @@ export function SignUpPage({
           if (user) {
             await storeUser(user)
             await navigate({
-              to: role === "administrator" ? "/" /* TODO /admin */ : "/",
+              to: role === "administrator" ? "/admin/users" : "/",
             })
           }
         } else {
@@ -100,7 +100,11 @@ export function SignUpPage({
         />
       ) : (
         <Stack>
-          <SignUpForm defaultEmail={defaultEmail} onSubmit={handleSubmit} />
+          <SignUpForm
+            buttonLabel="Request a verification code"
+            defaultEmail={defaultEmail}
+            onSubmit={handleSubmit}
+          />
 
           <Text>
             Already a member ? <TextLink to="/auth/sign-in">Sign-in</TextLink>{" "}

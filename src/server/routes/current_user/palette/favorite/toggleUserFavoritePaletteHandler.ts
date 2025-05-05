@@ -34,7 +34,6 @@ export function toggleUserFavoritePaletteHandler({
 > {
   return getUserFavoritePublicPaletteByColors({ db, colors, userId })
     .andThen(({ id, favoritePaletteId }) => {
-      console.log({ id, favoritePaletteId })
       if (favoritePaletteId === undefined)
         return ResultAsync.combine([
           createUserFavoritePublicPalette({

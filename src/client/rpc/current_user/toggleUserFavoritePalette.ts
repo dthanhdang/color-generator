@@ -1,5 +1,6 @@
 import { apiClient } from "./apiClient.js"
 import { InferResponseType } from "hono"
+import { handleError } from "#client/rpc/custom_fetch"
 
 const route = apiClient["palette"]["favorite"].$post
 
@@ -20,8 +21,6 @@ export async function toggleUserFavoritePalette(
 
     return await response.json()
   } catch (error) {
-    throw new Error("An unexpected error occured while saving the palette", {
-      cause: error,
-    })
+    handleError(error, "An unexpected error occured while saving the palette")
   }
 }

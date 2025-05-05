@@ -1,4 +1,4 @@
-import type { User, UserRole } from "#server/types"
+import type { UserSummary, UserRole } from "#server/types"
 import type { HandlerDBProps } from "@meow-meow-dev/server-utilities/hono"
 
 import { validateOTP } from "#server/auth/otp"
@@ -8,6 +8,7 @@ import { administratorRoleSchema } from "#server/schemas"
 import { nonEmptyStringSchema } from "@meow-meow-dev/server-utilities/validation"
 import { errAsync, okAsync, type ResultAsync } from "neverthrow"
 import * as v from "valibot"
+import { toIsoDate } from "#server/utils/date"
 
 const codeSchema = v.pipe(v.string(), v.regex(/^\d{6}$/))
 
@@ -30,7 +31,7 @@ export function signUpHandler({
   lastName,
   ...props
 }: SignUpHandlerProps): ResultAsync<
-  User,
+  UserSummary,
   | "administrator_already_exists"
   | "internal_server_error"
   | "invalid_or_expired_code"
@@ -43,10 +44,18 @@ export function signUpHandler({
   }).andThen(() => {
     const role = props.role ?? "registered_user"
 
+    const date = toIsoDate(new Date())
     return checkAdministratorUnicity(db, role).andThen(() =>
       createUser({
         db,
-        user: { email, firstName, lastName, role },
+        user: {
+          email,
+          firstName,
+          lastName,
+          lastSignInDate: date,
+          role,
+          signUpDate: date,
+        },
       }).andThen((user) => okAsync(fromDatabaseUser(user)))
     )
   })

@@ -1,6 +1,7 @@
 import { apiClient } from "./apiClient.js"
 import type { PublicPalette } from "#client/types"
 import { parseChromaPalette } from "#utils/parseChromaPalette.js"
+import { handleError } from "#client/rpc/custom_fetch"
 
 const route = apiClient.palette.public.$get
 
@@ -17,8 +18,9 @@ export async function listPublicPalettesWithUserFavoritePalettes(): Promise<
       colors: parseChromaPalette(colors),
     }))
   } catch (error) {
-    throw new Error("An unexpected error occured while fetching the palettes", {
-      cause: error,
-    })
+    handleError(
+      error,
+      "An unexpected error occured while fetching the palettes"
+    )
   }
 }

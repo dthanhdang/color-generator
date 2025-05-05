@@ -1,6 +1,7 @@
 import { apiClient } from "./apiClient.js"
 import { PublicPalette } from "#client/types"
 import { parseChromaPalette } from "#utils/parseChromaPalette.js"
+import { handleError } from "#client/rpc/custom_fetch"
 
 const route = apiClient["palette"]["favorite"].$get
 
@@ -22,11 +23,9 @@ export async function listCurrentUserFavoritePalettes(
       isFavorite: true,
     }))
   } catch (error) {
-    throw new Error(
-      "An unexpected error occured while fetching the palette status",
-      {
-        cause: error,
-      }
+    handleError(
+      error,
+      "An unexpected error occured while fetching the palette status"
     )
   }
 }

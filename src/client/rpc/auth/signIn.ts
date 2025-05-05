@@ -1,4 +1,5 @@
 import type { InferRequestType } from "hono"
+import { handleError } from "#client/rpc/custom_fetch"
 
 import { apiClient } from "./apiClient.js"
 
@@ -15,8 +16,6 @@ export async function signIn(props: SignInProps): Promise<SignInOutput> {
 
     return await response.json()
   } catch (error) {
-    throw new Error("An unexpected error occured while signing-in", {
-      cause: error,
-    })
+    handleError(error, "An unexpected error occured while signing-in")
   }
 }

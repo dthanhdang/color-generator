@@ -14,11 +14,13 @@ export type EmailFormData = v.InferOutput<typeof formDataSchema>
 
 type EmailFormProps = {
   defaultEmail?: string
+  isSubmitting: boolean
   onSubmit: (data: EmailFormData) => Promise<unknown> | undefined
 }
 
 export function EmailForm({
   defaultEmail,
+  isSubmitting,
   onSubmit,
 }: EmailFormProps): React.JSX.Element {
   const form = useForm({
@@ -47,7 +49,11 @@ export function EmailForm({
       />
 
       <Group className="justify-end" mt="md">
-        <Button data-testid="submit-button" type="submit">
+        <Button
+          data-testid="submit-button"
+          loading={isSubmitting}
+          type="submit"
+        >
           Request a verification code
         </Button>
       </Group>

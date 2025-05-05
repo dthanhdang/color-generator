@@ -3,6 +3,7 @@ import type { DB, User } from "#server/types/database"
 import type { Selectable } from "kysely"
 
 import { getQuery } from "@meow-meow-dev/server-utilities/queries"
+import { allFields } from "./allFields.ts"
 
 type GetUserByEmailAndRoleProps = {
   email: string
@@ -16,7 +17,7 @@ export const getUserByEmailAndRole = getQuery<
 >(({ db, email, role }) =>
   db
     .selectFrom("user")
-    .select(["email", "id", "firstName", "lastName", "role"])
+    .select(allFields)
     .where("email", "=", email)
     .where("role", "=", role)
     .executeTakeFirst()

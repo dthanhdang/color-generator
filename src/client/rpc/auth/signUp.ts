@@ -1,4 +1,5 @@
 import type { InferRequestType } from "hono"
+import { handleError } from "#client/rpc/custom_fetch"
 
 import { apiClient } from "./apiClient.js"
 
@@ -21,8 +22,6 @@ export async function signUp(props: SignUpProps): Promise<SignUpOutput> {
 
     return output
   } catch (error) {
-    throw new Error("An unexpected error occured while signing-up", {
-      cause: error,
-    })
+    handleError(error, "An unexpected error occured while signing-up")
   }
 }

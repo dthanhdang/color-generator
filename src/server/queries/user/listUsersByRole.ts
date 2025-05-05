@@ -3,10 +3,11 @@ import type { DB, User } from "#server/types/database"
 import type { Selectable, SelectQueryBuilder } from "kysely"
 
 import { listQuery } from "@meow-meow-dev/server-utilities/queries"
+import { allFields } from "./allFields.ts"
 
 type ListUsersByRoleProps = {
   limit?: number
-  role: UserRole
+  role?: UserRole
 }
 
 function withOptionalLimit<DB, TB extends keyof DB, O>(
@@ -20,12 +21,11 @@ export const listUsersByRole = listQuery<
   DB,
   ListUsersByRoleProps,
   Selectable<User>
->(({ db, limit, role }) =>
-  withOptionalLimit(
-    db
-      .selectFrom("user")
-      .select(["email", "id", "firstName", "lastName", "role"])
-      .where("role", "=", role),
+>(({ db, limit, role }) => {
+  const query = db.selectFrom("user").select(allFields)
+
+  return withOptionalLimit(
+    role ? query.where("role", "=", role) : query,
     limit
   ).execute()
-)
+})

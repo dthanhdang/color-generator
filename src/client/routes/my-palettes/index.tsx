@@ -1,19 +1,14 @@
-import { getUserFromLocalStorage } from "#client/auth"
+import { checkIsRegisteredUser } from "#client/auth"
 import { MyPalettesPage } from "#client/pages/my-palettes"
 import { getCurrentUserQuery } from "#client/tanstack/query/queries/public/current_user"
 import { useSuspenseQuery } from "@tanstack/react-query"
-import { createFileRoute, redirect } from "@tanstack/react-router"
+import { createFileRoute } from "@tanstack/react-router"
 import type { JSX } from "react"
 
 export const Route = createFileRoute("/my-palettes/")({
   component: PageWrapper,
   beforeLoad: () => {
-    const user = getUserFromLocalStorage("registered_user")
-    if (!user)
-      throw redirect({
-        to: "/auth/sign-in",
-        search: { redirect_to: window.location.href },
-      })
+    checkIsRegisteredUser()
   },
   loader: async ({ context: { queryClient } }) => {
     const query = getCurrentUserQuery()

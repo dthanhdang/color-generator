@@ -1,5 +1,6 @@
 import { InferResponseType } from "hono"
 
+import { handleError } from "#client/rpc/custom_fetch"
 import { apiClient } from "./apiClient.js"
 
 const route = apiClient.index.$get
@@ -12,8 +13,6 @@ export async function getCurrentUser(): Promise<GetCurrentUserOutput> {
 
     return await response.json()
   } catch (error) {
-    throw new Error("An unexpected error occured while fetching the user", {
-      cause: error,
-    })
+    handleError(error, "An unexpected error occured while fetching the user")
   }
 }

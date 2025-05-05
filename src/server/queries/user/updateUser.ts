@@ -2,11 +2,12 @@ import type { DB, User } from "#server/types/database"
 import type { Selectable, Updateable } from "kysely"
 
 import { updateQuery } from "@meow-meow-dev/server-utilities/queries"
+import { allFields } from "./allFields.ts"
 
 type UpdateableRegisteredUser = Required<Selectable<User>>
 
 type UpdateRegisteredUserProps = {
-  user: Required<Pick<Updateable<User>, "firstName" | "id" | "lastName">>
+  user: Required<Pick<Updateable<User>, "id">> & Omit<Updateable<User>, "id">
 }
 
 export const updateRegisteredUser = updateQuery<
@@ -18,7 +19,7 @@ export const updateRegisteredUser = updateQuery<
     .updateTable("user")
     .set(user)
     .where("id", "=", id)
-    .returning(["email", "id", "firstName", "lastName", "role"])
+    .returning(allFields)
     .executeTakeFirst()
     .then((row) => (row ? { ...row, id } : undefined))
 )

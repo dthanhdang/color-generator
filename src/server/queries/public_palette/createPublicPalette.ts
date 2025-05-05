@@ -16,7 +16,10 @@ export const createPublicPalette = createQuery<
   db
     .insertInto("publicPalette")
     .values(palette)
-    .onConflict((cb) => cb.doUpdateSet(palette))
+    // don't actually update anything but still return rows
+    .onConflict((cb) =>
+      cb.column("colors").doUpdateSet({ colors: palette.colors })
+    )
     .returning(allFields)
     .executeTakeFirst()
 )
