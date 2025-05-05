@@ -36,32 +36,34 @@ export function UsersList({
           )}
         </tr>
       </thead>
-      {users.map((user) => (
-        <tr key={user.id}>
-          <td className="border border-[var(--primary-color)] px-4 py-2">
-            {user.id.toString()}
-          </td>
-          <td className="border border-[var(--primary-color)] px-4 py-2">
-            {user.identity.firstName}
-          </td>
-          <td className="border border-[var(--primary-color)] px-4 py-2">
-            {user.identity.lastName}
-          </td>
-          <td className="border border-[var(--primary-color)] px-4 py-2">
-            {user.email}
-          </td>
-          {displayTimeStamps && (
-            <>
-              <td className="border border-[var(--primary-color)] px-4 py-2">
-                {user.signUpDate.toDateString()}
-              </td>
-              <td className="border border-[var(--primary-color)] px-4 py-2">
-                {user.lastSignInDate.toDateString()}
-              </td>
-            </>
-          )}
-        </tr>
-      ))}
+      <tbody>
+        {users.map((user) => (
+          <tr key={user.id}>
+            <td className="border border-[var(--primary-color)] px-4 py-2">
+              {user.id.toString()}
+            </td>
+            <td className="border border-[var(--primary-color)] px-4 py-2">
+              {user.identity.firstName}
+            </td>
+            <td className="border border-[var(--primary-color)] px-4 py-2">
+              {user.identity.lastName}
+            </td>
+            <td className="border border-[var(--primary-color)] px-4 py-2">
+              {user.email}
+            </td>
+            {displayTimeStamps && (
+              <>
+                <td className="border border-[var(--primary-color)] px-4 py-2">
+                  {user.signUpDate.toDateString()}
+                </td>
+                <td className="border border-[var(--primary-color)] px-4 py-2">
+                  {user.lastSignInDate.toDateString()}
+                </td>
+              </>
+            )}
+          </tr>
+        ))}
+      </tbody>
     </table>
   )
 }

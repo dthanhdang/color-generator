@@ -5,6 +5,7 @@ import * as v from "valibot"
 
 const searchParametersSchema = v.strictObject({
   email: v.optional(v.string()),
+  redirect_to: v.optional(v.pipe(v.string(), v.minLength(1))),
   role: v.optional(v.picklist(["administrator", "registered_user"])),
 })
 
@@ -17,7 +18,11 @@ export const Route = createFileRoute("/auth/sign-up/")({
 })
 
 function PageWrapper(): React.JSX.Element {
-  const { email, role = "registered_user" } = Route.useSearch()
+  const {
+    email,
+    redirect_to: redirectTo,
+    role = "registered_user",
+  } = Route.useSearch()
 
-  return <SignUpPage email={email} role={role} />
+  return <SignUpPage email={email} redirectTo={redirectTo} role={role} />
 }

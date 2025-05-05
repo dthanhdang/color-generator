@@ -100,7 +100,16 @@ export function SignInPage({
             onSubmit={handleSubmit}
           />
           <Text>
-            Not a member yet ? <TextLink to="/auth/sign-up">Sign-up</TextLink>{" "}
+            Not a member yet ?{" "}
+            <TextLink
+              to="/auth/sign-up"
+              search={{
+                redirect_to: redirectTo,
+                role: role === "administrator" ? role : undefined,
+              }}
+            >
+              Sign-up
+            </TextLink>{" "}
             instead
           </Text>
         </Stack>
