@@ -2,7 +2,7 @@ import { ContrastCheckerPage } from "#pages/contrast_checker"
 import { buildPublicPageProps } from "#utils/buildPageProps.ts"
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/contrast-checker/")({
+export const Route = createFileRoute("/_public/contrast-checker/")({
   component: ContrastCheckerPage,
   loader: () =>
     buildPublicPageProps("Your *Color Contrast* Checker", {

@@ -2,7 +2,7 @@ import { ImagePicker } from "#pages/image_picker"
 import { buildPublicPageProps } from "#utils/buildPageProps.ts"
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/image-picker/")({
+export const Route = createFileRoute("/_public/image-picker/")({
   component: ImagePicker,
   loader: () =>
     buildPublicPageProps("Your *Color From Image* Extractor", {

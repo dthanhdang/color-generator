@@ -1,5 +1,5 @@
 import { Stack } from "@mantine/core"
-import type { JSX } from "react"
+import { useState, type JSX } from "react"
 import { Link } from "@tanstack/react-router"
 import type { PublicPalette } from "#client/types"
 import { stringifyChromaPalette } from "#utils/stringifyChromaPalette.ts"
@@ -11,8 +11,32 @@ type PalettesListProps = {
   palettes: PublicPalette[]
 }
 
-export function PalettesList({ palettes }: PalettesListProps): JSX.Element {
-  const { toggleFavorite: handleToggleFavorite } = useToggleFavoritePalette()
+export function PalettesList({
+  palettes: initialPalettes,
+}: PalettesListProps): JSX.Element {
+  const { toggleFavorite } = useToggleFavoritePalette()
+
+  const [palettes, setPalettes] = useState(initialPalettes)
+
+  const handleToggleFavorite = async (
+    palette: PublicPalette
+  ): Promise<undefined> => {
+    const favoritePaletteId = await toggleFavorite(palette.colors)
+    console.log({ favoritePaletteId })
+    if (favoritePaletteId === null) return
+
+    setPalettes(
+      palettes.map((item) =>
+        item.id === palette.id
+          ? {
+              ...item,
+              favoritePaletteId,
+              likes: item.likes + (favoritePaletteId ? 1 : -1),
+            }
+          : item
+      )
+    )
+  }
 
   return (
     <div className="grid grid-cols-4 gap-x-6 gap-y-10">
@@ -29,7 +53,7 @@ export function PalettesList({ palettes }: PalettesListProps): JSX.Element {
           <LikesCounter
             isFavorite={palette.favoritePaletteId !== undefined}
             likes={palette.likes}
-            onToggleFavorite={() => handleToggleFavorite(palette.colors)}
+            onToggleFavorite={() => handleToggleFavorite(palette)}
           />
         </Stack>
       ))}

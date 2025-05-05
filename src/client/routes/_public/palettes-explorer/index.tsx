@@ -7,7 +7,7 @@ import { getUserFromLocalStorage } from "#client/auth"
 import { listPublicPalettesWithUserFavoritePalettesQuery } from "#client/tanstack/query/queries/public/current_user"
 import { buildPublicPageProps } from "#utils/buildPageProps.ts"
 
-export const Route = createFileRoute("/palettes-explorer/")({
+export const Route = createFileRoute("/_public/palettes-explorer/")({
   component: PageWrapper,
   loader: async ({ context: { queryClient } }) => {
     const query = getUserFromLocalStorage()

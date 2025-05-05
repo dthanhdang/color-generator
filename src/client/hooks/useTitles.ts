@@ -20,7 +20,6 @@ export function useTitles(): UseTitlesReturn {
         )
         .filter(Boolean),
   })
-  console.log({ matches })
   const currentPageMatch = matches.at(-1)
   if (currentPageMatch === undefined)
     return {

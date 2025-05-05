@@ -2,7 +2,7 @@ import { ContactPage } from "#pages/contact"
 import { buildPublicPageProps } from "#utils/buildPageProps.ts"
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/contact/")({
+export const Route = createFileRoute("/_public/contact/")({
   component: ContactPage,
   loader: () =>
     buildPublicPageProps("Contact", {

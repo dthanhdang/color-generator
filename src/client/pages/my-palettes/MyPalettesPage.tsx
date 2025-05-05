@@ -1,5 +1,5 @@
 import { PageStyle } from "#components/PageStyle.tsx"
-import type { JSX } from "react"
+import { type JSX } from "react"
 import type { PublicPalette } from "#client/types"
 import {
   EmptyPalettesList,

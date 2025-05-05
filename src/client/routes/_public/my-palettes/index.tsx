@@ -6,7 +6,7 @@ import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import type { JSX } from "react"
 
-export const Route = createFileRoute("/my-palettes/")({
+export const Route = createFileRoute("/_public/my-palettes/")({
   component: PageWrapper,
   beforeLoad: () => {
     checkIsRegisteredUser()
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/my-palettes/")({
 
     await queryClient.ensureQueryData(query)
 
-    return { query, ...buildPublicPageProps("My palettes") }
+    return { query, ...buildPublicPageProps("Your *Palettes Library*") }
   },
 })
 

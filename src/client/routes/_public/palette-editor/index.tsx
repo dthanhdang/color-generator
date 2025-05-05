@@ -10,7 +10,7 @@ import { buildPublicPageProps } from "#utils/buildPageProps.ts"
 
 const searchSchema = v.strictObject({ colors: v.optional(v.string()) })
 
-export const Route = createFileRoute("/palette-editor/")({
+export const Route = createFileRoute("/_public/palette-editor/")({
   component: PageWrapper,
   loaderDeps: ({ search }) => {
     const isAuthenticated =

@@ -12,22 +12,23 @@
 
 import { Route as rootRoute } from './../../routes/__root'
 import { Route as AdminImport } from './../../routes/admin'
+import { Route as PublicImport } from './../../routes/_public'
 import { Route as IndexImport } from './../../routes/index'
-import { Route as ScalePaletteIndexImport } from './../../routes/scale-palette/index'
-import { Route as RandomPaletteIndexImport } from './../../routes/random-palette/index'
-import { Route as PalettesExplorerIndexImport } from './../../routes/palettes-explorer/index'
-import { Route as PaletteEditorIndexImport } from './../../routes/palette-editor/index'
-import { Route as MyPalettesIndexImport } from './../../routes/my-palettes/index'
-import { Route as ImagePickerIndexImport } from './../../routes/image-picker/index'
-import { Route as HarmonyPaletteIndexImport } from './../../routes/harmony-palette/index'
-import { Route as ContrastCheckerIndexImport } from './../../routes/contrast-checker/index'
-import { Route as ContactIndexImport } from './../../routes/contact/index'
 import { Route as AdminIndexImport } from './../../routes/admin/index'
 import { Route as AdminPublicPalettesImport } from './../../routes/admin/public-palettes'
 import { Route as AuthSignUpIndexImport } from './../../routes/auth/sign-up/index'
 import { Route as AuthSignInIndexImport } from './../../routes/auth/sign-in/index'
 import { Route as AdminUsersIndexImport } from './../../routes/admin/users/index'
 import { Route as AdminPublicPalettesIndexImport } from './../../routes/admin/public-palettes/index'
+import { Route as PublicScalePaletteIndexImport } from './../../routes/_public/scale-palette/index'
+import { Route as PublicRandomPaletteIndexImport } from './../../routes/_public/random-palette/index'
+import { Route as PublicPalettesExplorerIndexImport } from './../../routes/_public/palettes-explorer/index'
+import { Route as PublicPaletteEditorIndexImport } from './../../routes/_public/palette-editor/index'
+import { Route as PublicMyPalettesIndexImport } from './../../routes/_public/my-palettes/index'
+import { Route as PublicImagePickerIndexImport } from './../../routes/_public/image-picker/index'
+import { Route as PublicHarmonyPaletteIndexImport } from './../../routes/_public/harmony-palette/index'
+import { Route as PublicContrastCheckerIndexImport } from './../../routes/_public/contrast-checker/index'
+import { Route as PublicContactIndexImport } from './../../routes/_public/contact/index'
 import { Route as AdminPublicPalettesGenerateIndexImport } from './../../routes/admin/public-palettes/generate/index'
 
 // Create/Update Routes
@@ -38,63 +39,14 @@ const AdminRoute = AdminImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const PublicRoute = PublicImport.update({
+  id: '/_public',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ScalePaletteIndexRoute = ScalePaletteIndexImport.update({
-  id: '/scale-palette/',
-  path: '/scale-palette/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const RandomPaletteIndexRoute = RandomPaletteIndexImport.update({
-  id: '/random-palette/',
-  path: '/random-palette/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PalettesExplorerIndexRoute = PalettesExplorerIndexImport.update({
-  id: '/palettes-explorer/',
-  path: '/palettes-explorer/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PaletteEditorIndexRoute = PaletteEditorIndexImport.update({
-  id: '/palette-editor/',
-  path: '/palette-editor/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const MyPalettesIndexRoute = MyPalettesIndexImport.update({
-  id: '/my-palettes/',
-  path: '/my-palettes/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ImagePickerIndexRoute = ImagePickerIndexImport.update({
-  id: '/image-picker/',
-  path: '/image-picker/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const HarmonyPaletteIndexRoute = HarmonyPaletteIndexImport.update({
-  id: '/harmony-palette/',
-  path: '/harmony-palette/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ContrastCheckerIndexRoute = ContrastCheckerIndexImport.update({
-  id: '/contrast-checker/',
-  path: '/contrast-checker/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ContactIndexRoute = ContactIndexImport.update({
-  id: '/contact/',
-  path: '/contact/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -134,6 +86,63 @@ const AdminPublicPalettesIndexRoute = AdminPublicPalettesIndexImport.update({
   getParentRoute: () => AdminPublicPalettesRoute,
 } as any)
 
+const PublicScalePaletteIndexRoute = PublicScalePaletteIndexImport.update({
+  id: '/scale-palette/',
+  path: '/scale-palette/',
+  getParentRoute: () => PublicRoute,
+} as any)
+
+const PublicRandomPaletteIndexRoute = PublicRandomPaletteIndexImport.update({
+  id: '/random-palette/',
+  path: '/random-palette/',
+  getParentRoute: () => PublicRoute,
+} as any)
+
+const PublicPalettesExplorerIndexRoute =
+  PublicPalettesExplorerIndexImport.update({
+    id: '/palettes-explorer/',
+    path: '/palettes-explorer/',
+    getParentRoute: () => PublicRoute,
+  } as any)
+
+const PublicPaletteEditorIndexRoute = PublicPaletteEditorIndexImport.update({
+  id: '/palette-editor/',
+  path: '/palette-editor/',
+  getParentRoute: () => PublicRoute,
+} as any)
+
+const PublicMyPalettesIndexRoute = PublicMyPalettesIndexImport.update({
+  id: '/my-palettes/',
+  path: '/my-palettes/',
+  getParentRoute: () => PublicRoute,
+} as any)
+
+const PublicImagePickerIndexRoute = PublicImagePickerIndexImport.update({
+  id: '/image-picker/',
+  path: '/image-picker/',
+  getParentRoute: () => PublicRoute,
+} as any)
+
+const PublicHarmonyPaletteIndexRoute = PublicHarmonyPaletteIndexImport.update({
+  id: '/harmony-palette/',
+  path: '/harmony-palette/',
+  getParentRoute: () => PublicRoute,
+} as any)
+
+const PublicContrastCheckerIndexRoute = PublicContrastCheckerIndexImport.update(
+  {
+    id: '/contrast-checker/',
+    path: '/contrast-checker/',
+    getParentRoute: () => PublicRoute,
+  } as any,
+)
+
+const PublicContactIndexRoute = PublicContactIndexImport.update({
+  id: '/contact/',
+  path: '/contact/',
+  getParentRoute: () => PublicRoute,
+} as any)
+
 const AdminPublicPalettesGenerateIndexRoute =
   AdminPublicPalettesGenerateIndexImport.update({
     id: '/generate/',
@@ -150,6 +159,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PublicImport
       parentRoute: typeof rootRoute
     }
     '/admin': {
@@ -173,68 +189,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexImport
       parentRoute: typeof AdminImport
     }
-    '/contact/': {
-      id: '/contact/'
+    '/_public/contact/': {
+      id: '/_public/contact/'
       path: '/contact'
       fullPath: '/contact'
-      preLoaderRoute: typeof ContactIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PublicContactIndexImport
+      parentRoute: typeof PublicImport
     }
-    '/contrast-checker/': {
-      id: '/contrast-checker/'
+    '/_public/contrast-checker/': {
+      id: '/_public/contrast-checker/'
       path: '/contrast-checker'
       fullPath: '/contrast-checker'
-      preLoaderRoute: typeof ContrastCheckerIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PublicContrastCheckerIndexImport
+      parentRoute: typeof PublicImport
     }
-    '/harmony-palette/': {
-      id: '/harmony-palette/'
+    '/_public/harmony-palette/': {
+      id: '/_public/harmony-palette/'
       path: '/harmony-palette'
       fullPath: '/harmony-palette'
-      preLoaderRoute: typeof HarmonyPaletteIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PublicHarmonyPaletteIndexImport
+      parentRoute: typeof PublicImport
     }
-    '/image-picker/': {
-      id: '/image-picker/'
+    '/_public/image-picker/': {
+      id: '/_public/image-picker/'
       path: '/image-picker'
       fullPath: '/image-picker'
-      preLoaderRoute: typeof ImagePickerIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PublicImagePickerIndexImport
+      parentRoute: typeof PublicImport
     }
-    '/my-palettes/': {
-      id: '/my-palettes/'
+    '/_public/my-palettes/': {
+      id: '/_public/my-palettes/'
       path: '/my-palettes'
       fullPath: '/my-palettes'
-      preLoaderRoute: typeof MyPalettesIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PublicMyPalettesIndexImport
+      parentRoute: typeof PublicImport
     }
-    '/palette-editor/': {
-      id: '/palette-editor/'
+    '/_public/palette-editor/': {
+      id: '/_public/palette-editor/'
       path: '/palette-editor'
       fullPath: '/palette-editor'
-      preLoaderRoute: typeof PaletteEditorIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PublicPaletteEditorIndexImport
+      parentRoute: typeof PublicImport
     }
-    '/palettes-explorer/': {
-      id: '/palettes-explorer/'
+    '/_public/palettes-explorer/': {
+      id: '/_public/palettes-explorer/'
       path: '/palettes-explorer'
       fullPath: '/palettes-explorer'
-      preLoaderRoute: typeof PalettesExplorerIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PublicPalettesExplorerIndexImport
+      parentRoute: typeof PublicImport
     }
-    '/random-palette/': {
-      id: '/random-palette/'
+    '/_public/random-palette/': {
+      id: '/_public/random-palette/'
       path: '/random-palette'
       fullPath: '/random-palette'
-      preLoaderRoute: typeof RandomPaletteIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PublicRandomPaletteIndexImport
+      parentRoute: typeof PublicImport
     }
-    '/scale-palette/': {
-      id: '/scale-palette/'
+    '/_public/scale-palette/': {
+      id: '/_public/scale-palette/'
       path: '/scale-palette'
       fullPath: '/scale-palette'
-      preLoaderRoute: typeof ScalePaletteIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PublicScalePaletteIndexImport
+      parentRoute: typeof PublicImport
     }
     '/admin/public-palettes/': {
       id: '/admin/public-palettes/'
@@ -276,6 +292,33 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface PublicRouteChildren {
+  PublicContactIndexRoute: typeof PublicContactIndexRoute
+  PublicContrastCheckerIndexRoute: typeof PublicContrastCheckerIndexRoute
+  PublicHarmonyPaletteIndexRoute: typeof PublicHarmonyPaletteIndexRoute
+  PublicImagePickerIndexRoute: typeof PublicImagePickerIndexRoute
+  PublicMyPalettesIndexRoute: typeof PublicMyPalettesIndexRoute
+  PublicPaletteEditorIndexRoute: typeof PublicPaletteEditorIndexRoute
+  PublicPalettesExplorerIndexRoute: typeof PublicPalettesExplorerIndexRoute
+  PublicRandomPaletteIndexRoute: typeof PublicRandomPaletteIndexRoute
+  PublicScalePaletteIndexRoute: typeof PublicScalePaletteIndexRoute
+}
+
+const PublicRouteChildren: PublicRouteChildren = {
+  PublicContactIndexRoute: PublicContactIndexRoute,
+  PublicContrastCheckerIndexRoute: PublicContrastCheckerIndexRoute,
+  PublicHarmonyPaletteIndexRoute: PublicHarmonyPaletteIndexRoute,
+  PublicImagePickerIndexRoute: PublicImagePickerIndexRoute,
+  PublicMyPalettesIndexRoute: PublicMyPalettesIndexRoute,
+  PublicPaletteEditorIndexRoute: PublicPaletteEditorIndexRoute,
+  PublicPalettesExplorerIndexRoute: PublicPalettesExplorerIndexRoute,
+  PublicRandomPaletteIndexRoute: PublicRandomPaletteIndexRoute,
+  PublicScalePaletteIndexRoute: PublicScalePaletteIndexRoute,
+}
+
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
+
 interface AdminPublicPalettesRouteChildren {
   AdminPublicPalettesIndexRoute: typeof AdminPublicPalettesIndexRoute
   AdminPublicPalettesGenerateIndexRoute: typeof AdminPublicPalettesGenerateIndexRoute
@@ -305,18 +348,19 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '': typeof PublicRouteWithChildren
   '/admin': typeof AdminRouteWithChildren
   '/admin/public-palettes': typeof AdminPublicPalettesRouteWithChildren
   '/admin/': typeof AdminIndexRoute
-  '/contact': typeof ContactIndexRoute
-  '/contrast-checker': typeof ContrastCheckerIndexRoute
-  '/harmony-palette': typeof HarmonyPaletteIndexRoute
-  '/image-picker': typeof ImagePickerIndexRoute
-  '/my-palettes': typeof MyPalettesIndexRoute
-  '/palette-editor': typeof PaletteEditorIndexRoute
-  '/palettes-explorer': typeof PalettesExplorerIndexRoute
-  '/random-palette': typeof RandomPaletteIndexRoute
-  '/scale-palette': typeof ScalePaletteIndexRoute
+  '/contact': typeof PublicContactIndexRoute
+  '/contrast-checker': typeof PublicContrastCheckerIndexRoute
+  '/harmony-palette': typeof PublicHarmonyPaletteIndexRoute
+  '/image-picker': typeof PublicImagePickerIndexRoute
+  '/my-palettes': typeof PublicMyPalettesIndexRoute
+  '/palette-editor': typeof PublicPaletteEditorIndexRoute
+  '/palettes-explorer': typeof PublicPalettesExplorerIndexRoute
+  '/random-palette': typeof PublicRandomPaletteIndexRoute
+  '/scale-palette': typeof PublicScalePaletteIndexRoute
   '/admin/public-palettes/': typeof AdminPublicPalettesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
   '/auth/sign-in': typeof AuthSignInIndexRoute
@@ -326,16 +370,17 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '': typeof PublicRouteWithChildren
   '/admin': typeof AdminIndexRoute
-  '/contact': typeof ContactIndexRoute
-  '/contrast-checker': typeof ContrastCheckerIndexRoute
-  '/harmony-palette': typeof HarmonyPaletteIndexRoute
-  '/image-picker': typeof ImagePickerIndexRoute
-  '/my-palettes': typeof MyPalettesIndexRoute
-  '/palette-editor': typeof PaletteEditorIndexRoute
-  '/palettes-explorer': typeof PalettesExplorerIndexRoute
-  '/random-palette': typeof RandomPaletteIndexRoute
-  '/scale-palette': typeof ScalePaletteIndexRoute
+  '/contact': typeof PublicContactIndexRoute
+  '/contrast-checker': typeof PublicContrastCheckerIndexRoute
+  '/harmony-palette': typeof PublicHarmonyPaletteIndexRoute
+  '/image-picker': typeof PublicImagePickerIndexRoute
+  '/my-palettes': typeof PublicMyPalettesIndexRoute
+  '/palette-editor': typeof PublicPaletteEditorIndexRoute
+  '/palettes-explorer': typeof PublicPalettesExplorerIndexRoute
+  '/random-palette': typeof PublicRandomPaletteIndexRoute
+  '/scale-palette': typeof PublicScalePaletteIndexRoute
   '/admin/public-palettes': typeof AdminPublicPalettesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
   '/auth/sign-in': typeof AuthSignInIndexRoute
@@ -346,18 +391,19 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_public': typeof PublicRouteWithChildren
   '/admin': typeof AdminRouteWithChildren
   '/admin/public-palettes': typeof AdminPublicPalettesRouteWithChildren
   '/admin/': typeof AdminIndexRoute
-  '/contact/': typeof ContactIndexRoute
-  '/contrast-checker/': typeof ContrastCheckerIndexRoute
-  '/harmony-palette/': typeof HarmonyPaletteIndexRoute
-  '/image-picker/': typeof ImagePickerIndexRoute
-  '/my-palettes/': typeof MyPalettesIndexRoute
-  '/palette-editor/': typeof PaletteEditorIndexRoute
-  '/palettes-explorer/': typeof PalettesExplorerIndexRoute
-  '/random-palette/': typeof RandomPaletteIndexRoute
-  '/scale-palette/': typeof ScalePaletteIndexRoute
+  '/_public/contact/': typeof PublicContactIndexRoute
+  '/_public/contrast-checker/': typeof PublicContrastCheckerIndexRoute
+  '/_public/harmony-palette/': typeof PublicHarmonyPaletteIndexRoute
+  '/_public/image-picker/': typeof PublicImagePickerIndexRoute
+  '/_public/my-palettes/': typeof PublicMyPalettesIndexRoute
+  '/_public/palette-editor/': typeof PublicPaletteEditorIndexRoute
+  '/_public/palettes-explorer/': typeof PublicPalettesExplorerIndexRoute
+  '/_public/random-palette/': typeof PublicRandomPaletteIndexRoute
+  '/_public/scale-palette/': typeof PublicScalePaletteIndexRoute
   '/admin/public-palettes/': typeof AdminPublicPalettesIndexRoute
   '/admin/users/': typeof AdminUsersIndexRoute
   '/auth/sign-in/': typeof AuthSignInIndexRoute
@@ -369,6 +415,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | ''
     | '/admin'
     | '/admin/public-palettes'
     | '/admin/'
@@ -389,6 +436,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | ''
     | '/admin'
     | '/contact'
     | '/contrast-checker'
@@ -407,18 +455,19 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_public'
     | '/admin'
     | '/admin/public-palettes'
     | '/admin/'
-    | '/contact/'
-    | '/contrast-checker/'
-    | '/harmony-palette/'
-    | '/image-picker/'
-    | '/my-palettes/'
-    | '/palette-editor/'
-    | '/palettes-explorer/'
-    | '/random-palette/'
-    | '/scale-palette/'
+    | '/_public/contact/'
+    | '/_public/contrast-checker/'
+    | '/_public/harmony-palette/'
+    | '/_public/image-picker/'
+    | '/_public/my-palettes/'
+    | '/_public/palette-editor/'
+    | '/_public/palettes-explorer/'
+    | '/_public/random-palette/'
+    | '/_public/scale-palette/'
     | '/admin/public-palettes/'
     | '/admin/users/'
     | '/auth/sign-in/'
@@ -429,32 +478,16 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PublicRoute: typeof PublicRouteWithChildren
   AdminRoute: typeof AdminRouteWithChildren
-  ContactIndexRoute: typeof ContactIndexRoute
-  ContrastCheckerIndexRoute: typeof ContrastCheckerIndexRoute
-  HarmonyPaletteIndexRoute: typeof HarmonyPaletteIndexRoute
-  ImagePickerIndexRoute: typeof ImagePickerIndexRoute
-  MyPalettesIndexRoute: typeof MyPalettesIndexRoute
-  PaletteEditorIndexRoute: typeof PaletteEditorIndexRoute
-  PalettesExplorerIndexRoute: typeof PalettesExplorerIndexRoute
-  RandomPaletteIndexRoute: typeof RandomPaletteIndexRoute
-  ScalePaletteIndexRoute: typeof ScalePaletteIndexRoute
   AuthSignInIndexRoute: typeof AuthSignInIndexRoute
   AuthSignUpIndexRoute: typeof AuthSignUpIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PublicRoute: PublicRouteWithChildren,
   AdminRoute: AdminRouteWithChildren,
-  ContactIndexRoute: ContactIndexRoute,
-  ContrastCheckerIndexRoute: ContrastCheckerIndexRoute,
-  HarmonyPaletteIndexRoute: HarmonyPaletteIndexRoute,
-  ImagePickerIndexRoute: ImagePickerIndexRoute,
-  MyPalettesIndexRoute: MyPalettesIndexRoute,
-  PaletteEditorIndexRoute: PaletteEditorIndexRoute,
-  PalettesExplorerIndexRoute: PalettesExplorerIndexRoute,
-  RandomPaletteIndexRoute: RandomPaletteIndexRoute,
-  ScalePaletteIndexRoute: ScalePaletteIndexRoute,
   AuthSignInIndexRoute: AuthSignInIndexRoute,
   AuthSignUpIndexRoute: AuthSignUpIndexRoute,
 }
@@ -470,22 +503,28 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_public",
         "/admin",
-        "/contact/",
-        "/contrast-checker/",
-        "/harmony-palette/",
-        "/image-picker/",
-        "/my-palettes/",
-        "/palette-editor/",
-        "/palettes-explorer/",
-        "/random-palette/",
-        "/scale-palette/",
         "/auth/sign-in/",
         "/auth/sign-up/"
       ]
     },
     "/": {
       "filePath": "index.ts"
+    },
+    "/_public": {
+      "filePath": "_public.ts",
+      "children": [
+        "/_public/contact/",
+        "/_public/contrast-checker/",
+        "/_public/harmony-palette/",
+        "/_public/image-picker/",
+        "/_public/my-palettes/",
+        "/_public/palette-editor/",
+        "/_public/palettes-explorer/",
+        "/_public/random-palette/",
+        "/_public/scale-palette/"
+      ]
     },
     "/admin": {
       "filePath": "admin.tsx",
@@ -507,32 +546,41 @@ export const routeTree = rootRoute
       "filePath": "admin/index.ts",
       "parent": "/admin"
     },
-    "/contact/": {
-      "filePath": "contact/index.ts"
+    "/_public/contact/": {
+      "filePath": "_public/contact/index.ts",
+      "parent": "/_public"
     },
-    "/contrast-checker/": {
-      "filePath": "contrast-checker/index.ts"
+    "/_public/contrast-checker/": {
+      "filePath": "_public/contrast-checker/index.ts",
+      "parent": "/_public"
     },
-    "/harmony-palette/": {
-      "filePath": "harmony-palette/index.ts"
+    "/_public/harmony-palette/": {
+      "filePath": "_public/harmony-palette/index.ts",
+      "parent": "/_public"
     },
-    "/image-picker/": {
-      "filePath": "image-picker/index.ts"
+    "/_public/image-picker/": {
+      "filePath": "_public/image-picker/index.ts",
+      "parent": "/_public"
     },
-    "/my-palettes/": {
-      "filePath": "my-palettes/index.tsx"
+    "/_public/my-palettes/": {
+      "filePath": "_public/my-palettes/index.tsx",
+      "parent": "/_public"
     },
-    "/palette-editor/": {
-      "filePath": "palette-editor/index.tsx"
+    "/_public/palette-editor/": {
+      "filePath": "_public/palette-editor/index.tsx",
+      "parent": "/_public"
     },
-    "/palettes-explorer/": {
-      "filePath": "palettes-explorer/index.tsx"
+    "/_public/palettes-explorer/": {
+      "filePath": "_public/palettes-explorer/index.tsx",
+      "parent": "/_public"
     },
-    "/random-palette/": {
-      "filePath": "random-palette/index.ts"
+    "/_public/random-palette/": {
+      "filePath": "_public/random-palette/index.ts",
+      "parent": "/_public"
     },
-    "/scale-palette/": {
-      "filePath": "scale-palette/index.ts"
+    "/_public/scale-palette/": {
+      "filePath": "_public/scale-palette/index.ts",
+      "parent": "/_public"
     },
     "/admin/public-palettes/": {
       "filePath": "admin/public-palettes/index.tsx",
