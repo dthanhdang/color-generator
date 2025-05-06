@@ -11,10 +11,7 @@
           "database_name": "ucolorr-production",
           "database_id" : "3455b240-555a-4379-95b4-8d4afe2091ea"
         }],
-        "services": [{
-          "binding": "UCOLORR",
-          "service": "ucolorr"
-        }],        
+        "services": [],
         "vars": {
           "CONTACT_SENDER_EMAIL": "Ucolorr <contact@ucolorr.app>",
           "OTP_SENDER_EMAIL": "Ucolorr <donotreply@ucolorr.app>"
@@ -27,10 +24,7 @@
           "database_id" : "5646c5c8-e8ec-40d8-8343-8257e7d3070a",
           "preview_database_id": "3455b240-555a-4379-95b4-8d4afe2091ea"
         }],
-        "services": [{
-          "binding": "UCOLORR",
-          "service": "ucolorr"
-        }],
+        "services": [],
         "vars": {
           "CONTACT_SENDER_EMAIL": "Ucolorr <contact@ucolorr.app>",
           "OTP_SENDER_EMAIL": "Ucolorr <donotreply@ucolorr.app>"
