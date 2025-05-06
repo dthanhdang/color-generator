@@ -23,6 +23,7 @@ export default defineWorkersProject(async () => {
           main: "./src/server/index.ts",
           miniflare: {
             bindings: {
+              CF_PAGES_URL: "http://localhost:5173",
               JWT_SECRET: "xxx",
               RESEND_API_KEY: "xxx",
               TEST_MIGRATIONS: migrations,

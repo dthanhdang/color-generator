@@ -29,7 +29,7 @@ export default defineConfig(({ mode }): UserConfig => {
       generateDotenv({
         outputFile: ".dev.vars",
         prefix: "UCOLORR_DEVELOPMENT_",
-        requiredKeys: ["JWT_SECRET", "RESEND_API_KEY"],
+        requiredKeys: ["CF_PAGES_URL", "JWT_SECRET", "RESEND_API_KEY"],
       }),
     ],
     // Cf https://github.com/facebook/react/issues/31827
