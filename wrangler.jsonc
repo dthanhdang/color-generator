@@ -15,13 +15,17 @@
         "services": [{
           "binding": "UCOLORR",
           "service": "ucolorr"
-        }], 
+        }],        
         "vars": {
           "CONTACT_SENDER_EMAIL": "Ucolorr <contact@ucolorr.app>",
           "OTP_SENDER_EMAIL": "Ucolorr <donotreply@ucolorr.app>"
         }
       },
       "production": {
+        "services": [{
+          "binding": "UCOLORR",
+          "service": "ucolorr"
+        }],
         "vars": {
           "CONTACT_SENDER_EMAIL": "Ucolorr <contact@ucolorr.app>",
           "OTP_SENDER_EMAIL": "Ucolorr <donotreply@ucolorr.app>"
