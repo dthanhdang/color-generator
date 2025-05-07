@@ -102,7 +102,9 @@ export function useDndHandlers({
 
   return {
     draggedSwatchColor:
-      draggedIndex === undefined ? undefined : swatches[draggedIndex].color,
+      draggedIndex === undefined || draggedIndex >= swatches.length
+        ? undefined
+        : swatches[draggedIndex].color,
     onMouseLeave,
     onMouseDown,
     onMouseMove: onMouseMove,
