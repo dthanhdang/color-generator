@@ -21,7 +21,7 @@ export function ErrorPage({ error }: ErrorComponentProps): JSX.Element {
     <Stack className="mt-20 flex flex-col items-center">
       {logo}
 
-      <div className="flex flex-col">
+      <div className="flex flex-col p-5 gap-5">
         <p>{errorMessage}</p>
         <p className="mb-5">
           <span>Meanwhile, why not </span>

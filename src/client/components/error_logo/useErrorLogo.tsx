@@ -43,7 +43,7 @@ export function useErrorLogo({
     logo: <ErrorLogo colors={colors} message={errorMessage} />,
     regenerateButton: (
       <button
-        className="underline text-[var(--primary-color)] decoration-dotted font-bold"
+        className="underline text-[var(--primary-color)] decoration-dotted font-bold cursor-pointer"
         onClick={handleRegeneratePalette}
       >
         {buttonLabel}

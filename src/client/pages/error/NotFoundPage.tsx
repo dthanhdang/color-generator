@@ -14,7 +14,7 @@ export function NotFoundPage(): JSX.Element {
     <Stack className="mt-20 flex flex-col items-center justify-around">
       {logo}
 
-      <div className="flex flex-col">
+      <div className="flex flex-col p-5 gap-5">
         <p className="mb-5">We couldn't find what you're looking for :'(</p>
 
         <p>
