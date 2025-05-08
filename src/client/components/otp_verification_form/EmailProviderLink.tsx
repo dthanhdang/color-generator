@@ -1,10 +1,10 @@
 import { Anchor } from "@mantine/core"
 import { clsx } from "clsx"
-import { IconExternalLink } from "@tabler/icons-react"
 
 import { Gmail } from "./Gmail.jsx"
 import { Outlook } from "./Outlook.jsx"
 import { ProtonMail } from "./ProtonMail.jsx"
+import { ExternalLink } from "lucide-react"
 
 type EmailProviderLinkProps = {
   className?: string
@@ -51,7 +51,7 @@ export function EmailProviderLink({
         >
           <span className="my-auto w-max">Open {providerLabel}</span>
 
-          <IconExternalLink className="my-auto" />
+          <ExternalLink className="my-auto" />
         </Anchor>
       </div>
     )
