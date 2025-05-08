@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import { ArrowRight, Palette, PaintBucket, Heart, Sparkles } from "lucide-react"
 
 import { HeroSection } from "./HeroSection"
-import { Header } from "./Header"
+//import { Header } from "./Header"
 import { FeatureSection } from "./FeatureSection"
 import { CTAButton } from "./CTAButton"
 import { Footer } from "./Footer"
@@ -45,7 +45,7 @@ export const LandingPage = () => {
   return (
     <div className="min-h-screen overflow-hidden">
       <SeoTags />
-      <Header />
+      {/*<Header />*/}
       <HeroSection />
 
       <FeatureSection />
@@ -147,7 +147,7 @@ export const LandingPage = () => {
               </p>
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <CTAButton
-                  href="#"
+                  href="/scale-palette"
                   variant="primary"
                   className="!bg-white !hover:bg-gray-100 !text-[#503AF7]"
                 >
@@ -263,7 +263,7 @@ export const LandingPage = () => {
             palettes with Ucolorr.
           </p>
           <CTAButton
-            href="#"
+            href="/random-palette"
             variant="primary"
             className="bg-white text-black hover:bg-gray-100"
           >

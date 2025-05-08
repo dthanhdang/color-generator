@@ -22,7 +22,7 @@ function getColorScale({
   count,
 }: GetColorScaleProps): ColorPaletteItem[] {
   const lightColor = chroma(baseColor).brighten(2)
-  const darkColor = chroma(baseColor).darken(1)
+  const darkColor = chroma(baseColor).darken(1.5)
   return (
     chroma
       //.scale(["white", baseColor])
@@ -79,9 +79,9 @@ export function ScalePaletteGenerator() {
   }
 
   const handleGenerateRandomScalePalette = () => {
-    const RandomColor = generateRandomColor()
-    setColor(RandomColor)
-    const newPalette = getColorScale({ baseColor: RandomColor, count: 11 })
+    const randomColor = generateRandomColor()
+    setColor(randomColor)
+    const newPalette = getColorScale({ baseColor: randomColor, count: 11 })
     setPalette(newPalette)
 
     if (newPalette.length > 5) {

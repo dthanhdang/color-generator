@@ -3,13 +3,13 @@ import { PreviewImageLanding } from "./PreviewImageLanding"
 
 export const HeroSection = () => {
   return (
-    <section className="pt-32 pb-20 px-6 md:px-12 relative overflow-hidden">
+    <section className="min-h-screen w-full relative overflow-hidden flex flex-col items-center justify-center">
       <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-white z-0"></div>
 
       {/* Animated background elements */}
-      <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-gradient-to-r from-indigo-300/20 to-violet-300/20 blur-3xl animate-float"></div>
+      <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-gradient-to-r from-cyan-300/20 to-blue-300/20 blur-3xl animate-float z-0"></div>
       <div
-        className="absolute bottom-20 left-[5%] w-96 h-96 rounded-full bg-gradient-to-r from-purple-300/20 to-pink-300/20 blur-3xl animate-float"
+        className="absolute bottom-20 left-[5%] w-96 h-96 rounded-full bg-gradient-to-r from-violet-400/30 to-fuchsia-400/30 blur-3xl animate-float z-0"
         style={{ animationDelay: "2s" }}
       ></div>
 
@@ -38,8 +38,8 @@ export const HeroSection = () => {
             className="text-xl text-gray-600 mb-8 animate-fade-in"
             style={{ animationDelay: "0.4s" }}
           >
-            UColorr is a FREE color palette generator that help you design with
-            confidence. You can generate perfect scales, build hamonious
+            Ucolorr is a FREE color palette generator that help you design with
+            confidence. You can generate perfect scales, build harmonious
             palettes, get beautiful random palettes, extract colors from images
             and much more{" "}
           </p>

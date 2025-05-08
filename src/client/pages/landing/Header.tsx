@@ -25,10 +25,10 @@ export const Header = () => {
   return (
     <header
       className={cn(
-        "z-50 py-4 px-6 md:px-12 transition-all duration-300",
+        "z-50 py-2 px-4 md:px-8 transition-all duration-300",
         scrolled
-          ? "fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md shadow-sm"
-          : "absolute top-0 left-0 right-0 bg-transparent"
+          ? "bg-white/80 backdrop-blur-md shadow-sm"
+          : "py-4 px-6 md:px-12 bg-transparent"
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -79,9 +79,9 @@ export const Header = () => {
           </Unauthenticated>
           <Unauthenticated>
             <a
-              href="#"
-              className="text-sm font-medium text-white px-4 py-2 rounded-full transition-all hover:bg-opacity-90"
-              style={{ backgroundColor: "oklch(0.511 0.262 276.966)" }}
+              href="/harmony-palette"
+              className="bg-[var(--primary-color)] text-sm font-medium text-white px-4 py-2 rounded-full transition-all hover:bg-opacity-90"
+              //style={{ backgroundColor: "oklch(0.511 0.262 276.966)" }}
             >
               Start It Free
             </a>

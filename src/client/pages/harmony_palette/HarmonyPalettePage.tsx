@@ -16,6 +16,7 @@ import { PaletteVisualizer } from "#components/PaletteVisualizer.tsx"
 import type { ColorMode } from "#client/types"
 import { ColorForm } from "#components/color_form/ColorForm.tsx"
 import { PaletteGeneratorButtons } from "#components/palette_generator_buttons/PaletteGeneratorButtons.tsx"
+import { getRandomBaseColor } from "#components/getRandomBaseColor.ts"
 
 function getHarmonyPalette(
   baseColor: Color,
@@ -47,8 +48,10 @@ function getCountForHarmonyType(harmonyType: HarmonyType): number {
   return harmonyCounts[harmonyType] || 5
 }
 
-function generateRandomColor(): Color {
+{
+  /*function generateRandomColor(): Color {
   return chroma.random()
+}*/
 }
 
 export function HarmonyPalette() {
@@ -84,7 +87,7 @@ export function HarmonyPalette() {
   }
 
   const handleRandomHarmonyPalette = () => {
-    const randomColor = generateRandomColor()
+    const randomColor = getRandomBaseColor()
     setColor(randomColor)
     setPalette(
       getHarmonyPalette(

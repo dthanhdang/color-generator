@@ -75,6 +75,18 @@ export const Footer = () => {
                   Random Palette Generator
                 </Link>
               </li>
+
+              <li>
+                <Link
+                  to="/contrast-checker"
+                  className="text-gray-600 hover:text-[#503AF7] transition-colors duration-300"
+                  activeProps={{
+                    className: "text-[#503AF7] font-medium",
+                  }}
+                >
+                  Color Contrast Checker
+                </Link>
+              </li>
             </ul>
           </div>
 

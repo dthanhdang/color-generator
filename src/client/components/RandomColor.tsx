@@ -1,14 +1,12 @@
 import type { JSX } from "react"
 import { useCallback, useEffect } from "react"
 import { Group } from "@mantine/core"
-//import { generateRandomColor } from "../utils/colorExtraction"
-//import { ColorDisplay } from "./ColorDisplay"
-//import { ColorPaletteItem } from "../ColorPalette"
 
 import { type Color } from "chroma-js"
-import chroma from "chroma-js"
+//import chroma from "chroma-js"
 import type { ColorPaletteItem } from "./ColorPalette.tsx"
 import { PaletteGeneratorButtons } from "./palette_generator_buttons/PaletteGeneratorButtons.tsx"
+import { getRandomBaseColor } from "./getRandomBaseColor.ts"
 
 type RandomColorProps = {
   onGeneratePalette: (
@@ -26,7 +24,7 @@ export function RandomColor({
   //const [palette, setPalette] = useState<ColorPaletteItem[]>([])
 
   const handleClick = useCallback(() => {
-    const baseColor = chroma.random()
+    const baseColor = getRandomBaseColor()
     onGeneratePalette(baseColor, "split-complementary", 5)
   }, [onGeneratePalette])
 
