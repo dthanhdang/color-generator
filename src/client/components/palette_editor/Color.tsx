@@ -72,7 +72,7 @@ export function Color({
         />
       </UnstyledButton>
 
-      <div className="flex flex-row justify-center my-auto gap-x-2">
+      <div className="flex flex-row md:max-lg:flex-col justify-center md:max-lg:items-center my-auto gap-x-2">
         <ColorIcon
           tooltip="Duplicate"
           onClick={handleDuplicate}

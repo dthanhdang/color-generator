@@ -48,12 +48,6 @@ function getCountForHarmonyType(harmonyType: HarmonyType): number {
   return harmonyCounts[harmonyType] || 5
 }
 
-{
-  /*function generateRandomColor(): Color {
-  return chroma.random()
-}*/
-}
-
 export function HarmonyPalette() {
   const [color, setColor] = useState<Color>(chroma("#b4f2ce"))
   const [colorMode, setColorMode] = useState<ColorMode>("hex")
@@ -99,7 +93,7 @@ export function HarmonyPalette() {
   }
 
   return (
-    <PageStyle title="Your *Harmony Palette* Generator">
+    <PageStyle>
       <Group justify="space-between" mb="md">
         <Select
           data={[

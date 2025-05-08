@@ -2,9 +2,9 @@ import {
   deleteUserFromLocalStorage,
   getUserFromLocalStorage,
 } from "#client/auth"
+import { fromPublicPaletteDto } from "#client/rpc/conversion"
 import { getCurrentUser } from "#client/rpc/current_user"
 import { RegisteredUser } from "#client/types"
-import { parseChromaPalette } from "#utils/parseChromaPalette.ts"
 import type { UseSuspenseQueryOptions } from "@tanstack/react-query"
 import { redirect } from "@tanstack/react-router"
 
@@ -19,11 +19,8 @@ export const getLocalStorageCurrentUserQuery: UseSuspenseQueryOptions<
           if (user) {
             return {
               ...user,
-              favoritePalettes: user.favoritePalettes.map(
-                ({ colors, ...palette }) => ({
-                  ...palette,
-                  colors: parseChromaPalette(colors),
-                })
+              favoritePalettes: user.favoritePalettes.map((palette) =>
+                fromPublicPaletteDto(palette)
               ),
             }
           } else {

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"vite --config vite.config.server.ts\" \"vite --config vite.config.client.ts\"",
     "generate_code": "pnpm wrangler:apply_migrations && pnpm kysely:generate_types --camel-case && pnpm wrangler:generate_types && pnpm tsr:generate_routes",
-    "kysely:generate_types": "pnpm kysely-codegen --camel-case --out-file ./src/server/_generated/kysely/index.ts --url .wrangler/state/v3/d1/miniflare-D1DatabaseObject/c4727c5fa707f340d2e04fa32c33e154a00b6d5548b92dae93b7623dacc25cdb.sqlite",
+    "kysely:generate_types": "pnpm kysely-codegen --camel-case --out-file ./src/server/_generated/kysely/index.ts --url .wrangler/state/v3/d1/miniflare-D1DatabaseObject/2bd80eff659ec3c787b6cb30f268a9a3c6e5a17b02901badefd8fb5dfa661fbf.sqlite",
     "lint": "eslint .",
     "lint:check": "eslint .",
     "prettier:check": "prettier --check .",
@@ -23,9 +23,9 @@
     "vite:preview": "vite preview",
     "vitest:server:run": "vitest run --config=vitest.config.server.ts --mode development",
     "vitest:server:watch": "vitest watch --config=vitest.config.server.ts --mode development",
-    "wrangler:apply_migrations": "pnpm wrangler d1 migrations apply ucolorr",
-    "wrangler:create_migration": "pnpm wrangler d1 migrations create ucolorr",
-    "wrangler:execute_sql": "wrangler d1 execute ucolorr --command ",
+    "wrangler:apply_migrations": "pnpm wrangler d1 migrations apply ucolorr-production",
+    "wrangler:create_migration": "pnpm wrangler d1 migrations create ucolorr-production",
+    "wrangler:execute_sql": "wrangler d1 execute ucolorr-production --command ",
     "wrangler:generate_types": "pnpm wrangler types && mkdir -p ./src/server/_generated/wrangler && mv worker-configuration.d.ts ./src/server/_generated/wrangler",
     "wrangler:preview": "wrangler pages dev",
     "wrangler:reset_db": "pnpm wrangler:execute_sql \"delete from d1_migrations\" && pnpm wrangler:apply_migrations && pnpm kysely:generate_types"
@@ -109,7 +109,7 @@
     "vite": "^6.1.0",
     "vitest": "^3.0.7",
     "vitest-matchmedia-mock": "^2.0.1",
-    "wrangler": "^4.12.0"
+    "wrangler": "^4.14.1"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -137,6 +137,7 @@
     "#server/schemas": "./src/server/schemas/index.ts",
     "#server/test/*": "./src/server/test/*/index.ts",
     "#server/types": "./src/server/types/index.ts",
+    "#server/utils/*": "./src/server/utils/*/index.ts",
     "#server/types/database": "./src/server/_generated/kysely/index.ts"
   }
 }

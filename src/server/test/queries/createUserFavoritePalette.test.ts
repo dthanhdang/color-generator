@@ -14,6 +14,7 @@ import type {
   UserFavoritePalette,
 } from "#server/types/database"
 import { okAsync, ResultAsync } from "neverthrow"
+import { toIsoDate } from "#server/utils/date"
 
 function createPalette(
   palette: Omit<Insertable<PublicPalette>, "id">
@@ -25,13 +26,17 @@ function createPalette(
   },
   "internal_server_error" | "user_already_exists"
 > {
+  const date = toIsoDate(new Date())
+
   return createUser({
     db: env.DB,
     user: {
       email: "test@test.com",
       firstName: "Test",
       lastName: "Test",
+      lastSignInDate: date,
       role: "registered_user",
+      signUpDate: date,
     },
   }).andThen((user) =>
     createPublicPalette({
@@ -49,11 +54,13 @@ function createPalette(
 }
 
 describe("createUserFavoritePublicPalette", () => {
+  const date = toIsoDate(new Date())
+
   it("Successfully prevents duplicate favorite palette creation", async ({
     expect,
   }) => {
     const { favoritePalette, palette, user } = await unsafeUnwrap(
-      createPalette({ colors: "#abcdef", likes: 0 })
+      createPalette({ colors: "#abcdef", createdAt: date, likes: 0 })
     )
 
     expect(favoritePalette.paletteId).toEqual(palette.id)
@@ -72,7 +79,7 @@ describe("createUserFavoritePublicPalette", () => {
   describe("createUserFavoritePublicPalette", () => {
     it("Correctly lists favorite palettes", async ({ expect }) => {
       const { palette, user } = await unsafeUnwrap(
-        createPalette({ colors: "#abcdef", likes: 0 })
+        createPalette({ colors: "#abcdef", createdAt: date, likes: 0 })
       )
 
       const favoritePalettes = await unsafeUnwrap(

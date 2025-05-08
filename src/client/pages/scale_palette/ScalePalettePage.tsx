@@ -90,7 +90,7 @@ export function ScalePaletteGenerator() {
   }
 
   return (
-    <PageStyle title="Your *Scale Palette* Generator">
+    <PageStyle>
       <Group justify="space-between" mb="md">
         <Select
           data={[

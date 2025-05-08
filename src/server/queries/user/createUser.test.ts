@@ -9,19 +9,24 @@ import { describe, it } from "vitest"
 import { createUser } from "./createUser.js"
 import { getUserByEmailAndRole } from "./getUserByEmailAndRole.js"
 import { getUserById } from "./getUserById.js"
+import { toIsoDate } from "#server/utils/date"
 
 const identity = {
   firstName: "John",
   lastName: "Doe",
 }
 
+const date = toIsoDate(new Date())
+const timestamps = { lastSignInDate: date, signUpDate: date }
+
 describe("create user", () => {
   it("handles duplicate emails", async ({ expect }) => {
     const email = generateTestSpecificEmail(expect)
+
     await unsafeUnwrap(
       createUser({
         db: env.DB,
-        user: { ...identity, email, role: "registered_user" },
+        user: { ...identity, ...timestamps, email, role: "registered_user" },
       })
     )
 
@@ -29,7 +34,7 @@ describe("create user", () => {
       await unsafeUnwrapErr(
         createUser({
           db: env.DB,
-          user: { ...identity, email, role: "registered_user" },
+          user: { ...identity, ...timestamps, email, role: "registered_user" },
         })
       )
     ).toEqual("user_already_exists")
@@ -37,7 +42,7 @@ describe("create user", () => {
     await unsafeUnwrap(
       createUser({
         db: env.DB,
-        user: { ...identity, email, role: "administrator" },
+        user: { ...identity, ...timestamps, email, role: "administrator" },
       })
     )
   })
@@ -47,7 +52,7 @@ describe("create user", () => {
     await unsafeUnwrap(
       createUser({
         db: env.DB,
-        user: { ...identity, email, role: "registered_user" },
+        user: { ...identity, ...timestamps, email, role: "registered_user" },
       })
     )
 

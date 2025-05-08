@@ -4,7 +4,6 @@ import {
   idTokenSchema,
   registeredUserRoleSchema,
   userRoleSchema,
-  userSchema,
   privatePaletteSchema,
   publicPaletteSchema,
 } from "#server/schemas"
@@ -36,4 +35,18 @@ export type PrivatePalette = v.InferOutput<typeof privatePaletteSchema>
 
 export type PublicPalette = v.InferOutput<typeof publicPaletteSchema>
 
-export type User = v.InferOutput<typeof userSchema>
+export type UserSummary<Role extends UserRole = UserRole> = {
+  email: string
+  id: number
+  identity: {
+    firstName: string
+    lastName: string
+  }
+  lastSignInDate: string
+  role: Role
+  signUpDate: string
+}
+
+export type HandlerResendApiKeyProps = {
+  resendApiKey: string
+}

@@ -15,6 +15,7 @@ import type {
 } from "#server/types/database"
 import { okAsync, ResultAsync } from "neverthrow"
 import { createTestUser } from "./createTestUser.ts"
+import { toIsoDate } from "#server/utils/date"
 
 function createPalette(
   user: Selectable<User>,
@@ -38,14 +39,16 @@ function createPalette(
 }
 
 describe("deleteUserFavoritePalette", () => {
+  const date = toIsoDate(new Date())
+
   it("Successfully deletes favorite palette", async ({ expect }) => {
     const user = await unsafeUnwrap(createTestUser(expect))
 
     const { favoritePalette: deletedFavoritePalette } = await unsafeUnwrap(
-      createPalette(user, { colors: "#123456", likes: 0 })
+      createPalette(user, { colors: "#123456", createdAt: date, likes: 0 })
     )
     const { palette: remainingPalette } = await unsafeUnwrap(
-      createPalette(user, { colors: "#abcdef", likes: 0 })
+      createPalette(user, { colors: "#abcdef", createdAt: date, likes: 0 })
     )
 
     await expect(

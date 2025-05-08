@@ -4,29 +4,46 @@
     "pages_build_output_dir": "./dist",
     "compatibility_flags": ["nodejs_compat"],
     "compatibility_date": "2024-09-23",
+    "env": {
+      "preview": {
+        "d1_databases": [{
+          "binding": "DB",
+          "database_name": "ucolorr-production",
+          "database_id" : "3455b240-555a-4379-95b4-8d4afe2091ea"
+        }],
+        "services": [],
+        "vars": {
+          "CONTACT_SENDER_EMAIL": "Ucolorr <contact@ucolorr.app>",
+          "OTP_SENDER_EMAIL": "Ucolorr <donotreply@ucolorr.app>"
+        }
+      },
+      "production": {
+        "d1_databases": [{
+          "binding": "DB",
+          "database_name": "ucolorr-production",
+          "database_id" : "5646c5c8-e8ec-40d8-8343-8257e7d3070a",
+          "preview_database_id": "3455b240-555a-4379-95b4-8d4afe2091ea"
+        }],
+        "services": [],
+        "vars": {
+          "CONTACT_SENDER_EMAIL": "Ucolorr <contact@ucolorr.app>",
+          "OTP_SENDER_EMAIL": "Ucolorr <donotreply@ucolorr.app>"
+        }
+      }
+    },
     "d1_databases": [{
       "binding": "DB",
-      "database_name": "ucolorr",
-      "database_id" : "e7de210f-b6ac-4d92-bf9b-ec73ff5ff90d"
+          "database_name": "ucolorr-production",
+          "database_id" : "5646c5c8-e8ec-40d8-8343-8257e7d3070a",
+          "preview_database_id": "3455b240-555a-4379-95b4-8d4afe2091ea"
     }],
     "services": [{
       "binding": "UCOLORR",
       "service": "ucolorr"
     }],
     "vars": {
-      "CONTACT_EMAIL": "contact@ucolorr.app"
-    },  
-    "env": {
-      "preview": {
-        "vars": {
-          "CONTACT_EMAIL": "contact@ucolorr.app"
-        }
-      },
-      "production": {
-        "vars": {
-          "CONTACT_EMAIL": "contact@ucolorr.app"
-        }
-      }
+      "CONTACT_SENDER_EMAIL": "Ucolorr <contact@ucolorr.app>",
+      "OTP_SENDER_EMAIL": "Ucolorr <donotreply@ucolorr.app>"
     }
   }
   

@@ -1,1 +1,1 @@
-export const allFields = ["colors", "id", "likes"] as const
+export const allFields = ["colors", "createdAt", "id", "likes"] as const

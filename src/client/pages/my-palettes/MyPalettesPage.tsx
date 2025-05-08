@@ -1,5 +1,5 @@
 import { PageStyle } from "#components/PageStyle.tsx"
-import type { JSX } from "react"
+import { type JSX } from "react"
 import type { PublicPalette } from "#client/types"
 import {
   EmptyPalettesList,
@@ -11,7 +11,7 @@ type MyPalettesPageProps = {
 }
 export function MyPalettesPage({ palettes }: MyPalettesPageProps): JSX.Element {
   return (
-    <PageStyle title="My palettes">
+    <PageStyle>
       {palettes.length === 0 ? (
         <EmptyPalettesList />
       ) : (

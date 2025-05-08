@@ -30,7 +30,7 @@ export function SignInPage({
 }: SignInPageProps): React.JSX.Element {
   const navigate = useNavigate()
   const signIn = useSignInMutation()
-  const { formData, handleResendOTP, handleSubmit } =
+  const { formData, handleResendOTP, handleSubmit, isSubmitting } =
     useRequestOTP<EmailFormData>({ requestOTP })
   const { storeUser } = useLocalStorage()
 
@@ -48,7 +48,9 @@ export function SignInPage({
           if (user) {
             await storeUser(user)
             await navigate({
-              to: redirectTo ?? "/", // role === "administrator" ? "/admin" : "/dashboard",
+              to:
+                redirectTo ??
+                (role === "administrator" ? "/admin" : "/palettes-explorer"),
             })
           } else {
             // TODO
@@ -79,11 +81,7 @@ export function SignInPage({
     : undefined
 
   return (
-    <AuthPage
-      pageTitle={
-        role === "administrator" ? "Sign-in as Administrator" : "Sign-in"
-      }
-    >
+    <AuthPage>
       {formData && onSubmitOTP ? (
         <OTPVerificationForm
           email={formData.email}
@@ -92,9 +90,22 @@ export function SignInPage({
         />
       ) : (
         <Stack>
-          <EmailForm defaultEmail={defaultEmail} onSubmit={handleSubmit} />
+          <EmailForm
+            defaultEmail={defaultEmail}
+            isSubmitting={isSubmitting}
+            onSubmit={handleSubmit}
+          />
           <Text>
-            Not a member yet ? <TextLink to="/auth/sign-up">Sign-up</TextLink>{" "}
+            Not a member yet ?{" "}
+            <TextLink
+              to="/auth/sign-up"
+              search={{
+                redirect_to: redirectTo,
+                role: role === "administrator" ? role : undefined,
+              }}
+            >
+              Sign-up
+            </TextLink>{" "}
             instead
           </Text>
         </Stack>

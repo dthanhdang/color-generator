@@ -9,10 +9,12 @@ type UseToggleFavoritePaletteProps = {
   defaultIsFavorite?: boolean
 }
 
-type UseToggleFavoritePaletteReturn = {
+export type UseToggleFavoritePaletteReturn = {
   isFavorite: boolean
   isUpdatePending: boolean
-  toggleFavorite: (colors: readonly Color[]) => void
+  toggleFavorite: (
+    colors: readonly Color[]
+  ) => Promise<number | undefined | null>
 }
 
 export function useToggleFavoritePalette({
@@ -32,17 +34,22 @@ export function useToggleFavoritePalette({
   const toggleFavoritePaletteMutation = useToggleFavoritePaletteMutation(
     handleMutationSuccess
   )
-  const toggleFavorite = (colors: readonly Color[]): void => {
+  const toggleFavorite = async (
+    colors: readonly Color[]
+  ): Promise<number | undefined | null> => {
     if (!user) {
       alert("You must be sign-in in order to add a favorite palette")
-      return
+      return null
     }
 
-    toggleFavoritePaletteMutation.mutate({
-      colors: stringifyChromaPalette(colors),
-    })
+    const { favoritePaletteId } =
+      await toggleFavoritePaletteMutation.mutateAsync({
+        colors: stringifyChromaPalette(colors),
+      })
 
     queryClient.invalidateQueries({ queryKey: ["CURRENT_USER"] })
+
+    return favoritePaletteId
   }
 
   return {

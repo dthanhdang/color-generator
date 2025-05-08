@@ -1,46 +1,60 @@
-import { ActionIcon, Group, Stack } from "@mantine/core"
-import type { JSX } from "react"
+import { Stack } from "@mantine/core"
+import { useState, type JSX } from "react"
 import { Link } from "@tanstack/react-router"
-import { Heart } from "lucide-react"
-import { useToggleFavoritePalette } from "#client/hooks"
 import type { PublicPalette } from "#client/types"
 import { stringifyChromaPalette } from "#utils/stringifyChromaPalette.ts"
+import { useToggleFavoritePalette } from "#client/hooks"
+import { PaletteColors } from "#components/palette_colors/index.js"
+import { LikesCounter } from "#components/likes_counter/index.js"
 
 type PalettesListProps = {
   palettes: PublicPalette[]
 }
 
-export function PalettesList({ palettes }: PalettesListProps): JSX.Element {
-  const toggleFavorite = useToggleFavoritePalette()
+export function PalettesList({
+  palettes: initialPalettes,
+}: PalettesListProps): JSX.Element {
+  const { toggleFavorite } = useToggleFavoritePalette()
+
+  const [palettes, setPalettes] = useState(initialPalettes)
+
+  const handleToggleFavorite = async (
+    palette: PublicPalette
+  ): Promise<undefined> => {
+    const favoritePaletteId = await toggleFavorite(palette.colors)
+    console.log({ favoritePaletteId })
+    if (favoritePaletteId === null) return
+
+    setPalettes(
+      palettes.map((item) =>
+        item.id === palette.id
+          ? {
+              ...item,
+              favoritePaletteId,
+              likes: item.likes + (favoritePaletteId ? 1 : -1),
+            }
+          : item
+      )
+    )
+  }
 
   return (
     <div className="grid grid-cols-4 gap-x-6 gap-y-10">
       {palettes.map((palette) => (
         <Stack className="gap-2" key={palette.id}>
           <Link
-            className="flex flex-row"
+            className="h-16 flex flex-row"
             search={{ colors: stringifyChromaPalette(palette.colors) }}
             to="/palette-editor"
           >
-            {palette.colors.map((color, index) => (
-              <div
-                className="size-16 grow"
-                key={index}
-                style={{ backgroundColor: color.hex() }}
-              />
-            ))}
+            <PaletteColors colors={palette.colors} />
           </Link>
-          <Group className="items-center gap-2 bold">
-            <ActionIcon
-              onClick={() => toggleFavorite.toggleFavorite(palette.colors)}
-              variant="transparent"
-            >
-              <Heart
-                fill={palette.favoritePaletteId ? "currentColor" : "white"}
-              />
-            </ActionIcon>
-            {(palette.likes ?? 0).toString()}
-          </Group>
+
+          <LikesCounter
+            isFavorite={palette.favoritePaletteId !== undefined}
+            likes={palette.likes}
+            onToggleFavorite={() => handleToggleFavorite(palette)}
+          />
         </Stack>
       ))}
     </div>

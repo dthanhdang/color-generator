@@ -1,4 +1,5 @@
 import type { InferRequestType } from "hono"
+import { handleError } from "#client/rpc/custom_fetch"
 
 import { apiClient } from "./apiClient.js"
 
@@ -10,8 +11,6 @@ export async function sendEmail(json: SendEmailProps): Promise<undefined> {
   try {
     await route({ json })
   } catch (error) {
-    throw new Error("An unexpected error occured while sending the email", {
-      cause: error,
-    })
+    handleError(error, "An unexpected error occured while sending the email")
   }
 }

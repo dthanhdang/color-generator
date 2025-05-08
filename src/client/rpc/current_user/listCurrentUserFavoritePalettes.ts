@@ -1,6 +1,7 @@
 import { apiClient } from "./apiClient.js"
 import { PublicPalette } from "#client/types"
-import { parseChromaPalette } from "#utils/parseChromaPalette.js"
+import { handleError } from "#client/rpc/custom_fetch"
+import { fromPublicPaletteDto } from "../conversion/fromPublicPaletteDto.js"
 
 const route = apiClient["palette"]["favorite"].$get
 
@@ -16,17 +17,12 @@ export async function listCurrentUserFavoritePalettes(
     })
 
     const { palettes } = await response.json()
-    return palettes.map(({ colors, ...palette }) => ({
-      ...palette,
-      colors: parseChromaPalette(colors),
-      isFavorite: true,
-    }))
+
+    return palettes.map((palette) => fromPublicPaletteDto(palette))
   } catch (error) {
-    throw new Error(
-      "An unexpected error occured while fetching the palette status",
-      {
-        cause: error,
-      }
+    handleError(
+      error,
+      "An unexpected error occured while fetching the palette status"
     )
   }
 }

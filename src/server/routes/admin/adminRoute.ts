@@ -1,8 +1,10 @@
 import { buildHono } from "#server/hono"
+import { adminPublicPaletteRoute } from "./public_palette/adminPublicPaletteRoute.js"
 
-import { adminRegisteredUserRoute } from "./registered_user/adminRegisteredUserRoute.js"
+import { adminUserRoute } from "./user/adminUserRoute.js"
 
-export const adminRoute = buildHono().route(
-  "/registered-user",
-  adminRegisteredUserRoute
-)
+export const adminRoute = buildHono()
+  .route("/public-palette", adminPublicPaletteRoute)
+  .route("/user", adminUserRoute)
+
+export type AdminType = typeof adminRoute

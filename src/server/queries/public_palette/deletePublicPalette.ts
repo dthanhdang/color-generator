@@ -9,6 +9,7 @@ export const deletePublicPalette = deleteQuery<DB, DeletePublicPaletteProps>(
     db
       .deleteFrom("publicPalette")
       .where("id", "=", id)
+      .where("likes", "=", 0)
       .returning("id")
       .executeTakeFirst()
       .then((row) => row?.id)

@@ -38,12 +38,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Apply D1 migrations
-        if: false # TODO activate once we need a backend
-        run: pnpm wrangler:apply_migrations
-
-      - name: Generate code # TODO add pnpm kysely:generate_types
-        run: pnpm tsr:generate_routes && pnpm wrangler:generate_types
+      - name: Apply D1 migrations & generate code
+        run: pnpm generate_code
 
       - name: Run lint
         run: pnpm lint:check

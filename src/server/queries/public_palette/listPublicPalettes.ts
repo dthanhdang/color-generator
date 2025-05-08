@@ -8,4 +8,10 @@ export const listPublicPalettes = listQuery<
   DB,
   Record<string, unknown>,
   Selectable<PublicPalette>
->(({ db }) => db.selectFrom("publicPalette").select(allFields).execute())
+>(({ db }) =>
+  db
+    .selectFrom("publicPalette")
+    .select(allFields)
+    .orderBy("likes desc")
+    .execute()
+)

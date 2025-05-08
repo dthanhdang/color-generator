@@ -34,6 +34,7 @@ export interface PrivatePalette {
 
 export interface PublicPalette {
   colors: string;
+  createdAt: string;
   id: Generated<number>;
   likes: number;
 }
@@ -43,7 +44,9 @@ export interface User {
   firstName: string;
   id: Generated<number>;
   lastName: string;
+  lastSignInDate: string;
   role: string;
+  signUpDate: string;
 }
 
 export interface UserFavoritePalette {

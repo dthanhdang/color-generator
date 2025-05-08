@@ -4,9 +4,11 @@ import { Link } from "@tanstack/react-router"
 import { Unauthenticated } from "#components/unauthenticated/Unauthenticated.tsx"
 import { Authenticated } from "#components/authenticated/Authenticated.tsx"
 import { SignOutButton } from "#components/sign_out_button/SignOutButton.tsx"
+import { useAuthentication } from "#client/hooks"
 
 export const Header = () => {
   const [scrolled, setScrolled] = useState(false)
+  const { user } = useAuthentication()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +35,7 @@ export const Header = () => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link
-          to="/"
+          to={user?.role === "administrator" ? "/admin" : "/"}
           className="text-2xl font-semibold tracking-wide flex items-center space-x-2"
         >
           <img
@@ -43,27 +45,30 @@ export const Header = () => {
           />
           <span>ucolorr</span>
         </Link>
-        <nav className="text-sm font-bold text-gray-600 flex flex-col gap-4 md:flex-row md:items-center md:gap-8">
-          <a
-            href="/#features"
-            className="text-sm font-medium hover:text-black/70 transition-colors"
-          >
-            Features
-          </a>
 
-          <a
-            href="/#how-it-works"
-            className="text-sm font-medium hover:text-black/70 transition-colors"
-          >
-            How It Works
-          </a>
-          <a
-            href="/#pricing"
-            className="text-sm font-medium hover:text-black/70 transition-colors"
-          >
-            Pricing
-          </a>
-        </nav>
+        {user?.role === "administrator" ? null : (
+          <nav className="text-sm font-bold text-gray-600 flex flex-col gap-4 md:flex-row md:items-center md:gap-8">
+            <a
+              href="/#features"
+              className="text-sm font-medium hover:text-black/70 transition-colors"
+            >
+              Features
+            </a>
+
+            <a
+              href="/#how-it-works"
+              className="text-sm font-medium hover:text-black/70 transition-colors"
+            >
+              How It Works
+            </a>
+            <a
+              href="/#pricing"
+              className="text-sm font-medium hover:text-black/70 transition-colors"
+            >
+              Pricing
+            </a>
+          </nav>
+        )}
 
         <div className="flex items-center space-x-4">
           <Authenticated>

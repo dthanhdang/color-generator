@@ -40,7 +40,7 @@ export function RandomPalette() {
   )
 
   return (
-    <PageStyle title="Your *Random Palette* Generator">
+    <PageStyle>
       <RandomColor
         onGeneratePalette={handleGeneratePalette}
         palette={palette}

@@ -21,11 +21,13 @@ import { Stack, Text } from "@mantine/core"
 
 type SignUpPageProps = {
   email?: string
+  redirectTo?: string
   role: "administrator" | "registered_user"
 }
 
 export function SignUpPage({
   email: defaultEmail,
+  redirectTo,
   role,
 }: SignUpPageProps): JSX.Element {
   const { formData, handleResendOTP, handleSubmit } =
@@ -52,7 +54,7 @@ export function SignUpPage({
           if (user) {
             await storeUser(user)
             await navigate({
-              to: role === "administrator" ? "/" /* TODO /admin */ : "/",
+              to: redirectTo ?? (role === "administrator" ? "/admin" : "/"),
             })
           }
         } else {
@@ -72,6 +74,7 @@ export function SignUpPage({
                   <TextLink
                     search={{
                       email: formData.email,
+                      redirect_to: redirectTo,
                       role: role === "administrator" ? role : undefined,
                     }}
                     to="/auth/sign-in"
@@ -87,11 +90,7 @@ export function SignUpPage({
     : undefined
 
   return (
-    <AuthPage
-      pageTitle={
-        role === "administrator" ? "Sign-up as administrator" : "Sign-up"
-      }
-    >
+    <AuthPage>
       {validateCode && formData ? (
         <OTPVerificationForm
           email={formData.email}
@@ -100,10 +99,23 @@ export function SignUpPage({
         />
       ) : (
         <Stack>
-          <SignUpForm defaultEmail={defaultEmail} onSubmit={handleSubmit} />
+          <SignUpForm
+            buttonLabel="Request a verification code"
+            defaultEmail={defaultEmail}
+            onSubmit={handleSubmit}
+          />
 
           <Text>
-            Already a member ? <TextLink to="/auth/sign-in">Sign-in</TextLink>{" "}
+            Already a member ?{" "}
+            <TextLink
+              to="/auth/sign-in"
+              search={{
+                redirect_to: redirectTo,
+                role: role === "administrator" ? role : undefined,
+              }}
+            >
+              Sign-in
+            </TextLink>{" "}
             instead
           </Text>
         </Stack>
