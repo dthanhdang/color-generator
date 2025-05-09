@@ -7,8 +7,7 @@ import { getOTP } from "./getOTP.js"
 export async function registerWrapper(
   expect: ExpectStatic,
   { auth: { register, requestOTP } }: RPCFactoryOutput,
-  email: string,
-  role?: "administrator"
+  email: string
 ): Promise<void> {
   await expect(requestOTP({ json: { email } })).toBeHTTPOk()
 
@@ -20,7 +19,6 @@ export async function registerWrapper(
         email,
         firstName: "John",
         lastName: "Doe",
-        role,
       },
     })
   ).toBeHTTPOk(expect.objectContaining({ idToken: expect.any(String) }))
