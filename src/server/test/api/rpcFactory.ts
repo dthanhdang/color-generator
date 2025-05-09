@@ -9,9 +9,9 @@ import { hc } from "hono/client"
 export type RPCFactoryOutput = {
   auth: {
     requestOTP: AuthApi["request-otp"]["$post"]
-    signIn: AuthApi["sign-in"]["$post"]
-    signOut: AuthApi["sign-out"]["$post"]
-    signUp: AuthApi["sign-up"]["$post"]
+    logIn: AuthApi["log-in"]["$post"]
+    logOut: AuthApi["log-out"]["$post"]
+    register: AuthApi["register"]["$post"]
   }
   currentUser: {
     get: CurrentUserApi["index"]["$get"]
@@ -70,9 +70,9 @@ export function rpcFactory(): RPCFactoryOutput {
   return {
     auth: {
       requestOTP: authApi["request-otp"].$post,
-      signIn: authApi["sign-in"].$post,
-      signOut: authApi["sign-out"].$post,
-      signUp: authApi["sign-up"].$post,
+      logIn: authApi["log-in"].$post,
+      logOut: authApi["log-out"].$post,
+      register: authApi.register.$post,
     },
     currentUser: {
       toggleFavoritePalette: currentUserApi.palette.favorite.$post,

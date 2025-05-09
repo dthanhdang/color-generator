@@ -38,7 +38,7 @@ export function useToggleFavoritePalette({
     colors: readonly Color[]
   ): Promise<number | undefined | null> => {
     if (!user) {
-      alert("You must be sign-in in order to add a favorite palette")
+      alert("You must be logged-in in order to add a favorite palette")
       return null
     }
 

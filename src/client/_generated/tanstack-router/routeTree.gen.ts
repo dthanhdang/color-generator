@@ -16,8 +16,8 @@ import { Route as PublicImport } from './../../routes/_public'
 import { Route as IndexImport } from './../../routes/index'
 import { Route as AdminIndexImport } from './../../routes/admin/index'
 import { Route as AdminPublicPalettesImport } from './../../routes/admin/public-palettes'
-import { Route as AuthSignUpIndexImport } from './../../routes/auth/sign-up/index'
-import { Route as AuthSignInIndexImport } from './../../routes/auth/sign-in/index'
+import { Route as AuthRegisterIndexImport } from './../../routes/auth/register/index'
+import { Route as AuthLogInIndexImport } from './../../routes/auth/log-in/index'
 import { Route as AdminUsersIndexImport } from './../../routes/admin/users/index'
 import { Route as AdminPublicPalettesIndexImport } from './../../routes/admin/public-palettes/index'
 import { Route as PublicScalePaletteIndexImport } from './../../routes/_public/scale-palette/index'
@@ -62,15 +62,15 @@ const AdminPublicPalettesRoute = AdminPublicPalettesImport.update({
   getParentRoute: () => AdminRoute,
 } as any)
 
-const AuthSignUpIndexRoute = AuthSignUpIndexImport.update({
-  id: '/auth/sign-up/',
-  path: '/auth/sign-up/',
+const AuthRegisterIndexRoute = AuthRegisterIndexImport.update({
+  id: '/auth/register/',
+  path: '/auth/register/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthSignInIndexRoute = AuthSignInIndexImport.update({
-  id: '/auth/sign-in/',
-  path: '/auth/sign-in/',
+const AuthLogInIndexRoute = AuthLogInIndexImport.update({
+  id: '/auth/log-in/',
+  path: '/auth/log-in/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -266,18 +266,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersIndexImport
       parentRoute: typeof AdminImport
     }
-    '/auth/sign-in/': {
-      id: '/auth/sign-in/'
-      path: '/auth/sign-in'
-      fullPath: '/auth/sign-in'
-      preLoaderRoute: typeof AuthSignInIndexImport
+    '/auth/log-in/': {
+      id: '/auth/log-in/'
+      path: '/auth/log-in'
+      fullPath: '/auth/log-in'
+      preLoaderRoute: typeof AuthLogInIndexImport
       parentRoute: typeof rootRoute
     }
-    '/auth/sign-up/': {
-      id: '/auth/sign-up/'
-      path: '/auth/sign-up'
-      fullPath: '/auth/sign-up'
-      preLoaderRoute: typeof AuthSignUpIndexImport
+    '/auth/register/': {
+      id: '/auth/register/'
+      path: '/auth/register'
+      fullPath: '/auth/register'
+      preLoaderRoute: typeof AuthRegisterIndexImport
       parentRoute: typeof rootRoute
     }
     '/admin/public-palettes/generate/': {
@@ -363,8 +363,8 @@ export interface FileRoutesByFullPath {
   '/scale-palette': typeof PublicScalePaletteIndexRoute
   '/admin/public-palettes/': typeof AdminPublicPalettesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
-  '/auth/sign-in': typeof AuthSignInIndexRoute
-  '/auth/sign-up': typeof AuthSignUpIndexRoute
+  '/auth/log-in': typeof AuthLogInIndexRoute
+  '/auth/register': typeof AuthRegisterIndexRoute
   '/admin/public-palettes/generate': typeof AdminPublicPalettesGenerateIndexRoute
 }
 
@@ -383,8 +383,8 @@ export interface FileRoutesByTo {
   '/scale-palette': typeof PublicScalePaletteIndexRoute
   '/admin/public-palettes': typeof AdminPublicPalettesIndexRoute
   '/admin/users': typeof AdminUsersIndexRoute
-  '/auth/sign-in': typeof AuthSignInIndexRoute
-  '/auth/sign-up': typeof AuthSignUpIndexRoute
+  '/auth/log-in': typeof AuthLogInIndexRoute
+  '/auth/register': typeof AuthRegisterIndexRoute
   '/admin/public-palettes/generate': typeof AdminPublicPalettesGenerateIndexRoute
 }
 
@@ -406,8 +406,8 @@ export interface FileRoutesById {
   '/_public/scale-palette/': typeof PublicScalePaletteIndexRoute
   '/admin/public-palettes/': typeof AdminPublicPalettesIndexRoute
   '/admin/users/': typeof AdminUsersIndexRoute
-  '/auth/sign-in/': typeof AuthSignInIndexRoute
-  '/auth/sign-up/': typeof AuthSignUpIndexRoute
+  '/auth/log-in/': typeof AuthLogInIndexRoute
+  '/auth/register/': typeof AuthRegisterIndexRoute
   '/admin/public-palettes/generate/': typeof AdminPublicPalettesGenerateIndexRoute
 }
 
@@ -430,8 +430,8 @@ export interface FileRouteTypes {
     | '/scale-palette'
     | '/admin/public-palettes/'
     | '/admin/users'
-    | '/auth/sign-in'
-    | '/auth/sign-up'
+    | '/auth/log-in'
+    | '/auth/register'
     | '/admin/public-palettes/generate'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -449,8 +449,8 @@ export interface FileRouteTypes {
     | '/scale-palette'
     | '/admin/public-palettes'
     | '/admin/users'
-    | '/auth/sign-in'
-    | '/auth/sign-up'
+    | '/auth/log-in'
+    | '/auth/register'
     | '/admin/public-palettes/generate'
   id:
     | '__root__'
@@ -470,8 +470,8 @@ export interface FileRouteTypes {
     | '/_public/scale-palette/'
     | '/admin/public-palettes/'
     | '/admin/users/'
-    | '/auth/sign-in/'
-    | '/auth/sign-up/'
+    | '/auth/log-in/'
+    | '/auth/register/'
     | '/admin/public-palettes/generate/'
   fileRoutesById: FileRoutesById
 }
@@ -480,16 +480,16 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PublicRoute: typeof PublicRouteWithChildren
   AdminRoute: typeof AdminRouteWithChildren
-  AuthSignInIndexRoute: typeof AuthSignInIndexRoute
-  AuthSignUpIndexRoute: typeof AuthSignUpIndexRoute
+  AuthLogInIndexRoute: typeof AuthLogInIndexRoute
+  AuthRegisterIndexRoute: typeof AuthRegisterIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PublicRoute: PublicRouteWithChildren,
   AdminRoute: AdminRouteWithChildren,
-  AuthSignInIndexRoute: AuthSignInIndexRoute,
-  AuthSignUpIndexRoute: AuthSignUpIndexRoute,
+  AuthLogInIndexRoute: AuthLogInIndexRoute,
+  AuthRegisterIndexRoute: AuthRegisterIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -505,8 +505,8 @@ export const routeTree = rootRoute
         "/",
         "/_public",
         "/admin",
-        "/auth/sign-in/",
-        "/auth/sign-up/"
+        "/auth/log-in/",
+        "/auth/register/"
       ]
     },
     "/": {
@@ -590,11 +590,11 @@ export const routeTree = rootRoute
       "filePath": "admin/users/index.tsx",
       "parent": "/admin"
     },
-    "/auth/sign-in/": {
-      "filePath": "auth/sign-in/index.tsx"
+    "/auth/log-in/": {
+      "filePath": "auth/log-in/index.tsx"
     },
-    "/auth/sign-up/": {
-      "filePath": "auth/sign-up/index.tsx"
+    "/auth/register/": {
+      "filePath": "auth/register/index.tsx"
     },
     "/admin/public-palettes/generate/": {
       "filePath": "admin/public-palettes/generate/index.ts",

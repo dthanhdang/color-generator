@@ -53,7 +53,7 @@ export function createAdministratorHandler({
     getUserById({ db, id: userId }),
   ]).andThen(([user, administrator]) => {
     const subject = `[Ucolorr] You're invited !`
-    const body = `<p>Hello ${firstName},</p><p>${administrator.firstName} (${administrator.email}) has invited you to become an administrator.</p><p>Please visit <a href="https://ucolorr.app/admin" target="_blank">Ucolorr's admin area</a> to sign-in !</p>`
+    const body = `<p>Hello ${firstName},</p><p>${administrator.firstName} (${administrator.email}) has invited you to become an administrator.</p><p>Please visit <a href="https://ucolorr.app/admin" target="_blank">Ucolorr's admin area</a> to log-in !</p>`
 
     return sendEmail({
       body,

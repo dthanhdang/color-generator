@@ -1,14 +1,14 @@
 import { buildHono } from "#server/hono"
 
 import { requestOtpRoute } from "./request-otp/requestOtpRoute.js"
-import { signInRoute } from "./sign-in/signInRoute.js"
-import { signOutRoute } from "./sign-out/signOutRoute.js"
-import { signUpRoute } from "./sign-up/signUpRoute.js"
+import { logInRoute } from "./log-in/logInRoute.js"
+import { logOutRoute } from "./log-out/logOutRoute.js"
+import { registerRoute } from "./register/registerRoute.js"
 
 export const authRoute = buildHono()
   .route("/request-otp", requestOtpRoute)
-  .route("/sign-in", signInRoute)
-  .route("/sign-out", signOutRoute)
-  .route("/sign-up", signUpRoute)
+  .route("/log-in", logInRoute)
+  .route("/log-out", logOutRoute)
+  .route("/register", registerRoute)
 
 export type AuthType = typeof authRoute

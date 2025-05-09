@@ -3,7 +3,7 @@ import { cn } from "../../lib/utils"
 import { Link } from "@tanstack/react-router"
 import { Unauthenticated } from "#components/unauthenticated/Unauthenticated.tsx"
 import { Authenticated } from "#components/authenticated/Authenticated.tsx"
-import { SignOutButton } from "#components/sign_out_button/SignOutButton.tsx"
+import { LogOutButton } from "#components/log_out_button/LogOutButton.tsx"
 import { useAuthentication } from "#client/hooks"
 
 export const Header = () => {
@@ -72,11 +72,11 @@ export const Header = () => {
 
         <div className="flex items-center space-x-4">
           <Authenticated>
-            <SignOutButton />
+            <LogOutButton />
           </Authenticated>
           <Unauthenticated>
             <Link
-              to="/auth/sign-in"
+              to="/auth/log-in"
               className="text-sm font-medium hover:text-black/70 transition-colors hidden md:block"
             >
               Log in

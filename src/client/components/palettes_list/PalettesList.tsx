@@ -22,7 +22,6 @@ export function PalettesList({
     palette: PublicPalette
   ): Promise<undefined> => {
     const favoritePaletteId = await toggleFavorite(palette.colors)
-    console.log({ favoritePaletteId })
     if (favoritePaletteId === null) return
 
     setPalettes(
@@ -39,7 +38,7 @@ export function PalettesList({
   }
 
   return (
-    <div className="grid grid-cols-4 gap-x-6 gap-y-10">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-6 gap-y-10">
       {palettes.map((palette) => (
         <Stack className="gap-2" key={palette.id}>
           <Link

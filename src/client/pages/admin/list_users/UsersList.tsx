@@ -27,10 +27,10 @@ export function UsersList({
           {displayTimeStamps && (
             <>
               <th className="bg-[var(--primary-color)] text-white px-4 py-2">
-                Sign-up
+                Registration
               </th>
               <th className="bg-[var(--primary-color)] text-white px-4 py-2">
-                Last sign-in
+                Last login
               </th>
             </>
           )}

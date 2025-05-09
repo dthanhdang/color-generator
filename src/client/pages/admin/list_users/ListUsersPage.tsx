@@ -4,8 +4,8 @@ import { Button, Stack, Text, Title } from "@mantine/core"
 import { UsersList } from "./UsersList.tsx"
 import { PlusCircle } from "lucide-react"
 import { modals } from "@mantine/modals"
-import { SignUpForm } from "#components/sign_up_form/SignUpForm.tsx"
-import type { SignUpFormData } from "#components/sign_up_form/SignUpForm.tsx"
+import { RegistrationForm } from "#components/registration_form/RegistrationForm.jsx"
+import type { RegistrationFormData } from "#components/registration_form/RegistrationForm.jsx"
 import { useCreateAdministratorMutation } from "./useCreateAdministratorMutation.ts"
 import { AdminPage } from "#components/page/AdminPage.tsx"
 
@@ -20,7 +20,7 @@ export function ListUsersPage({ users }: ListUsersPageProps): JSX.Element {
 
   const handleOpenAddAdministratorForm = (): undefined => {
     const handleSubmit = async (
-      formData: SignUpFormData
+      formData: RegistrationFormData
     ): Promise<undefined> => {
       const output = await createAdministratorMutation.mutateAsync(formData)
       if ("user" in output) modals.closeAll()
@@ -28,7 +28,7 @@ export function ListUsersPage({ users }: ListUsersPageProps): JSX.Element {
 
     modals.open({
       children: (
-        <SignUpForm
+        <RegistrationForm
           buttonLabel="Create administrator"
           onSubmit={handleSubmit}
         />

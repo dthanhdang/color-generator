@@ -25,7 +25,7 @@ export const getLocalStorageCurrentUserQuery: UseSuspenseQueryOptions<
             }
           } else {
             deleteUserFromLocalStorage()
-            throw redirect({ to: "/auth/sign-in" })
+            throw redirect({ to: "/auth/log-in" })
           }
         })
       : Promise.resolve(undefined)

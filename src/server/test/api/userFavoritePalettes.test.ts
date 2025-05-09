@@ -3,7 +3,7 @@ import type { RPCFactoryOutput } from "./rpcFactory.js"
 import { describe, it } from "vitest"
 import type { ExpectStatic } from "vitest"
 import { generateTestSpecificEmail } from "../generators/generateTestSpecificEmail.js"
-import { signUpWrapper } from "./signUpWrapper.js"
+import { registerWrapper } from "./registerWrapper.js"
 import type { PublicPalette } from "#server/types"
 
 async function toggleFavoritePalette(
@@ -55,7 +55,7 @@ describe("userFavoritePalettes endpoint", () => {
     const {
       currentUser: { listFavoritePalettes },
     } = rpc
-    await signUpWrapper(expect, rpc, generateTestSpecificEmail(expect))
+    await registerWrapper(expect, rpc, generateTestSpecificEmail(expect))
 
     const colors = "#abcdef"
 

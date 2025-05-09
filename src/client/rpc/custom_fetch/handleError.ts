@@ -1,11 +1,11 @@
-import { deleteUserFromLocalStorage, redirectToSignInPage } from "#client/auth"
+import { deleteUserFromLocalStorage, redirectToLogInPage } from "#client/auth"
 import { HTTPError } from "./HTTPError.ts"
 
 export function handleError(error: unknown, errorMessage: string): never {
   if (error instanceof HTTPError && error.status === 401) {
     deleteUserFromLocalStorage()
 
-    redirectToSignInPage()
+    redirectToLogInPage()
   }
 
   throw new Error(errorMessage, {
