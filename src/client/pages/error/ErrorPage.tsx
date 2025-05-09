@@ -12,9 +12,10 @@ export function ErrorPage({ error }: ErrorComponentProps): JSX.Element {
     harmonyType: "analogous",
   })
 
+  const { cause } = error
   const errorMessage =
-    error.cause && error instanceof HTTPError
-      ? "An error happened while contacting our servers. Please try again in a few moments."
+    cause && cause instanceof HTTPError
+      ? "An error happened while contacting our servers. Please try again in a few moments"
       : "An error occured. Please try again in a few moments"
 
   return (
